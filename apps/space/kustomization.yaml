@@ -1,0 +1,7 @@
+# apps/space/kustomization.yaml v1.0.0
+# Defines the 'space' application. Note it reuses the 'moon' component.
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../components/sun-chart
+  - ../../components/moon-chart

@@ -1,0 +1,6 @@
+replicaCount: 1
+image:
+  repository: nginxdemos/hello
+  tag: "plain-text"
+service:
+  port: 80

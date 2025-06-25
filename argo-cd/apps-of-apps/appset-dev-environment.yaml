@@ -1,0 +1,33 @@
+# argo-cd/apps-of-apps/appset-dev-environment.yaml v1.0.0
+# This ApplicationSet will automatically discover and create Argo CD Applications
+# for every app defined in the 'environments/dev' directory.
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: dev-environment
+  namespace: argocd
+spec:
+  generators:
+  - git:
+      repoURL: https://github.com/andres20980/gitops-poc.git # IMPORTANT: VERIFY YOUR REPO URL
+      revision: HEAD
+      directories:
+      - path: environments/dev/* # Discover every subdirectory in environments/dev
+  template:
+    metadata:
+      name: '{{path.basename}}-dev' # e.g., 'world-dev', 'space-dev'
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/andres20980/gitops-poc.git # IMPORTANT: VERIFY YOUR REPO URL
+        targetRevision: HEAD
+        path: '{{path}}' # The path discovered by the generator (e.g., environments/dev/world)
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{path.basename}}-dev' # Deploy to a dedicated namespace
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true

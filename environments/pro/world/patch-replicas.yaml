@@ -1,0 +1,9 @@
+# environments/pro/world/patch-replicas.yaml v1.0.0
+# Generic patch that sets the replica count. Kustomize will apply it
+# to all Deployment resources found.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: not-important # Kustomize ignores this and uses the resource's name
+spec:
+  replicas: 5
