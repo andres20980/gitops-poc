@@ -1,5 +1,5 @@
-# argo-cd/apps-of-apps/appset-dev-environment.yaml v4.0.0
-# This is the correct, final version. The helm configuration is now global in argocd-cm.
+# argo-cd/apps-of-apps/appset-dev-environment.yaml v5.0.0
+# This is the final and correct ApplicationSet definition.
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
@@ -7,19 +7,19 @@ metadata:
   namespace: argocd
 spec:
   generators:
-  - list:
-      elements:
-      - name: world
-      - name: space
+    - list:
+        elements:
+          - name: world
+          - name: space
   template:
     metadata:
       name: '{{name}}-dev'
     spec:
       project: default
       source:
-        repoURL: https://github.com/andres20980/gitops-poc.git # IMPORTANT: VERIFY YOUR REPO URL
+        repoURL: https://github.com/andres20980/gitops-poc.git # ⚠️ VERIFY THIS URL
         targetRevision: HEAD
-        path: 'environments/dev/{{name}}'
+        path: environments/dev/{{name}}
       destination:
         server: https://kubernetes.default.svc
         namespace: '{{name}}-dev'
