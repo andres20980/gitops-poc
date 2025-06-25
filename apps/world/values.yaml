@@ -6,4 +6,4 @@ byebyeworld-chart:
 moon-chart:
   replicaCount: 1
   image:
-    tag: "0.1.1" 
+    tag: "0.4" 
