@@ -1,3 +1,4 @@
+# components/moon-chart/Chart.yaml
 apiVersion: v2
 name: moon-chart
 description: Helm chart for the moon component.

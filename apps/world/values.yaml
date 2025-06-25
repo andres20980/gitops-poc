@@ -1,5 +1,4 @@
 # apps/world/values.yaml
-# Per-component values for the 'world' application
 helloworld-chart:
   replicaCount: 1
 byebyeworld-chart:

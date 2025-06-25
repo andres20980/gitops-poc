@@ -9,6 +9,6 @@ dependencies:
   - name: sun-chart
     version: "0.1.0"
     repository: "file://../../components/sun-chart"
-  - name: moon-chart # Reusing the moon component
+  - name: moon-chart
     version: "0.1.0"
     repository: "file://../../components/moon-chart"

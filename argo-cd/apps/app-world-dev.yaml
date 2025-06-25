@@ -1,4 +1,4 @@
-# argo-cd/apps-of-apps/app-world-dev.yaml
+# argo-cd/apps/app-world-dev.yaml
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -7,13 +7,10 @@ metadata:
 spec:
   project: default
   source:
-    # This now points directly to the Helm Umbrella chart
     repoURL: https://github.com/andres20980/gitops-poc.git # ⚠️ VERIFY THIS URL
     targetRevision: HEAD
     path: apps/world
     helm:
-      # Here you could specify a different values file for each environment
-      # For now, we use the default values.yaml
       valueFiles:
         - values.yaml
   destination:

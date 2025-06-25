@@ -1,4 +1,4 @@
-# argo-cd/apps-of-apps/app-space-dev.yaml
+# argo-cd/apps/app-space-dev.yaml
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:

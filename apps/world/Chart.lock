@@ -9,4 +9,4 @@ dependencies:
   repository: file://../../components/moon-chart
   version: 0.1.0
 digest: sha256:90712ce0ae61659eef467451b0358fb47a0d819a0cac722bea1c4fa9d5d5a4c5
-generated: "2025-06-25T17:14:54.91901632+02:00"
+generated: "2025-06-25T17:49:10.150197129+02:00"

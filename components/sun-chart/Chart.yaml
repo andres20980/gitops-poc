@@ -1,3 +1,4 @@
+# components/sun-chart/Chart.yaml
 apiVersion: v2
 name: sun-chart
 description: Helm chart for the sun component.

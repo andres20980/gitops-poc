@@ -1,3 +1,4 @@
+# components/helloworld-chart/Chart.yaml
 apiVersion: v2
 name: helloworld-chart
 description: Helm chart for the helloworld component.
