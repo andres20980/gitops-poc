@@ -1,7 +1,6 @@
-# setup_multi_app_poc.sh v3.0.0
+# setup_multi_app_poc.sh v3.1.0
 # This script creates the definitive multi-app, multi-component GitOps structure.
-# This version adds a kustomization.yaml inside each component's Helm chart directory,
-# making each component a valid Kustomize base. This is the correct pattern.
+# This version fixes a YAML syntax error in the ApplicationSet template.
 # WARNING: This will delete previous directories to start clean.
 
 echo "🚀 Starting Definitive Multi-App GitOps PoC setup..."
@@ -26,11 +25,9 @@ mkdir -p argo-cd/apps-of-apps \
 # --- Step 2: Create reusable Helm Charts for each component ---
 echo ">> Creating reusable Helm charts for all components..."
 
-# Function to create a simple Helm chart AND its kustomization file
 create_component() {
   COMPONENT_NAME=$1
   CHART_PATH="components/${COMPONENT_NAME}-chart"
-
   # Create Helm Chart.yaml
   cat <<EOF > "${CHART_PATH}/Chart.yaml"
 apiVersion: v2
@@ -40,7 +37,6 @@ type: application
 version: 0.1.0
 appVersion: "1.0.0"
 EOF
-
   # Create Helm values.yaml
   cat <<EOF > "${CHART_PATH}/values.yaml"
 replicaCount: 1
@@ -50,7 +46,6 @@ image:
 service:
   port: 80
 EOF
-
   # Create Helm deployment template
   cat <<EOF > "${CHART_PATH}/templates/deployment.yaml"
 apiVersion: apps/v1
@@ -73,7 +68,6 @@ spec:
           ports:
             - containerPort: 80
 EOF
-
   # Create Helm service template
   cat <<EOF > "${CHART_PATH}/templates/service.yaml"
 apiVersion: v1
@@ -87,33 +81,22 @@ spec:
   selector:
     app: ${COMPONENT_NAME}
 EOF
-
-  # *** THE NEW, CRITICAL PART ***
-  # Create a kustomization.yaml inside the chart directory to make it a valid Kustomize base.
+  # Create a kustomization.yaml inside the chart directory
   cat <<EOF > "${CHART_PATH}/kustomization.yaml"
 # components/${COMPONENT_NAME}-chart/kustomization.yaml v1.0.0
-# This file makes the Helm chart "kustomizable".
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 helmCharts:
 - name: ${COMPONENT_NAME}-chart
   releaseName: ${COMPONENT_NAME}
   version: 0.1.0
-  # No repo or path is needed here as Kustomize will find the Chart.yaml in the same directory.
 EOF
 }
-
-create_component "helloworld"
-create_component "byebyeworld"
-create_component "moon"
-create_component "sun"
+create_component "helloworld"; create_component "byebyeworld"; create_component "moon"; create_component "sun"
 
 # --- Step 3: Create Application Compositions in 'apps/' ---
 echo ">> Creating application compositions (grouping components)..."
-
-# These files are now simpler. They just point to the component directories.
 cat <<'EOF' > apps/world/kustomization.yaml
-# apps/world/kustomization.yaml v1.2.0
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
@@ -121,9 +104,7 @@ resources:
   - ../../components/byebyeworld-chart
   - ../../components/moon-chart
 EOF
-
 cat <<'EOF' > apps/space/kustomization.yaml
-# apps/space/kustomization.yaml v1.2.0
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
@@ -131,9 +112,8 @@ resources:
   - ../../components/moon-chart
 EOF
 
-# --- Step 4: Create Environment Overlays (NO CHANGES HERE) ---
+# --- Step 4: Create Environment Overlays ---
 echo ">> Creating environment-specific overlays..."
-# This function remains the same as before.
 create_env_overlay() {
   ENV=$1; APP=$2; REPLICAS=$3;
   ENV_PATH="environments/${ENV}/${APP}"; NAMESPACE="${APP}-${ENV}";
@@ -155,14 +135,15 @@ spec:
   replicas: ${REPLICAS}
 EOF
 }
-create_env_overlay "dev" "world" 1; create_env_overlay "dev" "space" 1
-create_env_overlay "pre" "world" 3; create_env_overlay "pre" "space" 2
-create_env_overlay "pro" "world" 5; create_env_overlay "pro" "space" 4
+create_env_overlay "dev" "world" 1; create_env_overlay "dev" "space" 1;
+create_env_overlay "pre" "world" 3; create_env_overlay "pre" "space" 2;
+create_env_overlay "pro" "world" 5; create_env_overlay "pro" "space" 4;
 
-# --- Step 5: Create the Argo CD App-of-Apps definitions (NO CHANGES HERE) ---
+# --- Step 5: Create the Argo CD App-of-Apps definitions ---
 echo ">> Creating Argo CD application definitions..."
 cat <<'EOF' > argo-cd/apps-of-apps/appset-dev-environment.yaml
-# argo-cd/apps-of-apps/appset-dev-environment.yaml v2.1.0
+# argo-cd/apps-of-apps/appset-dev-environment.yaml v3.1.0
+# This ApplicationSet uses a list generator and has CORRECT YAML syntax.
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
@@ -187,12 +168,15 @@ spec:
         server: https://kubernetes.default.svc
         namespace: '{{name}}-dev'
       syncPolicy:
-        automated: {prune: true, selfHeal: true}
-        syncOptions: [- CreateNamespace=true]
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
 EOF
 
-echo "✅ Definitive Multi-App setup complete!"
+echo "✅ Definitive Multi-App setup complete with corrected syntax!"
 echo "➡️ Next steps: "
 echo "1. VERY IMPORTANT: Verify the repoURL in argo-cd/apps-of-apps/appset-dev-environment.yaml"
 echo "2. Add, commit, and push all files to your Git repository."
-echo "3. Apply the DEV ApplicationSet: kubectl apply -f argo-cd/apps-of-apps/appset-dev-environment.yaml"
+echo "3. Run kubectl apply -f argo-cd/apps-of-apps/appset-dev-environment.yaml"

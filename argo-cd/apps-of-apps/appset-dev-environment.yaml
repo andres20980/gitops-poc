@@ -1,4 +1,5 @@
-# argo-cd/apps-of-apps/appset-dev-environment.yaml v2.1.0
+# argo-cd/apps-of-apps/appset-dev-environment.yaml v3.1.0
+# This ApplicationSet uses a list generator and has CORRECT YAML syntax.
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
@@ -23,5 +24,8 @@ spec:
         server: https://kubernetes.default.svc
         namespace: '{{name}}-dev'
       syncPolicy:
-        automated: {prune: true, selfHeal: true}
-        syncOptions: [- CreateNamespace=true]
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true

@@ -1,9 +1,7 @@
 # components/byebyeworld-chart/kustomization.yaml v1.0.0
-# This file makes the Helm chart "kustomizable".
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 helmCharts:
 - name: byebyeworld-chart
   releaseName: byebyeworld
   version: 0.1.0
-  # No repo or path is needed here as Kustomize will find the Chart.yaml in the same directory.
