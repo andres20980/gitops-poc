@@ -1,7 +1,6 @@
-# components/byebyeworld-chart/Chart.yaml
 apiVersion: v2
 name: byebyeworld-chart
-description: Helm chart for byebyeworld
+description: Helm chart for the byebyeworld component.
 type: application
 version: 0.1.0
 appVersion: "1.0.0"

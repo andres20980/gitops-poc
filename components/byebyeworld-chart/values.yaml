@@ -1,4 +1,3 @@
-# components/byebyeworld-chart/values.yaml
 replicaCount: 1
 image:
   repository: nginxdemos/hello

@@ -1,7 +1,6 @@
-# components/sun-chart/Chart.yaml
 apiVersion: v2
 name: sun-chart
-description: Helm chart for sun
+description: Helm chart for the sun component.
 type: application
 version: 0.1.0
 appVersion: "1.0.0"

@@ -1,11 +1,10 @@
-# components/helloworld-chart/templates/service.yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: helloworld-service
+  name: {{ .Release.Name }}-helloworld-service
 spec:
   ports:
     - port: {{ .Values.service.port }}
       targetPort: 80
   selector:
-    app: helloworld
+    app: {{ .Release.Name }}-helloworld

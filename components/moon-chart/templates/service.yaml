@@ -1,11 +1,10 @@
-# components/moon-chart/templates/service.yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: moon-service
+  name: {{ .Release.Name }}-moon-service
 spec:
   ports:
     - port: {{ .Values.service.port }}
       targetPort: 80
   selector:
-    app: moon
+    app: {{ .Release.Name }}-moon

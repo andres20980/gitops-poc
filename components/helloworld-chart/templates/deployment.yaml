@@ -1,17 +1,16 @@
-# components/helloworld-chart/templates/deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: helloworld-deployment
+  name: {{ .Release.Name }}-helloworld
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: helloworld
+      app: {{ .Release.Name }}-helloworld
   template:
     metadata:
       labels:
-        app: helloworld
+        app: {{ .Release.Name }}-helloworld
     spec:
       containers:
         - name: helloworld

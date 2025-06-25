@@ -1,17 +1,16 @@
-# components/sun-chart/templates/deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: sun-deployment
+  name: {{ .Release.Name }}-sun
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: sun
+      app: {{ .Release.Name }}-sun
   template:
     metadata:
       labels:
-        app: sun
+        app: {{ .Release.Name }}-sun
     spec:
       containers:
         - name: sun

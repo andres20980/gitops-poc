@@ -1,11 +1,10 @@
-# components/byebyeworld-chart/templates/service.yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: byebyeworld-service
+  name: {{ .Release.Name }}-byebyeworld-service
 spec:
   ports:
     - port: {{ .Values.service.port }}
       targetPort: 80
   selector:
-    app: byebyeworld
+    app: {{ .Release.Name }}-byebyeworld

@@ -1,11 +1,10 @@
-# components/sun-chart/templates/service.yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: sun-service
+  name: {{ .Release.Name }}-sun-service
 spec:
   ports:
     - port: {{ .Values.service.port }}
       targetPort: 80
   selector:
-    app: sun
+    app: {{ .Release.Name }}-sun

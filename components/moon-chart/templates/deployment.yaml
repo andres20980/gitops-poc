@@ -1,17 +1,16 @@
-# components/moon-chart/templates/deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: moon-deployment
+  name: {{ .Release.Name }}-moon
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: moon
+      app: {{ .Release.Name }}-moon
   template:
     metadata:
       labels:
-        app: moon
+        app: {{ .Release.Name }}-moon
     spec:
       containers:
         - name: moon

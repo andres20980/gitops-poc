@@ -1,17 +1,16 @@
-# components/byebyeworld-chart/templates/deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: byebyeworld-deployment
+  name: {{ .Release.Name }}-byebyeworld
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: byebyeworld
+      app: {{ .Release.Name }}-byebyeworld
   template:
     metadata:
       labels:
-        app: byebyeworld
+        app: {{ .Release.Name }}-byebyeworld
     spec:
       containers:
         - name: byebyeworld

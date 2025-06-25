@@ -1,9 +1,9 @@
-# setup_gitops_poc.sh v5.0.0
-# This is the final, definitive, and correct script.
-# It creates a multi-app, multi-component GitOps structure.
-# The key fix is removing the unnecessary kustomization.yaml from within the component charts.
+# setup_gitops_poc.sh v6.0.0
+# This is the final, definitive script using a robust Helm Umbrella Chart pattern.
+# This approach avoids the complexities and errors from the Kustomize+Helm integration.
+# WARNING: This will delete previous directories to start clean.
 
-echo "🚀 Starting definitive multi-app GitOps PoC setup..."
+echo "🚀 Starting definitive setup using Helm Umbrella Charts..."
 echo "🧹 Cleaning up previous structure and creating new hierarchy..."
 
 rm -rf apps components clusters environments argo-cd
@@ -11,29 +11,24 @@ rm -rf apps components clusters environments argo-cd
 mkdir -p \
   argo-cd/apps-of-apps \
   components/{helloworld-chart,byebyeworld-chart,moon-chart,sun-chart}/templates \
-  apps/{world,space} \
-  environments/{dev,pre,pro}/{world,space}
+  apps/{world,space}
 
+# --- Step 1: Create reusable Helm Charts for each component (as before) ---
 echo "🛠️ Creating reusable component Helm Charts..."
 
-create_component() {
+create_component_chart() {
   local COMPONENT=$1
   local CHART_PATH="components/${COMPONENT}-chart"
-
-  # Create Chart.yaml for the component
+  mkdir -p "${CHART_PATH}/templates"
   tee "${CHART_PATH}/Chart.yaml" > /dev/null <<EOF
-# components/${COMPONENT}-chart/Chart.yaml
 apiVersion: v2
 name: ${COMPONENT}-chart
-description: Helm chart for ${COMPONENT}
+description: Helm chart for the ${COMPONENT} component.
 type: application
 version: 0.1.0
 appVersion: "1.0.0"
 EOF
-
-  # Create values.yaml for the component
   tee "${CHART_PATH}/values.yaml" > /dev/null <<EOF
-# components/${COMPONENT}-chart/values.yaml
 replicaCount: 1
 image:
   repository: nginxdemos/hello
@@ -41,23 +36,20 @@ image:
 service:
   port: 80
 EOF
-
-  # Create deployment.yaml template for the component
   tee "${CHART_PATH}/templates/deployment.yaml" > /dev/null <<EOF
-# components/${COMPONENT}-chart/templates/deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ${COMPONENT}-deployment
+  name: {{ .Release.Name }}-${COMPONENT}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: ${COMPONENT}
+      app: {{ .Release.Name }}-${COMPONENT}
   template:
     metadata:
       labels:
-        app: ${COMPONENT}
+        app: {{ .Release.Name }}-${COMPONENT}
     spec:
       containers:
         - name: ${COMPONENT}
@@ -65,123 +57,152 @@ spec:
           ports:
             - containerPort: 80
 EOF
-
-  # Create service.yaml template for the component
   tee "${CHART_PATH}/templates/service.yaml" > /dev/null <<EOF
-# components/${COMPONENT}-chart/templates/service.yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: ${COMPONENT}-service
+  name: {{ .Release.Name }}-${COMPONENT}-service
 spec:
   ports:
     - port: {{ .Values.service.port }}
       targetPort: 80
   selector:
-    app: ${COMPONENT}
-EOF
-  # CORRECTED: The kustomization.yaml inside the component itself was removed.
-  # The global --enable-helm flag in argocd-cm handles the Helm rendering.
-}
-
-create_component "helloworld"
-create_component "byebyeworld"
-create_component "moon"
-create_component "sun"
-
-echo "📦 Composing applications from components..."
-
-# This is correct: the app composition layer points to component directories.
-tee apps/world/kustomization.yaml > /dev/null <<EOF
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-resources:
-  - ../../components/helloworld-chart
-  - ../../components/byebyeworld-chart
-  - ../../components/moon-chart
-EOF
-
-tee apps/space/kustomization.yaml > /dev/null <<EOF
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-resources:
-  - ../../components/sun-chart
-  - ../../components/moon-chart
-EOF
-
-echo "🌍 Creating environment-specific overlays (dev, pre, pro)..."
-
-create_env_overlay() {
-  local ENV=$1; local APP=$2; local REPLICAS=$3
-  local DIR="environments/${ENV}/${APP}"; local NS="${APP}-${ENV}"
-
-  tee "${DIR}/kustomization.yaml" > /dev/null <<EOF
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-namespace: ${NS}
-resources:
-  - ../../../apps/${APP}
-patches:
-  - path: patch-replicas.yaml
-EOF
-
-  tee "${DIR}/patch-replicas.yaml" > /dev/null <<EOF
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: not-important
-spec:
-  replicas: ${REPLICAS}
+    app: {{ .Release.Name }}-${COMPONENT}
 EOF
 }
+create_component_chart "helloworld"
+create_component_chart "byebyeworld"
+create_component_chart "moon"
+create_component_chart "sun"
 
-create_env_overlay dev world 1
-create_env_overlay dev space 1
-create_env_overlay pre world 3
-create_env_overlay pre space 2
-create_env_overlay pro world 5
-create_env_overlay pro space 4
+# --- Step 2: Create the Umbrella Charts for 'world' and 'space' apps ---
+echo "📦 Creating Umbrella Charts to compose applications..."
 
-echo "🎯 Creating ApplicationSet for the 'dev' environment..."
+# World App Umbrella Chart
+tee apps/world/Chart.yaml > /dev/null <<'EOF'
+# apps/world/Chart.yaml
+apiVersion: v2
+name: world-app
+description: An umbrella chart for the World application.
+type: application
+version: 0.1.0
+appVersion: "1.0"
+dependencies:
+  - name: helloworld-chart
+    version: "0.1.0"
+    repository: "file://../../components/helloworld-chart"
+  - name: byebyeworld-chart
+    version: "0.1.0"
+    repository: "file://../../components/byebyeworld-chart"
+  - name: moon-chart
+    version: "0.1.0"
+    repository: "file://../../components/moon-chart"
+EOF
 
-tee argo-cd/apps-of-apps/appset-dev-environment.yaml > /dev/null <<'EOF'
-# argo-cd/apps-of-apps/appset-dev-environment.yaml v5.0.0
-# This is the final and correct ApplicationSet definition.
+# World App Values (to override sub-chart values)
+tee apps/world/values.yaml > /dev/null <<'EOF'
+# apps/world/values.yaml
+# Per-component values for the 'world' application
+helloworld-chart:
+  replicaCount: 1
+byebyeworld-chart:
+  replicaCount: 1
+moon-chart:
+  replicaCount: 1
+EOF
+
+# Space App Umbrella Chart
+tee apps/space/Chart.yaml > /dev/null <<'EOF'
+# apps/space/Chart.yaml
+apiVersion: v2
+name: space-app
+description: An umbrella chart for the Space application.
+type: application
+version: 0.1.0
+appVersion: "1.0"
+dependencies:
+  - name: sun-chart
+    version: "0.1.0"
+    repository: "file://../../components/sun-chart"
+  - name: moon-chart # Reusing the moon component
+    version: "0.1.0"
+    repository: "file://../../components/moon-chart"
+EOF
+
+# Space App Values
+tee apps/space/values.yaml > /dev/null <<'EOF'
+# apps/space/values.yaml
+sun-chart:
+  replicaCount: 2
+moon-chart:
+  replicaCount: 2
+EOF
+
+# --- Step 3: Create the Argo CD Application ---
+# We will create one Argo CD App per application, which is simpler to manage.
+echo "🎯 Creating Argo CD Application definitions..."
+
+tee argo-cd/apps-of-apps/app-world-dev.yaml > /dev/null <<'EOF'
+# argo-cd/apps-of-apps/app-world-dev.yaml
 apiVersion: argoproj.io/v1alpha1
-kind: ApplicationSet
+kind: Application
 metadata:
-  name: dev-environment
+  name: world-dev
   namespace: argocd
 spec:
-  generators:
-    - list:
-        elements:
-          - name: world
-          - name: space
-  template:
-    metadata:
-      name: '{{name}}-dev'
-    spec:
-      project: default
-      source:
-        repoURL: https://github.com/andres20980/gitops-poc.git # ⚠️ VERIFY THIS URL
-        targetRevision: HEAD
-        path: environments/dev/{{name}}
-      destination:
-        server: https://kubernetes.default.svc
-        namespace: '{{name}}-dev'
-      syncPolicy:
-        automated:
-          prune: true
-          selfHeal: true
-        syncOptions:
-          - CreateNamespace=true
+  project: default
+  source:
+    # This now points directly to the Helm Umbrella chart
+    repoURL: https://github.com/andres20980/gitops-poc.git # ⚠️ VERIFY THIS URL
+    targetRevision: HEAD
+    path: apps/world
+    helm:
+      # Here you could specify a different values file for each environment
+      # For now, we use the default values.yaml
+      valueFiles:
+        - values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: world-dev
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
 EOF
 
-echo "✅ Setup completed successfully."
+tee argo-cd/apps-of-apps/app-space-dev.yaml > /dev/null <<'EOF'
+# argo-cd/apps-of-apps/app-space-dev.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: space-dev
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/andres20980/gitops-poc.git # ⚠️ VERIFY THIS URL
+    targetRevision: HEAD
+    path: apps/space
+    helm:
+      valueFiles:
+        - values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: space-dev
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+EOF
+
+echo "✅ Setup completed successfully using the Umbrella Chart pattern."
 echo "➡️ NEXT STEPS:"
-echo "1. Ensure argocd-cm is patched with '--enable-helm' and repo-server was restarted."
-echo "2. Verify the repoURL in the ApplicationSet YAML file."
-echo "3. Add, commit, and push the repository files."
-echo "4. Run:"
-echo "   kubectl apply -f argo-cd/apps-of-apps/appset-dev-environment.yaml"
+echo "1. Verify the repoURL in the Argo CD YAML files."
+echo "2. Run 'helm dependency build' in 'apps/world' and 'apps/space' directories."
+echo "   Example: cd apps/world && helm dependency build && cd ../../"
+echo "3. Add, commit, and push the repository files (including the 'charts/' directories created by helm)."
+echo "4. Run: kubectl apply -f argo-cd/apps-of-apps/"

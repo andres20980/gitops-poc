@@ -1,0 +1,5 @@
+# apps/space/values.yaml
+sun-chart:
+  replicaCount: 2
+moon-chart:
+  replicaCount: 2
