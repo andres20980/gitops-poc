@@ -1,5 +1,5 @@
-# argo-cd/apps-of-apps/appset-dev-environment.yaml v3.1.0
-# This ApplicationSet uses a list generator and has CORRECT YAML syntax.
+# argo-cd/apps-of-apps/appset-dev-environment.yaml v4.0.0
+# This is the correct, final version. The helm configuration is now global in argocd-cm.
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:

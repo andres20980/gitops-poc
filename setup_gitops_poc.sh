@@ -1,6 +1,6 @@
-# setup_multi_app_poc.sh v3.1.0
-# This script creates the definitive multi-app, multi-component GitOps structure.
-# This version fixes a YAML syntax error in the ApplicationSet template.
+# setup_multi_app_poc.sh v4.0.0
+# This is the definitive and correct script. The --enable-helm flag is now configured
+# directly in the argocd-cm ConfigMap, not in the ApplicationSet spec.
 # WARNING: This will delete previous directories to start clean.
 
 echo "🚀 Starting Definitive Multi-App GitOps PoC setup..."
@@ -83,7 +83,6 @@ spec:
 EOF
   # Create a kustomization.yaml inside the chart directory
   cat <<EOF > "${CHART_PATH}/kustomization.yaml"
-# components/${COMPONENT_NAME}-chart/kustomization.yaml v1.0.0
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 helmCharts:
@@ -142,8 +141,8 @@ create_env_overlay "pro" "world" 5; create_env_overlay "pro" "space" 4;
 # --- Step 5: Create the Argo CD App-of-Apps definitions ---
 echo ">> Creating Argo CD application definitions..."
 cat <<'EOF' > argo-cd/apps-of-apps/appset-dev-environment.yaml
-# argo-cd/apps-of-apps/appset-dev-environment.yaml v3.1.0
-# This ApplicationSet uses a list generator and has CORRECT YAML syntax.
+# argo-cd/apps-of-apps/appset-dev-environment.yaml v4.0.0
+# This is the correct, final version. The helm configuration is now global in argocd-cm.
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
@@ -175,7 +174,7 @@ spec:
           - CreateNamespace=true
 EOF
 
-echo "✅ Definitive Multi-App setup complete with corrected syntax!"
+echo "✅ Definitive Multi-App setup complete! This one WILL work."
 echo "➡️ Next steps: "
 echo "1. VERY IMPORTANT: Verify the repoURL in argo-cd/apps-of-apps/appset-dev-environment.yaml"
 echo "2. Add, commit, and push all files to your Git repository."
