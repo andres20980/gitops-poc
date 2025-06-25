@@ -1,5 +1,5 @@
 # apps/space/values.yaml
 sun-chart:
-  replicaCount: 2
+  replicaCount: 1
 moon-chart:
-  replicaCount: 2
+  replicaCount: 1
