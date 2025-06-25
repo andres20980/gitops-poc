@@ -1,13 +1,11 @@
-# environments/base/kustomization.yaml v1.0.0
-# This is the Kustomize base. It renders the Helm chart with default values.
+# environments/base/kustomization.yaml v1.0.1
+# This is the Kustomize base. It renders the local Helm chart.
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: helloworld-dev # This will be overridden by each environment
-helmCharts:
-  - name: helloworld-chart
-    releaseName: helloworld
-    version: 0.1.0
-    repo: "https://some-repo.com" # This is unused as we use 'path' but required by the schema
-    path: ../../base/helloworld-chart
-    # You can include a default values file if needed, e.g.:
-    # valuesFile: values.yaml
+
+# This namespace will be overridden by each environment's overlay.
+namespace: helloworld-base 
+
+# The correct way to include a local chart or any other local manifest folder.
+resources:
+  - ../../base/helloworld-chart
