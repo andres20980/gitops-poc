@@ -1,0 +1,6 @@
+# components/helloworld/namespace.yaml v1.0.0
+# Defines the namespace for the helloworld application.
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: helloworld

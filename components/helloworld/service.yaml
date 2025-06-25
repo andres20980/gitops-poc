@@ -1,0 +1,15 @@
+# components/helloworld/service.yaml v1.0.0
+# Exposes the helloworld deployment within the cluster.
+apiVersion: v1
+kind: Service
+metadata:
+  name: helloworld-service
+  namespace: helloworld
+spec:
+  selector:
+    app: helloworld
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: ClusterIP
