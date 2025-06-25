@@ -1,99 +1,65 @@
-# setup_gitops_poc.sh v1.0.0
-# This script creates the complete directory structure and all necessary
-# manifest files for the Argo CD GitOps Proof of Concept.
+# setup_multi_env_poc.sh v1.0.0
+# This script creates a multi-environment GitOps structure using Kustomize and Helm.
+# It will delete previous directories (apps, components, clusters) to start clean.
 
-echo "🚀 Starting GitOps PoC setup..."
+echo "🚀 Starting Multi-Environment GitOps PoC setup..."
 
-# Step 1: Create the directory structure.
-# Using -p ensures that the command doesn't fail if directories already exist.
-echo ">> Creating directory structure..."
-mkdir -p apps components/helloworld clusters/minikube
+# --- Step 1: Clean up old directories and create the new structure ---
+echo ">> Deleting old structure and creating new directories..."
+rm -rf apps components clusters
+mkdir -p apps/dev apps/pre apps/pro \
+         base/helloworld-chart/templates \
+         environments/base \
+         environments/dev \
+         environments/pre \
+         environments/pro
 
-# Step 2: Create all the manifest files with their content.
-# We use cat with a quoted 'EOF' to prevent shell expansion of variables ($)
-# inside the documents, ensuring the YAML content is written literally.
-echo ">> Creating manifest files..."
+# --- Step 2: Create a reusable Helm Chart in 'base/' ---
+echo ">> Creating a generic Helm chart for the helloworld app..."
 
-# --- App of Apps (Root Application) ---
-cat <<'EOF' > apps/app-of-apps.yaml
-# apps/app-of-apps.yaml v1.0.0
-# This is the root application, also known as the "App of Apps".
-# It manages all other applications in the specified path.
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: app-of-apps
-  namespace: argocd
-spec:
-  project: default
-  source:
-    # IMPORTANT: This URL is based on your previous input. Verify it is correct.
-    repoURL: 'https://github.com/andres20980/gitops-poc.git'
-    targetRevision: HEAD
-    path: clusters/minikube # This points to the directory containing our cluster-specific app definitions.
-  destination:
-    server: 'https://kubernetes.default.svc'
-    namespace: argocd
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
+# Chart.yaml
+cat <<'EOF' > base/helloworld-chart/Chart.yaml
+# base/helloworld-chart/Chart.yaml v1.0.0
+apiVersion: v2
+name: helloworld-chart
+description: A Helm chart for the HelloWorld application
+type: application
+version: 0.1.0
+appVersion: "1.0.0"
 EOF
 
-# --- HelloWorld Application Definition for Minikube Cluster ---
-cat <<'EOF' > clusters/minikube/helloworld-app.yaml
-# clusters/minikube/helloworld-app.yaml v1.0.0
-# Argo CD Application definition for the helloworld app on the minikube cluster.
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: helloworld
-  namespace: argocd # This application resource must live in the argocd namespace.
-  finalizers:
-    # The default behaviour is that when an Application CRD is deleted,
-    # all of its child resources are also deleted.
-    - resources-finalizer.argocd.argoproj.io
-spec:
-  project: default
-  source:
-    # IMPORTANT: This URL is based on your previous input. Verify it is correct.
-    repoURL: 'https://github.com/andres20980/gitops-poc.git'
-    targetRevision: HEAD
-    path: components/helloworld # This points to the directory with the component manifests.
-  destination:
-    server: 'https://kubernetes.default.svc' # This means the local cluster where Argo CD is running.
-    namespace: helloworld # The namespace where the app will be deployed.
-  syncPolicy:
-    automated:
-      prune: true # Deletes resources that are no longer defined in Git.
-      selfHeal: true # Reverts any manual changes made in the cluster to match Git.
-    syncOptions:
-      - CreateNamespace=true # Allows Argo CD to create the namespace if it doesn't exist.
+# values.yaml (The API of our chart)
+cat <<'EOF' > base/helloworld-chart/values.yaml
+# base/helloworld-chart/values.yaml v1.0.0
+# Default values for helloworld-chart.
+replicaCount: 1
+
+image:
+  repository: nginxdemos/hello
+  pullPolicy: IfNotPresent
+  tag: "plain-text"
+
+service:
+  type: ClusterIP
+  port: 80
+
+# Extra environment variables to inject into the container
+envVars: []
+#  - name: "ENV_NAME"
+#    value: "development"
 EOF
 
-# --- HelloWorld Component: Namespace ---
-cat <<'EOF' > components/helloworld/namespace.yaml
-# components/helloworld/namespace.yaml v1.0.0
-# Defines the namespace for the helloworld application.
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: helloworld
-EOF
-
-# --- HelloWorld Component: Deployment ---
-cat <<'EOF' > components/helloworld/deployment.yaml
-# components/helloworld/deployment.yaml v1.0.0
-# Defines the deployment for the helloworld application.
+# deployment.yaml template
+cat <<'EOF' > base/helloworld-chart/templates/deployment.yaml
+# base/helloworld-chart/templates/deployment.yaml v1.0.0
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: helloworld-deployment
-  namespace: helloworld
   labels:
     app: helloworld
 spec:
-  replicas: 1
+  replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
       app: helloworld
@@ -103,34 +69,187 @@ spec:
         app: helloworld
     spec:
       containers:
-      - name: helloworld
-        image: nginxdemos/hello:plain-text # A simple image that responds to HTTP requests.
-        ports:
-        - containerPort: 80
+        - name: helloworld
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: 80
+          env: {{- toYaml .Values.envVars | nindent 12 }}
 EOF
 
-# --- HelloWorld Component: Service ---
-cat <<'EOF' > components/helloworld/service.yaml
-# components/helloworld/service.yaml v1.0.0
-# Exposes the helloworld deployment within the cluster.
+# service.yaml template
+cat <<'EOF' > base/helloworld-chart/templates/service.yaml
+# base/helloworld-chart/templates/service.yaml v1.0.0
 apiVersion: v1
 kind: Service
 metadata:
   name: helloworld-service
-  namespace: helloworld
 spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: 80
+      protocol: TCP
   selector:
     app: helloworld
-  ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 80
-  type: ClusterIP
 EOF
 
-echo "✅ Setup complete! All directories and files have been created."
+# --- Step 3: Create Kustomize configurations for each environment ---
+echo ">> Creating Kustomize overlays for dev, pre, and pro..."
+
+# Kustomize Base (common for all environments)
+cat <<'EOF' > environments/base/kustomization.yaml
+# environments/base/kustomization.yaml v1.0.0
+# This is the Kustomize base. It renders the Helm chart with default values.
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: helloworld-dev # This will be overridden by each environment
+helmCharts:
+  - name: helloworld-chart
+    releaseName: helloworld
+    version: 0.1.0
+    repo: "https://some-repo.com" # This is unused as we use 'path' but required by the schema
+    path: ../../base/helloworld-chart
+    # You can include a default values file if needed, e.g.:
+    # valuesFile: values.yaml
+EOF
+
+# --- DEV Environment ---
+cat <<'EOF' > environments/dev/kustomization.yaml
+# environments/dev/kustomization.yaml v1.0.0
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: helloworld-dev # Specific namespace for dev
+resources:
+  - ../base # Inherit from the common base
+
+patches:
+  - path: patch-replicas-and-env.yaml
+    target:
+      kind: Deployment
+      name: helloworld-deployment
+EOF
+
+cat <<'EOF' > environments/dev/patch-replicas-and-env.yaml
+# environments/dev/patch-replicas-and-env.yaml v1.0.0
+# Patch for DEV: 1 replica and add an environment variable
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: helloworld-deployment
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+        - name: helloworld
+          env:
+            - name: "ENVIRONMENT"
+              value: "development"
+EOF
+
+# --- PRE Environment ---
+cat <<'EOF' > environments/pre/kustomization.yaml
+# environments/pre/kustomization.yaml v1.0.0
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: helloworld-pre
+resources:
+  - ../base
+patches:
+  - path: patch-replicas-and-env.yaml
+    target:
+      kind: Deployment
+      name: helloworld-deployment
+EOF
+
+cat <<'EOF' > environments/pre/patch-replicas-and-env.yaml
+# environments/pre/patch-replicas-and-env.yaml v1.0.0
+# Patch for PRE: 3 replicas and add an environment variable
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: helloworld-deployment
+spec:
+  replicas: 3
+  template:
+    spec:
+      containers:
+        - name: helloworld
+          env:
+            - name: "ENVIRONMENT"
+              value: "preproduction"
+EOF
+
+# --- PRO Environment ---
+cat <<'EOF' > environments/pro/kustomization.yaml
+# environments/pro/kustomization.yaml v1.0.0
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: helloworld-pro
+resources:
+  - ../base
+patches:
+  - path: patch-replicas-and-env.yaml
+    target:
+      kind: Deployment
+      name: helloworld-deployment
+EOF
+
+cat <<'EOF' > environments/pro/patch-replicas-and-env.yaml
+# environments/pro/patch-replicas-and-env.yaml v1.0.0
+# Patch for PRO: 5 replicas and add an environment variable
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: helloworld-deployment
+spec:
+  replicas: 5
+  template:
+    spec:
+      containers:
+        - name: helloworld
+          env:
+            - name: "ENVIRONMENT"
+              value: "production"
+EOF
+
+# --- Step 4: Create Argo CD applications to deploy each environment ---
+echo ">> Creating Argo CD application definitions for each environment..."
+
+cat <<'EOF' > apps/dev/app-helloworld-dev.yaml
+# apps/dev/app-helloworld-dev.yaml v1.0.0
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: helloworld-dev
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/andres20980/gitops-poc.git' # IMPORTANT: VERIFY YOUR REPO URL
+    targetRevision: HEAD
+    path: environments/dev # This app points to the DEV Kustomize overlay
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: helloworld-dev # Deploy to the dev namespace
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+EOF
+
+# You would create similar files for pre and pro in their respective directories
+# cp apps/dev/app-helloworld-dev.yaml apps/pre/app-helloworld-pre.yaml
+# cp apps/dev/app-helloworld-dev.yaml apps/pro/app-helloworld-pro.yaml
+# ... and then edit them to change 'name', 'path', and 'namespace'.
+
+echo "✅ Multi-Environment setup complete!"
 echo "➡️ Next steps: "
-echo "1. Add these files to Git: git add ."
-echo "2. Commit the files: git commit -m \"feat: Initial GitOps structure\""
-echo "3. Push to your repository: git push --set-upstream origin main"
-echo "4. Apply the root app to Argo CD: kubectl apply -f apps/app-of-apps.yaml"
+echo "1. Verify the repoURL in apps/dev/app-helloworld-dev.yaml"
+echo "2. Add, commit, and push all files to your Git repository."
+echo "3. Apply the DEV application: kubectl apply -f apps/dev/app-helloworld-dev.yaml"

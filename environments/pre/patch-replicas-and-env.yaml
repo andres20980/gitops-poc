@@ -1,0 +1,15 @@
+# environments/pre/patch-replicas-and-env.yaml v1.0.0
+# Patch for PRE: 3 replicas and add an environment variable
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: helloworld-deployment
+spec:
+  replicas: 3
+  template:
+    spec:
+      containers:
+        - name: helloworld
+          env:
+            - name: "ENVIRONMENT"
+              value: "preproduction"
