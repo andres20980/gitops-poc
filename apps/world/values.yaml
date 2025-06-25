@@ -5,3 +5,5 @@ byebyeworld-chart:
   replicaCount: 1
 moon-chart:
   replicaCount: 1
+  image:
+    tag: "0.1.1" 
