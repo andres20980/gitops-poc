@@ -1,0 +1,26 @@
+# argo-cd/apps/app-world-pre.yaml v1.0.0
+# Argo CD Application for the 'world' app in the PRE environment.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: world-pre 
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/andres20980/gitops-poc.git # ⚠️ VERIFY THIS URL
+    targetRevision: HEAD
+    path: apps/world
+    helm:
+      # Este es el cambio clave: Le decimos que use un fichero de valores específico.
+      valueFiles:
+        - values-pre.yaml 
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: world-pre 
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

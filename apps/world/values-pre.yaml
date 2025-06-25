@@ -1,0 +1,12 @@
+# apps/world/values-pre.yaml
+# Environment-specific values for the 'world' app in PRE.
+# We are overriding the default replicaCount for all components.
+
+helloworld-chart:
+  replicaCount: 2
+
+byebyeworld-chart:
+  replicaCount: 2
+
+moon-chart:
+  replicaCount: 2
