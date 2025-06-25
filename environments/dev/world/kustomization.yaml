@@ -1,11 +1,7 @@
-# apps/world/kustomization.yaml v1.1.0
-# Defines the 'world' application by composing multiple component charts.
-# Enables Helm chart inflation.
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-enableHelm: true # This is the magic line that fixes the issue
-
+namespace: world-dev
 resources:
-  - ../../components/helloworld-chart
-  - ../../components/byebyeworld-chart
-  - ../../components/moon-chart
+  - ../../../apps/world
+patches:
+  - path: patch-replicas.yaml

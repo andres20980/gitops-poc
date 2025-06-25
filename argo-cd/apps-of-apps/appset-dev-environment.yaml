@@ -1,13 +1,10 @@
 # argo-cd/apps-of-apps/appset-dev-environment.yaml v2.1.0
-# This ApplicationSet uses a list generator for explicit app creation,
-# ensuring robustness for the dev environment.
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
   name: dev-environment
   namespace: argocd
 spec:
-  # We are switching to a 'list' generator for more explicit control.
   generators:
   - list:
       elements:
@@ -15,22 +12,16 @@ spec:
       - name: space
   template:
     metadata:
-      # Use the 'name' from the list element to build the Application name
       name: '{{name}}-dev'
     spec:
       project: default
       source:
         repoURL: https://github.com/andres20980/gitops-poc.git # IMPORTANT: VERIFY YOUR REPO URL
         targetRevision: HEAD
-        # The path is now constructed from the list element's name
         path: 'environments/dev/{{name}}'
       destination:
         server: https://kubernetes.default.svc
-        # The namespace is also constructed from the list element's name
         namespace: '{{name}}-dev'
       syncPolicy:
-        automated:
-          prune: true
-          selfHeal: true
-        syncOptions:
-          - CreateNamespace=true
+        automated: {prune: true, selfHeal: true}
+        syncOptions: [- CreateNamespace=true]

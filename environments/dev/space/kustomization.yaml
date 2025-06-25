@@ -1,10 +1,7 @@
-# apps/space/kustomization.yaml v1.1.0
-# Defines the 'space' application. Note it reuses the 'moon' component.
-# Enables Helm chart inflation.
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-enableHelm: true # This is the magic line that fixes the issue
-
+namespace: space-dev
 resources:
-  - ../../components/sun-chart
-  - ../../components/moon-chart
+  - ../../../apps/space
+patches:
+  - path: patch-replicas.yaml
