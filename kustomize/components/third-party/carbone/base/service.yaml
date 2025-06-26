@@ -1,0 +1,14 @@
+# kustomize/components/third-party/carbone/base/service.yaml v1.0.0
+# This is the STABLE service for the Carbone component.
+# Argo Rollouts will manage its selectors to shift traffic.
+apiVersion: v1
+kind: Service
+metadata:
+  name: carbone-service
+spec:
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8080
+  selector:
+    app: carbone

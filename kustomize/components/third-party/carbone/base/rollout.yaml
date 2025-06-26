@@ -1,0 +1,32 @@
+# kustomize/components/third-party/carbone/base/rollout.yaml v3.1.0
+# Argo Rollout definition for the custom-built Carbone service.
+# This version is updated to pull the image from GitHub Container Registry (GHCR).
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: carbone
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: carbone
+  template:
+    metadata:
+      labels:
+        app: carbone
+    spec:
+      containers:
+        - name: carbone
+          # This now points to your GHCR. Your CI pipeline will replace the tag.
+          image: "ghcr.io/andres20980/carbone:latest"
+          ports:
+            # This port matches the one exposed in the official Dockerfile.
+            - containerPort: 4000
+  strategy:
+    # We will use a simple Canary strategy for this service.
+    canary:
+      stableService: carbone-service
+      canaryService: carbone-service-canary
+      steps:
+      - setWeight: 25
+      - pause: {duration: 60s}

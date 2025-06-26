@@ -1,0 +1,14 @@
+# kustomize/components/third-party/carbone/base/service-canary.yaml v1.0.0
+# This is the CANARY service for the Carbone component.
+# It will be used to exclusively target the new version pods for testing.
+apiVersion: v1
+kind: Service
+metadata:
+  name: carbone-service-canary
+spec:
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8080
+  selector:
+    app: carbone

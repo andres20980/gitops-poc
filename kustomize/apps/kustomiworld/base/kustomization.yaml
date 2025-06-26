@@ -1,9 +1,9 @@
-# kustomize/apps/kustomiworld/base/kustomization.yaml v1.0.0
-# Base Kustomization for the kustomiworld application.
-# This file aggregates the bases of the components that make up this application.
+# kustomize/apps/kustomiworld/base/kustomization.yaml v1.2.0
+# Added the third-party carbone component to the application.
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ../../../components/helloworld/base
-  - ../../../components/byebyeworld/base
-  - ../../../components/moon/base
+  - ../../../components/custom/helloworld/base
+  - ../../../components/custom/byebyeworld/base
+  - ../../../components/custom/moon/base
+  - ../../../components/third-party/carbone/base

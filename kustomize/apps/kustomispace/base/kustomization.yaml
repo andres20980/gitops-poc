@@ -1,8 +1,8 @@
-# kustomize/apps/kustomispace/base/kustomization.yaml v1.0.0
-# Base Kustomization for the kustomispace application.
-# This file aggregates the bases of the sun and moon components.
+# kustomize/apps/kustomispace/base/kustomization.yaml v1.2.0
+# Added the third-party carbone component to the application.
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ../../../components/sun/base
-  - ../../../components/moon/base
+  - ../../../components/custom/sun/base
+  - ../../../components/custom/moon/base
+  - ../../../components/third-party/carbone/base
