@@ -1,4 +1,4 @@
-# kustomize/apps/kustomiworld/overlays/dev/kustomization.yaml v1.0.0
+# kustomize/apps/kustomiworld/overlays/dev/kustomization.yaml v1.2.0
 # Kustomization overlay for the kustomiworld DEV environment.
 # This file customizes the base application for development.
 apiVersion: kustomize.config.k8s.io/v1beta1
@@ -11,8 +11,13 @@ bases:
 # Set the namespace for all resources in this overlay.
 namespace: kustomiworld-dev
 
-# Specify image overrides for this environment.
-images:
-  - name: nginxdemos/hello
-    newName: ghcr.io/andres20980/helloworld
-    newTag: "canary"
+# We use a patch to add a timestamp label to the pod template.
+# This change will trigger a new rollout without changing the container image.
+patches:
+- patch: |-
+    - op: add
+      path: /spec/template/metadata/labels/rollout-timestamp
+      value: "2025-06-26T12-00-00Z"
+  target:
+    kind: Rollout
+    name: helloworld
