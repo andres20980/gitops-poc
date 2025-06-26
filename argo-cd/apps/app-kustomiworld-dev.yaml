@@ -1,25 +1,19 @@
-# argo-cd/apps/app-kustomiworld-dev.yaml v1.0.0
-# Argo CD Application for the 'kustomiworld' app in the DEV environment.
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: kustomiworld-dev
-  namespace: argocd
-spec:
-  project: default
-  source:
-    repoURL: https://github.com/andres20980/gitops-poc.git # ⚠️ VERIFY THIS URL
-    targetRevision: HEAD
-    # This is the key change: Point to the Kustomize overlay for 'dev'.
-    path: kustomize/apps/kustomiworld/overlays/dev
-  destination:
-    server: https://kubernetes.default.svc
-    # The namespace is managed by the Kustomize overlay,
-    # but we specify it here for clarity in the Argo CD UI.
-    namespace: kustomiworld-dev
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
+# kustomize/apps/kustomiworld/overlays/dev/kustomization.yaml v1.1.0
+# Kustomization overlay for the kustomiworld DEV environment.
+# This file customizes the base application for development.
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# Inherit from the base configuration.
+bases:
+  - ../../base
+
+# Set the namespace for all resources in this overlay.
+namespace: kustomiworld-dev
+
+# Specify image overrides for this environment.
+# We are updating the tag to trigger a new rollout.
+images:
+  - name: nginxdemos/hello
+    newName: ghcr.io/andres20980/helloworld
+    newTag: "a1b2c3d" # <-- This is the change that will trigger the canary
