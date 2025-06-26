@@ -15,4 +15,4 @@ namespace: kustomiworld-dev
 images:
   - name: nginxdemos/hello
     newName: ghcr.io/andres20980/helloworld
-    newTag: "9c8fb34"
+    newTag: "canary"
