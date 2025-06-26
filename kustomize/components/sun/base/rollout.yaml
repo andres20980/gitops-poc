@@ -1,0 +1,30 @@
+# kustomize/components/sun/base/rollout.yaml v1.0.0
+# Argo Rollout definition for the sun component using a Blue-Green strategy.
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: sun
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sun
+  template:
+    metadata:
+      labels:
+        app: sun
+    spec:
+      containers:
+        - name: sun
+          image: "nginxdemos/hello:plain-text"
+          ports:
+            - containerPort: 80
+  # This section defines the Blue-Green deployment strategy.
+  strategy:
+    blueGreen: 
+      # activeService is the service that points to the stable (Blue) version.
+      activeService: sun-service
+      # previewService is the service that points to the new (Green) version for testing.
+      previewService: sun-service-preview
+      # autoPromotionEnabled: false means we need to manually promote the Green version.
+      autoPromotionEnabled: false

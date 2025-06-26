@@ -1,5 +1,6 @@
-# kustomize/components/moon/base/service.yaml v1.0.0
-# Base service for the moon component.
+# kustomize/components/moon/base/service.yaml v1.1.0
+# This is the ACTIVE service for the Blue-Green strategy.
+# It points to the stable (Blue) version and handles all production traffic.
 apiVersion: v1
 kind: Service
 metadata:

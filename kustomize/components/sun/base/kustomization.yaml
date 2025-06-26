@@ -1,7 +1,8 @@
-# kustomize/components/sun/base/kustomization.yaml v1.0.0
+# kustomize/components/sun/base/kustomization.yaml v1.2.0
 # Kustomization for the sun component base.
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - deployment.yaml
+  - rollout.yaml
   - service.yaml
+  - service-preview.yaml

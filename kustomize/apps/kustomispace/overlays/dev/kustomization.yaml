@@ -1,0 +1,11 @@
+# kustomize/apps/kustomispace/overlays/dev/kustomization.yaml v1.0.0
+# Kustomization overlay for the kustomispace DEV environment.
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# Inherit from the base application configuration.
+bases:
+  - ../../base
+
+# Set the namespace for all resources in this overlay.
+namespace: kustomispace-dev
