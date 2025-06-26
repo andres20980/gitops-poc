@@ -1,5 +1,7 @@
-# kustomize/components/helloworld/base/service.yaml v1.0.0
-# Base service for the helloworld component.
+# kustomize/components/helloworld/base/service.yaml v1.1.0
+# This is the STABLE service.
+# Argo Rollouts will manage the selectors of this service to shift traffic
+# between the stable and canary versions.
 apiVersion: v1
 kind: Service
 metadata:

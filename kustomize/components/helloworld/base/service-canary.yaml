@@ -1,0 +1,15 @@
+# kustomize/components/helloworld/base/service-canary.yaml v1.0.0
+# This is the CANARY service.
+# It will be used to exclusively target the new version pods during a rollout
+# for testing and validation purposes.
+apiVersion: v1
+kind: Service
+metadata:
+  # A distinct name for the canary service
+  name: helloworld-service-canary
+spec:
+  ports:
+    - port: 80
+      targetPort: 80
+  selector:
+    app: helloworld
