@@ -1,0 +1,23 @@
+# argo-cd/apps/app-kustomispace-dev.yaml v1.0.0
+# Argo CD Application for the 'kustomispace' app in the DEV environment,
+# which uses a Blue-Green deployment strategy.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kustomispace-dev
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/andres20980/gitops-poc.git # ⚠️ VERIFY THIS URL
+    targetRevision: HEAD
+    path: kustomize/apps/kustomispace/overlays/dev
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: kustomispace-dev
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
