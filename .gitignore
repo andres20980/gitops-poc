@@ -1,0 +1,60 @@
+# .gitignore v1.0.0
+
+# --- Archivos generados por Helm ---
+# Directorios donde Helm descarga dependencias de charts.
+# Si usas 'helm dependency build', estos se generan localmente.
+charts/
+
+# Paquetes de charts creados con 'helm package'
+*.tgz
+
+# Dependencias de Helm generadas por el CLI
+tmp/
+.helmignore
+
+# --- Archivos generados por Kustomize ---
+# Aunque los fuentes Kustomize se versionan, la salida directa de 'kustomize build'
+# no suele subirse al repositorio en un flujo GitOps, ya que Argo CD lo construye en tiempo real.
+# Sin embargo, si alguna vez generas un 'build' localmente y no quieres que se suba, puedes añadir:
+# kustomize-build/ # O el nombre del directorio donde guardes la salida del build
+
+# --- Archivos de configuración y entornos locales ---
+# Si tienes archivos de valores sensibles que no deben subirse, añádelos aquí.
+# Por ejemplo, si usas un 'values-secret.yaml' para credenciales locales:
+# values-secret.yaml
+
+# Archivos de entorno específicos de desarrollo
+.env
+.flaskenv
+
+# --- Credenciales y secretos (si se generaran localmente) ---
+# Cualquier archivo que contenga PATs, claves o certificados en texto plano
+# Asegúrate de que el archivo del secreto Base64 *sí* esté versionado si lo gestionas con Kustomize,
+# pero no la versión sin codificar si la generas localmente para el .dockerconfigjson
+# Por ejemplo, si el token crudo estuviera en un archivo:
+# my_raw_pat.txt
+
+# Los archivos que usamos para generar el secreto .dockerconfigjson localmente
+dockerconfig.json
+
+# --- Archivos del sistema operativo ---
+.DS_Store # macOS
+Thumbs.db # Windows
+
+# --- Archivos de entornos virtuales de Python (si aplica) ---
+.venv/
+env/
+venv/
+__pycache__/
+
+# --- Archivos de IDEs / Editores ---
+.idea/ # IntelliJ / PyCharm
+.vscode/ # VS Code
+*.iml
+*.swp
+*.swo
+
+# --- Logs y directorios temporales ---
+logs/
+*.log
+tmp/
