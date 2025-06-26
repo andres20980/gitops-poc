@@ -1,4 +1,4 @@
-# kustomize/components/helloworld/base/rollout.yaml v1.1.0
+# kustomize/components/custom/helloworld/base/rollout.yaml v1.2.1
 # Argo Rollout definition for the helloworld component.
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
@@ -16,12 +16,13 @@ spec:
     spec:
       containers:
         - name: helloworld
-          image: "nginxdemos/hello:plain-text"
+          image: "nginxdemos/hello:plain-text" # O la imagen de GHCR si ya la estás usando aquí
           ports:
             - containerPort: 80
+      imagePullSecrets: # <-- Añade esta sección
+      - name: github-image-pull-secret
   strategy:
     canary:
-      # These fields connect the rollout to the services.
       stableService: helloworld-service
       canaryService: helloworld-service-canary
       steps:
