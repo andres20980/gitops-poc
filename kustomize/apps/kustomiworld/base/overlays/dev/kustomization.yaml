@@ -1,0 +1,18 @@
+# kustomize/apps/kustomiworld/overlays/dev/kustomization.yaml v1.0.0
+# Kustomization overlay for the kustomiworld DEV environment.
+# This file customizes the base application for development.
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# Inherit from the base configuration.
+bases:
+  - ../../base
+
+# Set the namespace for all resources in this overlay.
+namespace: kustomiworld-dev
+
+# Specify image overrides for this environment.
+images:
+  - name: nginxdemos/hello
+    newName: ghcr.io/andres20980/helloworld
+    newTag: "9c8fb34"

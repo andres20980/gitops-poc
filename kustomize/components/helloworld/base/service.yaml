@@ -1,0 +1,12 @@
+# kustomize/components/helloworld/base/service.yaml v1.0.0
+# Base service for the helloworld component.
+apiVersion: v1
+kind: Service
+metadata:
+  name: helloworld-service
+spec:
+  ports:
+    - port: 80
+      targetPort: 80
+  selector:
+    app: helloworld

@@ -1,0 +1,21 @@
+# kustomize/components/sun/base/deployment.yaml v1.0.0
+# Base deployment for the sun component.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sun
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sun
+  template:
+    metadata:
+      labels:
+        app: sun
+    spec:
+      containers:
+        - name: sun
+          image: "nginxdemos/hello:plain-text"
+          ports:
+            - containerPort: 80

@@ -1,0 +1,21 @@
+# kustomize/components/helloworld/base/deployment.yaml v1.0.0
+# Base deployment for the helloworld component.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: helloworld
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: helloworld
+  template:
+    metadata:
+      labels:
+        app: helloworld
+    spec:
+      containers:
+        - name: helloworld
+          image: "nginxdemos/hello:plain-text"
+          ports:
+            - containerPort: 80

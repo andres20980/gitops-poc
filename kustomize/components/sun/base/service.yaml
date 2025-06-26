@@ -1,0 +1,12 @@
+# kustomize/components/sun/base/service.yaml v1.0.0
+# Base service for the sun component.
+apiVersion: v1
+kind: Service
+metadata:
+  name: sun-service
+spec:
+  ports:
+    - port: 80
+      targetPort: 80
+  selector:
+    app: sun

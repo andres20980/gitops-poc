@@ -1,0 +1,24 @@
+# argo-cd/apps/app-kustomiworld-pre.yaml v1.0.0
+# Argo CD Application for the 'kustomiworld' app in the PRE environment.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kustomiworld-pre
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/andres20980/gitops-poc.git # ⚠️ VERIFY THIS URL
+    targetRevision: HEAD
+    # Point to the Kustomize overlay for 'pre'.
+    path: kustomize/apps/kustomiworld/overlays/pre
+  destination:
+    server: https://kubernetes.default.svc
+    # The namespace is managed by the Kustomize overlay.
+    namespace: kustomiworld-pre
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
