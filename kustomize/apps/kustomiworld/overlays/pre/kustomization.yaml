@@ -35,3 +35,7 @@ patches:
     target:
       kind: Deployment
       name: moon
+images:
+- name: ghcr.io/andres20980/helloworld-app
+  newName: ghcr.io/andres20980/helloworld-app
+  newTag: 25f6004
