@@ -8,7 +8,9 @@ bases:
 
 # Updated the namespace from kustomiworld-pre to world-pre
 namespace: world-pre
-
+images:
+  - name: ghcr.io/andres20980/helloworld-app
+    newTag: 25f6004
 patches:
   - patch: |-
       - op: replace
