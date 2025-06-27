@@ -1,0 +1,21 @@
+# kustomize/apps/world/overlays/dev/kustomization.yaml v2.0.0
+# Updated the namespace to match the new application name.
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+bases:
+  - ../../base
+
+# Updated the namespace from kustomiworld-dev to world-dev
+namespace: world-dev
+
+images:
+  - name: ghcr.io/andres20980/helloworld-app
+    newTag: 25f6004
+patches:
+- patch: |-
+    - op: add
+      path: /spec/template/metadata/labels/rollout-timestamp
+      value: "2025-06-27T10-30-00Z"
+  target:
+    kind: Rollout
+    name: helloworld

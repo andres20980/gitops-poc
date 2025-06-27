@@ -1,21 +1,22 @@
-# argo-cd/apps/app-kustomiworld-pre.yaml v1.0.0
-# Argo CD Application for the 'kustomiworld' app in the PRE environment.
+# argo-cd/apps/app-world-dev.yaml v2.0.0
+# Content updated to reflect the new application name 'world'.
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: kustomiworld-pre
+  # 1. Renamed the Argo CD Application
+  name: world-dev
   namespace: argocd
 spec:
   project: default
   source:
     repoURL: https://github.com/andres20980/gitops-poc.git
     targetRevision: HEAD
-    # Point to the Kustomize overlay for 'pre'.
-    path: kustomize/apps/kustomiworld/overlays/pre
+    # 2. Updated the path to the new directory
+    path: kustomize/apps/world/overlays/dev
   destination:
     server: https://kubernetes.default.svc
-    # The namespace is managed by the Kustomize overlay.
-    namespace: kustomiworld-pre
+    # 3. Renamed the destination namespace for consistency
+    namespace: world-dev
   syncPolicy:
     automated:
       prune: true

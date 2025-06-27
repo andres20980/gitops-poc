@@ -1,0 +1,19 @@
+# kustomize/apps/space/overlays/dev/kustomization.yaml v2.0.0
+# Updated the namespace to match the new application name.
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+bases:
+  - ../../base
+
+# Updated the namespace from kustomispace-dev to space-dev
+namespace: space-dev
+
+patches:
+- patch: |-
+    - op: add
+      path: /spec/template/metadata/labels/rollout-timestamp
+      value: "2025-06-27T10-40-00Z"
+  target:
+    kind: Rollout
+    name: sun

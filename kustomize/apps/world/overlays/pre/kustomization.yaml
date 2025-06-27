@@ -1,0 +1,33 @@
+# kustomize/apps/world/overlays/pre/kustomization.yaml v2.0.0
+# Updated the namespace to match the new application name.
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+bases:
+  - ../../base
+
+# Updated the namespace from kustomiworld-pre to world-pre
+namespace: world-pre
+
+patches:
+  - patch: |-
+      - op: replace
+        path: /spec/replicas
+        value: 2
+    target:
+      kind: Deployment
+      name: helloworld
+  - patch: |-
+      - op: replace
+        path: /spec/replicas
+        value: 2
+    target:
+      kind: Deployment
+      name: byebyeworld
+  - patch: |-
+      - op: replace
+        path: /spec/replicas
+        value: 2
+    target:
+      kind: Deployment
+      name: moon

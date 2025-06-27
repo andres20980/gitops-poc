@@ -1,20 +1,22 @@
-# argo-cd/apps/app-kustomispace-dev.yaml v1.0.0
-# Argo CD Application for the 'kustomispace' app in the DEV environment,
-# which uses a Blue-Green deployment strategy.
+# argo-cd/apps/app-world-pre.yaml v2.0.0
+# Content updated to reflect the new application name 'world'.
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: kustomispace-dev
+  # 1. Renamed the Argo CD Application
+  name: world-pre
   namespace: argocd
 spec:
   project: default
   source:
     repoURL: https://github.com/andres20980/gitops-poc.git
     targetRevision: HEAD
-    path: kustomize/apps/kustomispace/overlays/dev
+    # 2. Updated the path to the new directory
+    path: kustomize/apps/world/overlays/pre
   destination:
     server: https://kubernetes.default.svc
-    namespace: kustomispace-dev
+    # 3. Renamed the destination namespace for consistency
+    namespace: world-pre
   syncPolicy:
     automated:
       prune: true
