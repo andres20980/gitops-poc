@@ -5,8 +5,6 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 # Inherit from the base configuration.
-bases:
-  - ../../base
 
 # Set the namespace for all resources in this overlay.
 namespace: kustomiworld-dev
@@ -21,3 +19,9 @@ patches:
   target:
     kind: Rollout
     name: helloworld
+resources:
+- ../../base
+images:
+- name: ghcr.io/andres20980/helloworld-app
+  newName: ghcr.io/andres20980/helloworld-app
+  newTag: 25f6004
