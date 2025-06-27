@@ -5,4 +5,3 @@ kind: Kustomization
 resources:
   - ../../../components/custom/sun/base
   - ../../../components/custom/moon/base
-  - ../../../components/third-party/carbone/base
