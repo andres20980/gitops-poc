@@ -1,34 +1,74 @@
-# setup_kustomize_poc.sh v1.0.0
-# This script builds the Kustomize-based structure for the GitOps PoC,
-# including components with Canary and Blue-Green rollout strategies.
+# setup_kustomize_poc.sh v1.1.0
+# This script builds the Kustomize-based structure for the GitOps PoC.
+# This version adds prerequisite checks and instructions for dependencies
+# like Argo CD, Argo Rollouts, and kubectl.
 
 set -euo pipefail
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$PATH"
 
+# --- Step 0: Prerequisites Check ---
+
+check_deps() {
+  if ! command -v kubectl &> /dev/null; then
+    echo "❌ ERROR: kubectl is not installed or not in your PATH."
+    echo "Please install kubectl and configure access to your Kubernetes cluster first."
+    exit 1
+  fi
+  echo "✅ kubectl command found."
+}
+
+cat << "EOF"
+
+################################################################################
+#                              PREREQUISITES                                   #
+################################################################################
+
+This script will generate the file structure for the GitOps PoC.
+Before you can deploy these applications, you MUST ensure the following
+tools are installed and configured in your Kubernetes cluster:
+
+1. Argo CD:
+   - Follow the official installation guide:
+     https://argo-cd.readthedocs.io/en/stable/getting_started/
+
+2. Argo Rollouts:
+   a) Install the controller in your cluster:
+      kubectl create namespace argo-rollouts
+      kubectl apply -n argo-rollouts -f https://github.com/argoproj/argo-rollouts/releases/latest/download/install.yaml
+
+   b) (Recommended) Install the kubectl plugin for easier management:
+      - macOS: brew install argoproj/tap/kubectl-argo-rollouts
+      - Linux: https://argo-rollouts.readthedocs.io/en/stable/installation/#kubectl-plugin-installation
+
+3. Carbone Service Note:
+   - The 'carbone' component uses a public image from GHCR for convenience.
+     In a real-world scenario, you would have a CI pipeline to build and push
+     your own version of this service's container image to your registry.
+
+Press ENTER to acknowledge and continue, or CTRL+C to cancel.
+EOF
+
+read -p ""
+
+check_deps
+
+# --- The rest of the script remains the same ---
+
 echo "🚀 Starting Kustomize & Argo Rollouts PoC setup..."
 echo "🧹 Cleaning up previous structure and creating new hierarchy..."
 
-# Clean up old directories and the old script
-rm -rf apps components clusters environments argo-cd kustomize services
-rm -f setup_gitops_poc.sh
-
-# --- Step 1: Create the main directory structure ---
-echo "🏗️  Creating base directories for Kustomize and Argo CD..."
+rm -rf argo-cd kustomize services
 mkdir -p \
   argo-cd/apps \
   kustomize/apps/kustomiworld/overlays/dev \
   kustomize/apps/kustomispace/overlays/dev \
   kustomize/components/custom/helloworld/base \
-  kustomize/components/custom/byebyeworld/base \
-  kustomize/components/custom/moon/base \
   kustomize/components/custom/sun/base
 
-# --- Step 2: Create Component Bases with Rollout Strategies ---
 echo "🛠️  Creating Kustomize component bases with Rollout strategies..."
 
 # --- Helloworld Component (Canary) ---
 tee kustomize/components/custom/helloworld/base/kustomization.yaml > /dev/null <<'EOF'
-# kustomize/components/custom/helloworld/base/kustomization.yaml
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
@@ -36,9 +76,7 @@ resources:
   - service.yaml
   - service-canary.yaml
 EOF
-
 tee kustomize/components/custom/helloworld/base/rollout.yaml > /dev/null <<'EOF'
-# kustomize/components/custom/helloworld/base/rollout.yaml
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
@@ -66,9 +104,7 @@ spec:
       - setWeight: 20
       - pause: {}
 EOF
-
 tee kustomize/components/custom/helloworld/base/service.yaml > /dev/null <<'EOF'
-# kustomize/components/custom/helloworld/base/service.yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -80,9 +116,7 @@ spec:
   selector:
     app: helloworld
 EOF
-
 tee kustomize/components/custom/helloworld/base/service-canary.yaml > /dev/null <<'EOF'
-# kustomize/components/custom/helloworld/base/service-canary.yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -97,7 +131,6 @@ EOF
 
 # --- Sun Component (Blue-Green) ---
 tee kustomize/components/custom/sun/base/kustomization.yaml > /dev/null <<'EOF'
-# kustomize/components/custom/sun/base/kustomization.yaml
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
@@ -105,9 +138,7 @@ resources:
   - service.yaml
   - service-preview.yaml
 EOF
-
 tee kustomize/components/custom/sun/base/rollout.yaml > /dev/null <<'EOF'
-# kustomize/components/custom/sun/base/rollout.yaml
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
@@ -133,9 +164,7 @@ spec:
       previewService: sun-service-preview
       autoPromotionEnabled: false
 EOF
-
 tee kustomize/components/custom/sun/base/service.yaml > /dev/null <<'EOF'
-# kustomize/components/custom/sun/base/service.yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -147,9 +176,7 @@ spec:
   selector:
     app: sun
 EOF
-
 tee kustomize/components/custom/sun/base/service-preview.yaml > /dev/null <<'EOF'
-# kustomize/components/custom/sun/base/service-preview.yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -162,24 +189,16 @@ spec:
     app: sun
 EOF
 
-# Note: For brevity, 'byebyeworld' and 'moon' would be created similarly.
-# This script focuses on demonstrating one of each pattern (Canary, Blue-Green).
-
-# --- Step 3: Create Application Compositions (Bases and Overlays) ---
 echo "📦 Composing applications using Kustomize bases and overlays..."
 
 # --- kustomiworld App ---
 tee kustomize/apps/kustomiworld/base/kustomization.yaml > /dev/null <<'EOF'
-# kustomize/apps/kustomiworld/base/kustomization.yaml
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ../../../components/custom/helloworld/base
-  # Add other components like byebyeworld, moon here
 EOF
-
 tee kustomize/apps/kustomiworld/overlays/dev/kustomization.yaml > /dev/null <<'EOF'
-# kustomize/apps/kustomiworld/overlays/dev/kustomization.yaml
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 bases:
@@ -189,7 +208,7 @@ patches:
 - patch: |-
     - op: add
       path: /spec/template/metadata/labels/rollout-timestamp
-      value: "2025-06-27T10-30-00Z"
+      value: "2025-06-27T10-40-00Z"
   target:
     kind: Rollout
     name: helloworld
@@ -197,16 +216,12 @@ EOF
 
 # --- kustomispace App ---
 tee kustomize/apps/kustomispace/base/kustomization.yaml > /dev/null <<'EOF'
-# kustomize/apps/kustomispace/base/kustomization.yaml
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ../../../components/custom/sun/base
-  # Add other components like moon here
 EOF
-
 tee kustomize/apps/kustomispace/overlays/dev/kustomization.yaml > /dev/null <<'EOF'
-# kustomize/apps/kustomispace/overlays/dev/kustomization.yaml
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 bases:
@@ -216,17 +231,15 @@ patches:
 - patch: |-
     - op: add
       path: /spec/template/metadata/labels/rollout-timestamp
-      value: "2025-06-27T10-30-00Z"
+      value: "2025-06-27T10-40-00Z"
   target:
     kind: Rollout
     name: sun
 EOF
 
-# --- Step 4: Create Argo CD Application Definitions ---
 echo "🎯 Creating Argo CD Application definitions for Kustomize..."
 
 tee argo-cd/apps/app-kustomiworld-dev.yaml > /dev/null <<'EOF'
-# argo-cd/apps/app-kustomiworld-dev.yaml
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -248,9 +261,7 @@ spec:
     syncOptions:
       - CreateNamespace=true
 EOF
-
 tee argo-cd/apps/app-kustomispace-dev.yaml > /dev/null <<'EOF'
-# argo-cd/apps/app-kustomispace-dev.yaml
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -276,6 +287,7 @@ EOF
 echo ""
 echo "✅ Kustomize PoC setup completed successfully."
 echo "➡️  NEXT STEPS:"
-echo "1. Review and commit all the generated files."
-echo "2. IMPORTANT: Edit the 'repoURL' in the Argo CD YAML files to point to your repository."
-echo "3. Apply the Argo CD applications: kubectl apply -f argo-cd/apps/"
+echo "1. Verify that all prerequisites (Argo CD, Rollouts) are running in your cluster."
+echo "2. Review and commit all the generated files."
+echo "3. IMPORTANT: Edit the 'repoURL' in the Argo CD YAML files to point to your repository."
+echo "4. Apply the Argo CD applications: kubectl apply -f argo-cd/apps/"
