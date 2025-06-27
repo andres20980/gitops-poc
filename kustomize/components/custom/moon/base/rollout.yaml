@@ -18,7 +18,7 @@ spec:
         - name: moon
           image: "nginxdemos/hello:plain-text"
           ports:
-            - containerPort: 80
+            - containerPort: 82
   # This section defines the Blue-Green deployment strategy for the moon component.
   strategy:
     blueGreen: 
