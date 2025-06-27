@@ -1,6 +1,6 @@
-# kustomize/components/third-party/carbone/base/rollout.yaml v3.2.2
+# kustomize/components/third-party/carbone/base/rollout.yaml v3.2.9
 # Argo Rollout definition for the custom-built Carbone service.
-# This version is updated to pull the image from GitHub Container Registry (GHCR).
+# Image is now public on GHCR, so no imagePullSecrets are needed.
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
@@ -17,11 +17,11 @@ spec:
     spec:
       containers:
         - name: carbone
-          image: "ghcr.io/andres20980/carbone:latest" # Esta imagen ya es de GHCR
+          image: "ghcr.io/andres20980/carbone:latest"
           ports:
             - containerPort: 4000
-      imagePullSecrets:
-      - name: ghcr-creds # <-- ¡CAMBIA A ESTE NOMBRE!
+      # imagePullSecrets: # <-- ¡ASEGÚRATE DE QUE ESTA SECCIÓN NO ESTÉ!
+      # - name: ghcr-creds
   strategy:
     canary:
       stableService: carbone-service
