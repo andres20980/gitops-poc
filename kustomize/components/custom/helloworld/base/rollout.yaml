@@ -1,5 +1,5 @@
-# kustomize/components/custom/helloworld/base/rollout.yaml v1.2.2
-# Argo Rollout definition for the helloworld component.
+# kustomize/components/custom/helloworld/base/rollout.yaml v2.1.0
+# Updated to use the custom Python application from the correct GHCR path.
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
@@ -16,9 +16,11 @@ spec:
     spec:
       containers:
         - name: helloworld
-          image: "nginxdemos/hello:plain-text" # O la imagen de GHCR si ya la estás usando aquí
+          # Using the correct image path with your GitHub username
+          image: "ghcr.io/andres20980/helloworld-app:v1"
           ports:
-            - containerPort: 80
+            # The new application runs on port 8080
+            - containerPort: 8080
   strategy:
     canary:
       stableService: helloworld-service

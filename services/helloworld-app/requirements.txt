@@ -1,0 +1,5 @@
+# services/helloworld-app/requirements.txt v1.0.0
+# Python dependencies for the helloworld application.
+
+flask
+requests

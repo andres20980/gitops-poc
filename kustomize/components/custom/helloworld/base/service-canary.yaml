@@ -1,7 +1,5 @@
-# kustomize/components/helloworld/base/service-canary.yaml v1.0.0
-# This is the CANARY service.
-# It will be used to exclusively target the new version pods during a rollout
-# for testing and validation purposes.
+# kustomize/components/custom/helloworld/base/service-canary.yaml v2.0.0
+# Updated the targetPort to 8080 to match the new Python application.
 apiVersion: v1
 kind: Service
 metadata:
@@ -10,6 +8,7 @@ metadata:
 spec:
   ports:
     - port: 80
-      targetPort: 80
+      # This now points to the port exposed by the Flask app in the container.
+      targetPort: 8080
   selector:
     app: helloworld
