@@ -1,7 +1,0 @@
-# apps/space/values.yaml
-sun-chart:
-  replicaCount: 1
-moon-chart:
-  replicaCount: 1
-  image:
-    tag: "0.4" 

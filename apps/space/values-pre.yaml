@@ -1,9 +1,0 @@
-# apps/space/values-pre.yaml
-# Environment-specific values for the 'space' app in PRE.
-# We are overriding the default replicaCount for all components to 3.
-
-sun-chart:
-  replicaCount: 3
-
-moon-chart:
-  replicaCount: 3

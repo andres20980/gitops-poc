@@ -20,8 +20,6 @@ spec:
           image: "ghcr.io/andres20980/carbone:latest"
           ports:
             - containerPort: 4000
-      # imagePullSecrets: # <-- ¡ASEGÚRATE DE QUE ESTA SECCIÓN NO ESTÉ!
-      # - name: ghcr-creds
   strategy:
     canary:
       stableService: carbone-service

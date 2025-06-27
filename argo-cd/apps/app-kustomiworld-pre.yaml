@@ -8,7 +8,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/andres20980/gitops-poc.git # ⚠️ VERIFY THIS URL
+    repoURL: https://github.com/andres20980/gitops-poc.git
     targetRevision: HEAD
     # Point to the Kustomize overlay for 'pre'.
     path: kustomize/apps/kustomiworld/overlays/pre

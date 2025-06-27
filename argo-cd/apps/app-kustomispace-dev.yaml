@@ -9,7 +9,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/andres20980/gitops-poc.git # ⚠️ VERIFY THIS URL
+    repoURL: https://github.com/andres20980/gitops-poc.git
     targetRevision: HEAD
     path: kustomize/apps/kustomispace/overlays/dev
   destination:

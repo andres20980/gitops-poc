@@ -1,9 +1,0 @@
-dependencies:
-- name: sun-chart
-  repository: file://../../components/sun-chart
-  version: 0.1.0
-- name: moon-chart
-  repository: file://../../components/moon-chart
-  version: 0.1.0
-digest: sha256:96808b844b7edb7e8d919e11f8a9973db5a100c3c5e555280aa913eba482e9f0
-generated: "2025-06-25T17:49:10.571011138+02:00"

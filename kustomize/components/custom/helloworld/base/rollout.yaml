@@ -19,8 +19,6 @@ spec:
           image: "nginxdemos/hello:plain-text" # O la imagen de GHCR si ya la estás usando aquí
           ports:
             - containerPort: 80
-      imagePullSecrets:
-      - name: ghcr-creds # <-- ¡CAMBIA A ESTE NOMBRE!
   strategy:
     canary:
       stableService: helloworld-service
