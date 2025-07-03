@@ -16,4 +16,4 @@ patches:
       value: "2025-07-03-10-00-00Z"
   target:
     kind: Rollout
-    name: helloworld
+    name: moon
