@@ -1,11 +1,9 @@
 # kustomize/apps/world/overlays/dev/kustomization.yaml v2.0.0
-# Updated the namespace to match the new application name.
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 bases:
   - ../../base
 
-# Updated the namespace from kustomiworld-dev to world-dev
 namespace: world-dev
 
 images:
@@ -15,7 +13,7 @@ patches:
 - patch: |-
     - op: add
       path: /spec/template/metadata/labels/rollout-timestamp
-      value: "2025-07-03T10:00:00Z"
+      value: "2025-07-03-10-00-00Z"
   target:
     kind: Rollout
     name: helloworld
