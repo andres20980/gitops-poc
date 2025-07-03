@@ -1,0 +1,33 @@
+# kustomize/apps/space/overlays/pre/kustomization.yaml v1.0.0
+# Kustomize overlay for the 'space' application in the PRE environment.
+# This overlay sets the namespace and increases the replica count for all components.
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+bases:
+  - ../../base
+
+namespace: space-pre
+
+patches:
+  - patch: |-
+      - op: replace
+        path: /spec/replicas
+        value: 2
+    target:
+      kind: Rollout
+      name: sun
+  - patch: |-
+      - op: replace
+        path: /spec/replicas
+        value: 2
+    target:
+      kind: Rollout
+      name: moon
+  - patch: |-
+      - op: replace
+        path: /spec/replicas
+        value: 2
+    target:
+      kind: Rollout
+      name: carbone
