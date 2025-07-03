@@ -15,7 +15,7 @@ patches:
 - patch: |-
     - op: add
       path: /spec/template/metadata/labels/rollout-timestamp
-      value: "2025-06-27T10-30-00Z"
+      value: "2025-07-03T10:00:00Z"
   target:
     kind: Rollout
     name: helloworld
