@@ -1,0 +1,26 @@
+# argo-cd/app-of-apps.yaml v1.0.0
+# This is the root "App of Apps" that discovers and manages all other applications.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  # The name for our root application, as we decided.
+  name: app-of-apps
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/andres20980/gitops-poc.git
+    targetRevision: HEAD
+    # This path points to the directory containing all your other application manifests.
+    path: argo-cd/apps
+  destination:
+    # This application itself lives in the 'argocd' namespace.
+    # The child applications will be deployed to their own respective namespaces.
+    server: https://kubernetes.default.svc
+    namespace: argocd
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
