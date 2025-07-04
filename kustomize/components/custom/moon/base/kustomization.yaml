@@ -5,4 +5,12 @@ kind: Kustomization
 resources:
   - rollout.yaml
   - service.yaml
-  - service-preview.yaml
+  - service-preview.yaml# kustomize/components/custom/moon/base/kustomization.yaml v3.0.0
+# This component is now generated from the local Helm chart.
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+helmCharts:
+- name: ../../../../helm-base
+  releaseName: moon
+  valuesFile: values.yaml

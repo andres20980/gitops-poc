@@ -1,0 +1,27 @@
+# kustomize/components/custom/helloworld/base/values.yaml v1.0.0
+# Values for the helloworld component.
+
+name: helloworld
+
+app:
+  registry: "ghcr.io/andres20980"
+  image: "helloworld-app:v1"
+  version: "1.0" # App version, not image tag
+
+service:
+  targetPort: 8080
+
+# Enable Argo Rollouts with Canary strategy
+rollout:
+  enabled: true
+  strategy: "Canary"
+
+# Specific config to wait for the carbone service dependency
+initContainer:
+  enabled: true
+  image: "busybox"
+  version: "1.28"
+  command:
+    - "sh"
+    - "-c"
+    - "until nc -z -v -w30 carbone-service 4000; do echo 'Waiting for carbone-service...'; sleep 2; done;"

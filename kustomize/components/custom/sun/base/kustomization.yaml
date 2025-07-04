@@ -1,8 +1,9 @@
-# kustomize/components/sun/base/kustomization.yaml v1.2.0
-# Kustomization for the sun component base.
+# kustomize/components/custom/sun/base/kustomization.yaml v3.0.0
+# This component is now generated from the local Helm chart.
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-resources:
-  - rollout.yaml
-  - service.yaml
-  - service-preview.yaml
+
+helmCharts:
+- name: ../../../../helm-base
+  releaseName: sun
+  valuesFile: values.yaml

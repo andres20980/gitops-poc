@@ -1,5 +1,6 @@
 # helm-base/templates/deployment.yaml v1.0.0
 # Template for the main Deployment resource.
+{{- if not .Values.rollout.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -258,3 +259,4 @@ spec:
                       - {{ .Values.nodeName }}
       {{- end }}
       enableServiceLinks: false
+{{- end }}

@@ -1,0 +1,14 @@
+# helm-base/templates/service-preview.yaml v1.0.0
+# Generates the preview service, only if the strategy is BlueGreen.
+{{- if and .Values.rollout.enabled (eq .Values.rollout.strategy "BlueGreen") }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.name }}-service-preview
+spec:
+  ports:
+    - port: 80
+      targetPort: {{ .Values.service.targetPort }}
+  selector:
+    app: {{ .Values.name }}
+{{- end }}

@@ -1,9 +1,9 @@
-# kustomize/components/third-party/carbone/base/kustomization.yaml v1.0.0
-# Kustomization for the carbone component base.
-# It includes the Rollout and the stable and canary services.
+# kustomize/components/third-party/carbone/base/kustomization.yaml v3.0.0
+# This component is now generated from the local Helm chart.
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-resources:
-  - rollout.yaml
-  - service.yaml
-  - service-canary.yaml
+
+helmCharts:
+- name: ../../../../helm-base
+  releaseName: carbone
+  valuesFile: values.yaml
