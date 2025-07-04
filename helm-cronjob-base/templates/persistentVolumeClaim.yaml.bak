@@ -1,0 +1,21 @@
+# persistentVolumeClaim.yaml v1.1.0
+{{- if .Values.persistence.enabled }}
+  {{ $additionalLabels := .Values.additionalLabels }}
+  {{- range .Values.persistence.storages }}
+    {{- $storageName := .name }}
+    {{- if .containers }}
+      {{- $containerStorageClass := .containers.storageClass | default "azureblob-fuse-premium" }}
+      {{- range .containers.items }}
+        {{- $item := dict "name" (print $.Values.jobName "-" $storageName "-" .name "-pvc") "storageSize" "100Gi" "volumeName" (print $.Values.jobName "-" $storageName "-" .name "-pv") "storageClassName" $containerStorageClass "additionalLabels" $additionalLabels }}
+        {{- template "cronjob.pvcTemplate" $item }}
+      {{- end }}
+    {{- end}}
+    {{- if .fileShares }}
+      {{- $fileShareStorageClass := .fileShares.storageClass | default "azurefile-csi" }}
+      {{- range .fileShares.items }}
+        {{- $item := dict "name" (print $.Values.jobName "-" $storageName "-" .name "-pvc") "storageSize" "5Gi" "volumeName" (print $.Values.jobName "-" $storageName "-" .name "-pv") "storageClassName" $fileShareStorageClass "additionalLabels" $additionalLabels }}
+        {{- template "cronjob.pvcTemplate" $item }}
+      {{- end }}
+    {{- end }}
+  {{- end }}
+{{- end }}

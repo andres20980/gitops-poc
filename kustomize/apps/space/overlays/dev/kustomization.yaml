@@ -2,22 +2,24 @@
 # Reverted to using patches for customization.
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-bases:
+resources:
   - ../../base
 namespace: space-dev
 patches:
-- target: { kind: Rollout, name: sun }
-  patch: |-
-    - op: replace
-      path: /spec/replicas
-      value: 1
-- target: { kind: Rollout, name: moon }
-  patch: |-
-    - op: replace
-      path: /spec/replicas
-      value: 1
-- target: { kind: Rollout, name: carbone }
-  patch: |-
-    - op: replace
-      path: /spec/replicas
-      value: 1
+  - target: {kind: Rollout, name: sun}
+    patch: |-
+      - op: replace
+        path: /spec/replicas
+        value: 1
+  - target: {kind: Rollout, name: moon}
+    patch: |-
+      - op: replace
+        path: /spec/replicas
+        value: 1
+  - target: {kind: Rollout, name: carbone}
+    patch: |-
+      - op: replace
+        path: /spec/replicas
+        value: 1
+commonLabels:
+  app: myapp

@@ -2,7 +2,6 @@ projectName: ''
 registry: amsdvpallacratlantis.azurecr.io
 image: ''
 version: ''
-
 # backoffLimit: 0 # Optional - if not present default is 0
 # concurrencyPolicy: Forbid # Optional - if not present default is "Forbid"
 imagePullSecrets: ''
@@ -10,33 +9,30 @@ imagePullPolicy: ''
 jobName: ''
 schedule: ''
 suspend: false
-
 # workloadIdentity: "false"
 # serviceAccountName: "default"
-
 securityContext: {}
 additionalLabels: {}
-
 command: '' # '["kubectl"]'
 args: '' #["exec", "deployment/{{ .Values.cronjobs.targetDeployment }}", "--", "/code/project/django-admin", "{{ .Values.cronjobs.jobCommand }}"{{- include "argsPassed" . }}]
-
 tolerations:
   enabled: false
   # key: enterprise
   # value: flw
-
 affinityNodeKey: '' # optional
 affinityNodeName: '' # optional
-
 resources:
   enabled: false
-
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 500m
+    memory: 256Mi
 persistence:
-  enabled: false 
-
+  enabled: false
 customScriptSupport:
   enabled: false
-
 app:
   configuration: {}
   # secretStoreKind: "" SecretStore or ClusterSecretStore. Default: SecretStore
@@ -46,8 +42,6 @@ app:
   additionalConfigurationRef: []
   volumeMounts: []
   mountFiles: []
-
-
 # sidecarContainer is only supported in Kubernetes 1.19+
 initContainer:
   enabled: false
@@ -58,8 +52,7 @@ initContainer:
   # secrets: {}
   # additionalConfigurationRef: {}
   # additionalSecretRef: {}
-
-
+replicaCount: 1
 # # # TEST VALUES
 # projectName: my-project
 # jobName: my-job
@@ -74,15 +67,13 @@ initContainer:
 #   - /bin/sh
 #   - -c
 #   - echo "Hello, World!"
-
 # securityContext:
 #   runAsUser: 10000 # "tools" user inside msw-esl-bash-interface
 #   runAsGroup: 10001
-
 # additionalLabels:
 #   easilys_instance: "1041180067992173623"
 #   job_type: bash-interface
-  
+
 # imagePullPolicy: IfNotPresent
 # workloadIdentity: false
 
@@ -91,10 +82,8 @@ initContainer:
 #   key: "key1"
 #   value: "value1"
 
-
 # affinityNodeKey: "key2"
 # affinityNodeName: "value2"
-
 
 # initContainer:
 #   enabled: true
@@ -160,6 +149,5 @@ initContainer:
 #         items:
 #           - name: share1
 #             mountPath: /data/share1
-
 
 # secretStoreRef: my-secret-store

@@ -4,3 +4,6 @@ kind: Kustomization
 resources:
   - rollout.yaml
   - service.yaml
+namespace: default
+commonLabels:
+  app: myapp

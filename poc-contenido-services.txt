@@ -1,0 +1,252 @@
+############################################################
+# Contenido del directorio: services
+############################################################
+[1;34md[33mr[31mw[32mx[0m[33mr[1;90m-[0m[32mx[33mr[1;90m-[0m[32mx[0m [1;90m-[0m [1;33masanchez[0m [34m27 Jun 13:21[0m [1;90m--[0m [1;34mcarbone-ee-docker[0m
+[1;34md[33mr[31mw[32mx[0m[33mr[1;90m-[0m[32mx[33mr[1;90m-[0m[32mx[0m [1;90m-[0m [1;33masanchez[0m [34m27 Jun 13:23[0m [1;90m--[0m [1;34mhelloworld-app[0m
+
+services/carbone-ee-docker:
+[1;34md[33mr[31mw[32mx[0m[33mr[1;90m-[0m[32mx[33mr[1;90m-[0m[32mx[0m    [1;90m-[0m [1;33masanchez[0m [34m 4 Jul 13:57[0m [1;90m--[0m [1;34m.git[0m
+[1;34md[33mr[31mw[32mx[0m[33mr[1;90m-[0m[32mx[33mr[1;90m-[0m[32mx[0m    [1;90m-[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m [1;34m.github[0m
+[1;34md[33mr[31mw[32mx[0m[33mr[1;90m-[0m[32mx[33mr[1;90m-[0m[32mx[0m    [1;90m-[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m [1;34mdeployement[0m
+[1;34md[33mr[31mw[32mx[0m[33mr[1;90m-[0m[32mx[33mr[1;90m-[0m[32mx[0m    [1;90m-[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m [1;34mfonts[0m
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m    [32m8[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m .dockerignore
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m  [32m821[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m BUILD.md
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m  [32m857[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m docker-entrypoint.sh
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m2.2k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m [1;4;33mDockerfile[0m
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m2.2k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m Dockerfile-fonts
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m1.6k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m Dockerfile-slim
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m5.5k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m documentation.md
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m5.1k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m [1;4;33mREADME.md[0m
+
+services/carbone-ee-docker/.git:
+[1;34md[33mr[31mw[32mx[0m[33mr[1;90m-[0m[32mx[33mr[1;90m-[0m[32mx[0m   [1;90m-[0m [1;33masanchez[0m [34m26 Jun 20:14[0m [1;90m--[0m [1;34mbranches[0m
+[1;34md[33mr[31mw[32mx[0m[33mr[1;90m-[0m[32mx[33mr[1;90m-[0m[32mx[0m   [1;90m-[0m [1;33masanchez[0m [34m26 Jun 20:14[0m [1;90m--[0m [1;34mhooks[0m
+[1;34md[33mr[31mw[32mx[0m[33mr[1;90m-[0m[32mx[33mr[1;90m-[0m[32mx[0m   [1;90m-[0m [1;33masanchez[0m [34m26 Jun 20:14[0m [1;90m--[0m [1;34minfo[0m
+[1;34md[33mr[31mw[32mx[0m[33mr[1;90m-[0m[32mx[33mr[1;90m-[0m[32mx[0m   [1;90m-[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m [1;34mlogs[0m
+[1;34md[33mr[31mw[32mx[0m[33mr[1;90m-[0m[32mx[33mr[1;90m-[0m[32mx[0m   [1;90m-[0m [1;33masanchez[0m [34m26 Jun 20:14[0m [1;90m--[0m [1;34mobjects[0m
+[1;34md[33mr[31mw[32mx[0m[33mr[1;90m-[0m[32mx[33mr[1;90m-[0m[32mx[0m   [1;90m-[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m [1;34mrefs[0m
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [32m275[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m config
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m  [32m73[0m [1;33masanchez[0m [34m26 Jun 20:14[0m [1;90m--[0m description
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m  [32m23[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m HEAD
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m13k[0m [1;33masanchez[0m [34m26 Jun 20:17[0m [1;90m--[0m index
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [32m406[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m packed-refs
+
+services/carbone-ee-docker/.git/branches:
+
+services/carbone-ee-docker/.git/hooks:
+.[1;33mr[31mw[4;32mx[0m[33mr[1;90m-[0m[32mx[33mr[1;90m-[0m[32mx[0m  [32m478[0m [1;33masanchez[0m [34m26 Jun 20:14[0m [1;90m--[0m [1;32mapplypatch-msg.sample[0m
+.[1;33mr[31mw[4;32mx[0m[33mr[1;90m-[0m[32mx[33mr[1;90m-[0m[32mx[0m  [32m896[0m [1;33masanchez[0m [34m26 Jun 20:14[0m [1;90m--[0m [1;32mcommit-msg.sample[0m
+.[1;33mr[31mw[4;32mx[0m[33mr[1;90m-[0m[32mx[33mr[1;90m-[0m[32mx[0m [1;32m4.7k[0m [1;33masanchez[0m [34m26 Jun 20:14[0m [1;90m--[0m [1;32mfsmonitor-watchman.sample[0m
+.[1;33mr[31mw[4;32mx[0m[33mr[1;90m-[0m[32mx[33mr[1;90m-[0m[32mx[0m  [32m189[0m [1;33masanchez[0m [34m26 Jun 20:14[0m [1;90m--[0m [1;32mpost-update.sample[0m
+.[1;33mr[31mw[4;32mx[0m[33mr[1;90m-[0m[32mx[33mr[1;90m-[0m[32mx[0m  [32m424[0m [1;33masanchez[0m [34m26 Jun 20:14[0m [1;90m--[0m [1;32mpre-applypatch.sample[0m
+.[1;33mr[31mw[4;32mx[0m[33mr[1;90m-[0m[32mx[33mr[1;90m-[0m[32mx[0m [1;32m1.6k[0m [1;33masanchez[0m [34m26 Jun 20:14[0m [1;90m--[0m [1;32mpre-commit.sample[0m
+.[1;33mr[31mw[4;32mx[0m[33mr[1;90m-[0m[32mx[33mr[1;90m-[0m[32mx[0m  [32m416[0m [1;33masanchez[0m [34m26 Jun 20:14[0m [1;90m--[0m [1;32mpre-merge-commit.sample[0m
+.[1;33mr[31mw[4;32mx[0m[33mr[1;90m-[0m[32mx[33mr[1;90m-[0m[32mx[0m [1;32m1.4k[0m [1;33masanchez[0m [34m26 Jun 20:14[0m [1;90m--[0m [1;32mpre-push.sample[0m
+.[1;33mr[31mw[4;32mx[0m[33mr[1;90m-[0m[32mx[33mr[1;90m-[0m[32mx[0m [1;32m4.9k[0m [1;33masanchez[0m [34m26 Jun 20:14[0m [1;90m--[0m [1;32mpre-rebase.sample[0m
+.[1;33mr[31mw[4;32mx[0m[33mr[1;90m-[0m[32mx[33mr[1;90m-[0m[32mx[0m  [32m544[0m [1;33masanchez[0m [34m26 Jun 20:14[0m [1;90m--[0m [1;32mpre-receive.sample[0m
+.[1;33mr[31mw[4;32mx[0m[33mr[1;90m-[0m[32mx[33mr[1;90m-[0m[32mx[0m [1;32m1.5k[0m [1;33masanchez[0m [34m26 Jun 20:14[0m [1;90m--[0m [1;32mprepare-commit-msg.sample[0m
+.[1;33mr[31mw[4;32mx[0m[33mr[1;90m-[0m[32mx[33mr[1;90m-[0m[32mx[0m [1;32m2.8k[0m [1;33masanchez[0m [34m26 Jun 20:14[0m [1;90m--[0m [1;32mpush-to-checkout.sample[0m
+.[1;33mr[31mw[4;32mx[0m[33mr[1;90m-[0m[32mx[33mr[1;90m-[0m[32mx[0m [1;32m2.3k[0m [1;33masanchez[0m [34m26 Jun 20:14[0m [1;90m--[0m [1;32msendemail-validate.sample[0m
+.[1;33mr[31mw[4;32mx[0m[33mr[1;90m-[0m[32mx[33mr[1;90m-[0m[32mx[0m [1;32m3.6k[0m [1;33masanchez[0m [34m26 Jun 20:14[0m [1;90m--[0m [1;32mupdate.sample[0m
+
+services/carbone-ee-docker/.git/info:
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [32m240[0m [1;33masanchez[0m [34m26 Jun 20:14[0m [1;90m--[0m exclude
+
+services/carbone-ee-docker/.git/logs:
+[1;34md[33mr[31mw[32mx[0m[33mr[1;90m-[0m[32mx[33mr[1;90m-[0m[32mx[0m   [1;90m-[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m [1;34mrefs[0m
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [32m202[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m HEAD
+
+services/carbone-ee-docker/.git/logs/refs:
+[1;34md[33mr[31mw[32mx[0m[33mr[1;90m-[0m[32mx[33mr[1;90m-[0m[32mx[0m [1;90m-[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m [1;34mheads[0m
+[1;34md[33mr[31mw[32mx[0m[33mr[1;90m-[0m[32mx[33mr[1;90m-[0m[32mx[0m [1;90m-[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m [1;34mremotes[0m
+
+services/carbone-ee-docker/.git/logs/refs/heads:
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [32m202[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m master
+
+services/carbone-ee-docker/.git/logs/refs/remotes:
+[1;34md[33mr[31mw[32mx[0m[33mr[1;90m-[0m[32mx[33mr[1;90m-[0m[32mx[0m [1;90m-[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m [1;34morigin[0m
+
+services/carbone-ee-docker/.git/logs/refs/remotes/origin:
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [32m202[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m HEAD
+
+services/carbone-ee-docker/.git/objects:
+[1;34md[33mr[31mw[32mx[0m[33mr[1;90m-[0m[32mx[33mr[1;90m-[0m[32mx[0m [1;90m-[0m [1;33masanchez[0m [34m26 Jun 20:14[0m [1;90m--[0m [1;34minfo[0m
+[1;34md[33mr[31mw[32mx[0m[33mr[1;90m-[0m[32mx[33mr[1;90m-[0m[32mx[0m [1;90m-[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m [1;34mpack[0m
+
+services/carbone-ee-docker/.git/objects/info:
+
+services/carbone-ee-docker/.git/objects/pack:
+.[1;33mr[90m--[0m[33mr[1;90m--[0m[33mr[1;90m--[0m  [1;32m10k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m pack-61e978d6c7d6128926cdc996da601a0b20645964.idx
+.[1;33mr[90m--[0m[33mr[1;90m--[0m[33mr[1;90m--[0m  [33m25M[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m pack-61e978d6c7d6128926cdc996da601a0b20645964.pack
+.[1;33mr[90m--[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m1.4k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m pack-61e978d6c7d6128926cdc996da601a0b20645964.rev
+
+services/carbone-ee-docker/.git/refs:
+[1;34md[33mr[31mw[32mx[0m[33mr[1;90m-[0m[32mx[33mr[1;90m-[0m[32mx[0m [1;90m-[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m [1;34mheads[0m
+[1;34md[33mr[31mw[32mx[0m[33mr[1;90m-[0m[32mx[33mr[1;90m-[0m[32mx[0m [1;90m-[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m [1;34mremotes[0m
+[1;34md[33mr[31mw[32mx[0m[33mr[1;90m-[0m[32mx[33mr[1;90m-[0m[32mx[0m [1;90m-[0m [1;33masanchez[0m [34m26 Jun 20:14[0m [1;90m--[0m [1;34mtags[0m
+
+services/carbone-ee-docker/.git/refs/heads:
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [32m41[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m master
+
+services/carbone-ee-docker/.git/refs/remotes:
+[1;34md[33mr[31mw[32mx[0m[33mr[1;90m-[0m[32mx[33mr[1;90m-[0m[32mx[0m [1;90m-[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m [1;34morigin[0m
+
+services/carbone-ee-docker/.git/refs/remotes/origin:
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [32m32[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m HEAD
+
+services/carbone-ee-docker/.git/refs/tags:
+
+services/carbone-ee-docker/.github:
+[1;34md[33mr[31mw[32mx[0m[33mr[1;90m-[0m[32mx[33mr[1;90m-[0m[32mx[0m [1;90m-[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m [1;34mworkflows[0m
+
+services/carbone-ee-docker/.github/workflows:
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m3.5k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m publish.yml
+
+services/carbone-ee-docker/deployement:
+[1;34md[33mr[31mw[32mx[0m[33mr[1;90m-[0m[32mx[33mr[1;90m-[0m[32mx[0m [1;90m-[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m [1;34maws-ecs[0m
+[1;34md[33mr[31mw[32mx[0m[33mr[1;90m-[0m[32mx[33mr[1;90m-[0m[32mx[0m [1;90m-[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m [1;34mazure-container-apps[0m
+[1;34md[33mr[31mw[32mx[0m[33mr[1;90m-[0m[32mx[33mr[1;90m-[0m[32mx[0m [1;90m-[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m [1;34mdocker-compose[0m
+
+services/carbone-ee-docker/deployement/aws-ecs:
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m14k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m ecs.tf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [32m123[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m [1;4;33mREADME.md[0m
+
+services/carbone-ee-docker/deployement/azure-container-apps:
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m4.2k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m azure.tf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m  [32m203[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m [1;4;33mReadme.md[0m
+
+services/carbone-ee-docker/deployement/docker-compose:
+[1;34md[33mr[31mw[32mx[0m[33mr[1;90m-[0m[32mx[33mr[1;90m-[0m[32mx[0m [1;90m-[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m [1;34mmultiInstance[0m
+[1;34md[33mr[31mw[32mx[0m[33mr[1;90m-[0m[32mx[33mr[1;90m-[0m[32mx[0m [1;90m-[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m [1;34msimple[0m
+
+services/carbone-ee-docker/deployement/docker-compose/multiInstance:
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [32m760[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m docker-compose.yml
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [32m250[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m nginx.conf
+
+services/carbone-ee-docker/deployement/docker-compose/simple:
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [32m357[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m docker-compose.yml
+
+services/carbone-ee-docker/fonts:
+[1;34md[33mr[31mw[32mx[0m[33mr[1;90m-[0m[32mx[33mr[1;90m-[0m[32mx[0m [1;90m-[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m [1;34maptos-fonts[0m
+[1;34md[33mr[31mw[32mx[0m[33mr[1;90m-[0m[32mx[33mr[1;90m-[0m[32mx[0m [1;90m-[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m [1;34mmsttcorefonts[0m
+[1;34md[33mr[31mw[32mx[0m[33mr[1;90m-[0m[32mx[33mr[1;90m-[0m[32mx[0m [1;90m-[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m [1;34mppviewer[0m
+
+services/carbone-ee-docker/fonts/aptos-fonts:
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m230k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m Aptos-Black-Italic.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m221k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m Aptos-Black.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m229k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m Aptos-Bold-Italic.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m221k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m Aptos-Bold.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m229k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m Aptos-Display-Bold-Italic.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m222k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m Aptos-Display-Bold.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m228k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m Aptos-Display-Italic.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m221k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m Aptos-Display.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m229k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m Aptos-ExtraBold-Italic.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m222k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m Aptos-ExtraBold.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m228k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m Aptos-Italic.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m227k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m Aptos-Light-Italic.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m219k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m Aptos-Light.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m103k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m Aptos-Mono-Bold-Italic.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m  [1;32m99k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m Aptos-Mono-Bold.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m102k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m Aptos-Mono-Italic.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m  [1;32m98k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m Aptos-Mono.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m250k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m Aptos-Narrow-Bold-Italic.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m238k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m Aptos-Narrow-Bold.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m249k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m Aptos-Narrow-Italic.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m239k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m Aptos-Narrow.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m228k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m Aptos-SemiBold-Italic.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m221k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m Aptos-SemiBold.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m223k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m Aptos-Serif-Bold-Italic.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m203k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m Aptos-Serif-Bold.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m223k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m Aptos-Serif-Italic.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m202k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m Aptos-Serif.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m221k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m Aptos.ttf
+
+services/carbone-ee-docker/fonts/msttcorefonts:
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m105k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m Andale_Mono.ttf
+[1;36ml[33mr[31mw[32mx[0m[33mr[31mw[32mx[33mr[31mw[32mx[0m    [1;90m-[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m [1;36mandalemo.ttf[0m [1;90m->[0m Andale_Mono.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m276k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m arial.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m117k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m Arial_Black.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m287k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m Arial_Bold.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m225k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m Arial_Bold_Italic.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m206k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m Arial_Italic.ttf
+[1;36ml[33mr[31mw[32mx[0m[33mr[31mw[32mx[33mr[31mw[32mx[0m    [1;90m-[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m [1;36marialbd.ttf[0m [1;90m->[0m Arial_Bold.ttf
+[1;36ml[33mr[31mw[32mx[0m[33mr[31mw[32mx[33mr[31mw[32mx[0m    [1;90m-[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m [1;36marialbi.ttf[0m [1;90m->[0m Arial_Bold_Italic.ttf
+[1;36ml[33mr[31mw[32mx[0m[33mr[31mw[32mx[33mr[31mw[32mx[0m    [1;90m-[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m [1;36mariali.ttf[0m [1;90m->[0m Arial_Italic.ttf
+[1;36ml[33mr[31mw[32mx[0m[33mr[31mw[32mx[33mr[31mw[32mx[0m    [1;90m-[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m [1;36mariblk.ttf[0m [1;90m->[0m Arial_Black.ttf
+[1;36ml[33mr[31mw[32mx[0m[33mr[31mw[32mx[33mr[31mw[32mx[0m    [1;90m-[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m [1;36mcomic.ttf[0m [1;90m->[0m Comic_Sans_MS.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m126k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m Comic_Sans_MS.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m111k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m Comic_Sans_MS_Bold.ttf
+[1;36ml[33mr[31mw[32mx[0m[33mr[31mw[32mx[33mr[31mw[32mx[0m    [1;90m-[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m [1;36mcomicbd.ttf[0m [1;90m->[0m Comic_Sans_MS_Bold.ttf
+[1;36ml[33mr[31mw[32mx[0m[33mr[31mw[32mx[33mr[31mw[32mx[0m    [1;90m-[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m [1;36mcour.ttf[0m [1;90m->[0m Courier_New.ttf
+[1;36ml[33mr[31mw[32mx[0m[33mr[31mw[32mx[33mr[31mw[32mx[0m    [1;90m-[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m [1;36mcourbd.ttf[0m [1;90m->[0m Courier_New_Bold.ttf
+[1;36ml[33mr[31mw[32mx[0m[33mr[31mw[32mx[33mr[31mw[32mx[0m    [1;90m-[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m [1;36mcourbi.ttf[0m [1;90m->[0m Courier_New_Bold_Italic.ttf
+[1;36ml[33mr[31mw[32mx[0m[33mr[31mw[32mx[33mr[31mw[32mx[0m    [1;90m-[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m [1;36mcouri.ttf[0m [1;90m->[0m Courier_New_Italic.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m303k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m Courier_New.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m312k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m Courier_New_Bold.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m235k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m Courier_New_Bold_Italic.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m244k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m Courier_New_Italic.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m143k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m georgia.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m140k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m Georgia_Bold.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m159k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m Georgia_Bold_Italic.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m157k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m Georgia_Italic.ttf
+[1;36ml[33mr[31mw[32mx[0m[33mr[31mw[32mx[33mr[31mw[32mx[0m    [1;90m-[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m [1;36mgeorgiab.ttf[0m [1;90m->[0m Georgia_Bold.ttf
+[1;36ml[33mr[31mw[32mx[0m[33mr[31mw[32mx[33mr[31mw[32mx[0m    [1;90m-[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m [1;36mgeorgiai.ttf[0m [1;90m->[0m Georgia_Italic.ttf
+[1;36ml[33mr[31mw[32mx[0m[33mr[31mw[32mx[33mr[31mw[32mx[0m    [1;90m-[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m [1;36mgeorgiaz.ttf[0m [1;90m->[0m Georgia_Bold_Italic.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m136k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m impact.ttf
+[1;36ml[33mr[31mw[32mx[0m[33mr[31mw[32mx[33mr[31mw[32mx[0m    [1;90m-[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m [1;36mtimes.ttf[0m [1;90m->[0m Times_New_Roman.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m330k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m Times_New_Roman.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m334k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m Times_New_Roman_Bold.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m239k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m Times_New_Roman_Bold_Italic.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m247k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m Times_New_Roman_Italic.ttf
+[1;36ml[33mr[31mw[32mx[0m[33mr[31mw[32mx[33mr[31mw[32mx[0m    [1;90m-[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m [1;36mtimesbd.ttf[0m [1;90m->[0m Times_New_Roman_Bold.ttf
+[1;36ml[33mr[31mw[32mx[0m[33mr[31mw[32mx[33mr[31mw[32mx[0m    [1;90m-[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m [1;36mtimesbi.ttf[0m [1;90m->[0m Times_New_Roman_Bold_Italic.ttf
+[1;36ml[33mr[31mw[32mx[0m[33mr[31mw[32mx[33mr[31mw[32mx[0m    [1;90m-[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m [1;36mtimesi.ttf[0m [1;90m->[0m Times_New_Roman_Italic.ttf
+[1;36ml[33mr[31mw[32mx[0m[33mr[31mw[32mx[33mr[31mw[32mx[0m    [1;90m-[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m [1;36mtrebuc.ttf[0m [1;90m->[0m Trebuchet_MS.ttf
+[1;36ml[33mr[31mw[32mx[0m[33mr[31mw[32mx[33mr[31mw[32mx[0m    [1;90m-[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m [1;36mtrebucbd.ttf[0m [1;90m->[0m Trebuchet_MS_Bold.ttf
+[1;36ml[33mr[31mw[32mx[0m[33mr[31mw[32mx[33mr[31mw[32mx[0m    [1;90m-[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m [1;36mtrebucbi.ttf[0m [1;90m->[0m Trebuchet_MS_Bold_Italic.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m127k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m Trebuchet_MS.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m124k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m Trebuchet_MS_Bold.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m131k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m Trebuchet_MS_Bold_Italic.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m139k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m Trebuchet_MS_Italic.ttf
+[1;36ml[33mr[31mw[32mx[0m[33mr[31mw[32mx[33mr[31mw[32mx[0m    [1;90m-[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m [1;36mtrebucit.ttf[0m [1;90m->[0m Trebuchet_MS_Italic.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m140k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m verdana.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m136k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m Verdana_Bold.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m153k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m Verdana_Bold_Italic.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m154k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m Verdana_Italic.ttf
+[1;36ml[33mr[31mw[32mx[0m[33mr[31mw[32mx[33mr[31mw[32mx[0m    [1;90m-[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m [1;36mverdanab.ttf[0m [1;90m->[0m Verdana_Bold.ttf
+[1;36ml[33mr[31mw[32mx[0m[33mr[31mw[32mx[33mr[31mw[32mx[0m    [1;90m-[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m [1;36mverdanai.ttf[0m [1;90m->[0m Verdana_Italic.ttf
+[1;36ml[33mr[31mw[32mx[0m[33mr[31mw[32mx[33mr[31mw[32mx[0m    [1;90m-[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m [1;36mverdanaz.ttf[0m [1;90m->[0m Verdana_Bold_Italic.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m119k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m webdings.ttf
+
+services/carbone-ee-docker/fonts/ppviewer:
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m811k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m calibri.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m849k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m calibrib.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m853k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m calibrii.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m900k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m calibriz.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [33m1.6M[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m cambria.ttc
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m792k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m cambriab.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m827k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m cambriai.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m806k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m cambriaz.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m219k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m candara.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m227k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m candarab.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m227k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m candarai.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m228k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m candaraz.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m358k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m consola.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m369k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m consolab.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m365k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m consolai.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m375k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m consolaz.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m449k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m constan.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m451k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m constanb.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m448k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m constani.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m455k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m constanz.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m261k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m corbel.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m274k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m corbelb.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m269k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m corbeli.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m279k[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m corbelz.ttf
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [33m9.5M[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m meiryo.ttc
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [33m9.7M[0m [1;33masanchez[0m [34m26 Jun 20:15[0m [1;90m--[0m meiryob.ttc
+
+services/helloworld-app:
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m1.1k[0m [1;33masanchez[0m [34m27 Jun 13:21[0m [1;90m--[0m [1;33mapp.py[0m
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m  [32m749[0m [1;33masanchez[0m [34m27 Jun 13:22[0m [1;90m--[0m [1;4;33mDockerfile[0m
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m  [32m119[0m [1;33masanchez[0m [34m27 Jun 13:23[0m [1;90m--[0m requirements.txt

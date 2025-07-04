@@ -1,0 +1,133 @@
+# helm-base/templates/config-map.yaml v1.0.0
+# Template for ConfigMap resources.
+{{- $appName := .Values.name }}
+
+{{- if or .Values.app.configuration .Values.global }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app.kubernetes.io/name: {{ include "helm-base.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+  name: {{ $appName }}-app-config
+  labels:
+    app: {{ $appName }}
+data:
+{{- if .Values.app.configuration }}
+{{- with .Values.app.configuration }}
+{{- range $key, $value := . }}
+  {{ $key }}: {{ $value | quote }}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- if .Values.global.configuration }}
+{{- range $key, $value := .Values.global.configuration }}
+  {{- if kindIs "string" $value }}
+  {{ $key }}: {{ $value | quote }}
+  {{- else }}
+  {{ $key }}: |
+{{ $value | indent 2 }}
+  {{- end }}
+{{- end }}
+{{- end }}
+{{- end }}
+
+{{- if .Values.app.mountFiles }}
+{{range $file := .Values.app.mountFiles }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app.kubernetes.io/name: {{ include "helm-base.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+  name: {{ $appName }}-app-{{ $file.name }}-config
+  labels:
+    app: {{ $appName }}
+data:
+  {{ $file.name }}: |
+{{ $file.data | indent 4 }}
+{{- end }}
+{{- end }}
+
+{{- range $containerName, $containerSpecs := .Values.additionalContainers }}
+{{- if $containerSpecs.configuration }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app.kubernetes.io/name: {{ include "helm-base.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+  name: {{ $appName }}-{{ $containerName }}-config
+  labels:
+    app: {{ $appName }}
+data:
+{{- with $containerSpecs.configuration }}
+{{- range $key, $value := . }}
+  {{ $key }}: {{ $value | quote }}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- if $containerSpecs.mountFiles }}
+{{range $file := $containerSpecs.mountFiles }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app.kubernetes.io/name: {{ include "helm-base.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+  name: {{ $appName }}-{{ $containerName }}-{{ $file.name }}-config
+  labels:
+    app: {{ $appName }}
+data:
+  {{ $file.name }}: |
+{{ $file.data | indent 4 }}
+{{- end }}
+{{- end }}
+{{- end }}
+
+{{- if and .Values.initContainer.enabled .Values.initContainer.configuration }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app.kubernetes.io/name: {{ include "helm-base.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+  name: {{ $appName }}-init-config
+  labels:
+    app: {{ $appName }}
+data:
+{{- with .Values.initContainer.configuration }}
+{{- range $key, $value := . }}
+  {{ $key }}: {{ $value | quote }}
+{{- end }}
+{{- end }}
+{{- end }}
+
+{{- if and .Values.initContainer.enabled .Values.initContainer.mountFiles }}
+{{range $file := .Values.initContainer.mountFiles }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app.kubernetes.io/name: {{ include "helm-base.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+  name: {{ $appName }}-init-{{ $file.name }}-config
+  labels:
+    app: {{ $appName }}
+data:
+  {{ $file.name }}: |
+{{ $file.data | indent 4 }}
+{{- end }}
+{{- end }}

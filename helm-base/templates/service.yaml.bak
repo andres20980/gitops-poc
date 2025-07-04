@@ -1,0 +1,19 @@
+# helm-base/templates/service.yaml v1.0.0
+# Template for the main Service resource.
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.kubernetes.io/name: {{ include "helm-base.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+  name: {{ .Values.name }}
+  labels:
+    meta.helm.sh/release-name: {{ .Values.name }}
+spec:
+  ports:
+    - port: 80
+      targetPort: {{ .Values.service.targetPort }}
+      protocol: TCP
+  selector:
+    app: {{ .Values.name }}

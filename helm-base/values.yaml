@@ -1,3 +1,11 @@
-# helm-base/values.yaml v1.0.0
-# Default values for the base chart.
-# These will be overridden by the values files in each Kustomize component.
+replicaCount: 1
+image:
+  repository: myrepo/image
+  tag: latest
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 500m
+    memory: 256Mi

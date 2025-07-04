@@ -3,6 +3,10 @@
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
+  labels:
+    app.kubernetes.io/name: {{ include "helm-base.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
   name: {{ .Values.name }}
   labels:
     meta.helm.sh/release-name: {{ .Values.name }}

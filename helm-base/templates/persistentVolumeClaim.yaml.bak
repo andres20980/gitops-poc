@@ -1,0 +1,21 @@
+# helm-base/templates/persistentVolumeClaim.yaml v1.1.0
+# Updated to use the new "app." prefixed helper.
+{{- if .Values.persistence.enabled }}
+  {{- range .Values.persistence.storages }}
+    {{- $storageName := .name }}
+    {{- if .containers }}
+      {{- $containerStorageClass := .containers.storageClass | default "azureblob-fuse-premium" }}
+      {{- range .containers.items }}
+        {{- $item := dict "resourceName" (print $.Values.name "-" $storageName "-" .name "-pvc") "storageSize" "100Gi" "volumeResourceName" (print $.Values.name "-" $storageName "-" .name "-pv") "storageClassName" $containerStorageClass }}
+        {{- template "app.pvcTemplate" $item }}
+      {{- end }}
+    {{- end}}
+    {{- if .fileShares }}
+      {{- $fileShareStorageClass := .fileShares.storageClass | default "azurefile-csi" }}
+      {{- range .fileShares.items }}
+        {{- $item := dict "resourceName" (print $.Values.name "-" $storageName "-" .name "-pvc") "storageSize" "5Gi" "volumeResourceName" (print $.Values.name "-" $storageName "-" .name "-pv") "storageClassName" $fileShareStorageClass }}
+        {{- template "app.pvcTemplate" $item }}
+      {{- end }}
+    {{- end }}
+  {{- end }}
+{{- end }}
