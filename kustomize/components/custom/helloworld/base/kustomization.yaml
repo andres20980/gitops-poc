@@ -1,9 +1,6 @@
-# kustomize/components/custom/helloworld/base/kustomization.yaml v3.0.0
-# This component is now generated from the local Helm chart.
+# kustomize/components/custom/helloworld/base/kustomization.yaml v2.0.0
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-
-helmCharts:
-- name: ../../../../helm-base
-  releaseName: helloworld
-  valuesFile: values.yaml
+resources:
+  - rollout.yaml
+  - service.yaml
