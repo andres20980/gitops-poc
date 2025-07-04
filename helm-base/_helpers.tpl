@@ -1,8 +1,12 @@
-{{/* helm-base/templates/_helpers.tpl v1.0.0 */}}
 {{/*
-Reusable template for creating PersistentVolumes.
+# helm-base/templates/_helpers.tpl v1.1.0
+# Added "app." prefix to all template definitions for consistency and to avoid name collisions.
 */}}
-{{- define "pvTemplate" -}}
+
+{{/*
+Template to generate a PersistentVolume resource.
+*/}}
+{{- define "app.pvTemplate" -}}
 ---
 apiVersion: v1
 kind: PersistentVolume
@@ -37,9 +41,9 @@ spec:
 {{- end -}}
 
 {{/*
-Reusable template for creating PersistentVolumeClaims.
+Template to generate a PersistentVolumeClaim resource.
 */}}
-{{- define "pvcTemplate" -}}
+{{- define "app.pvcTemplate" -}}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -56,14 +60,13 @@ spec:
 {{- end -}}
 
 {{/*
-Reusable template for creating ExternalSecrets.
+Template to generate an ExternalSecret resource.
 */}}
-{{- define "externalSecretTemplate" -}}
+{{- define "app.externalSecretTemplate" -}}
 {{- $appName := .appName -}}
 {{- $externalsecretName := .externalsecretName -}}
 {{- $secretName := .secretName -}}
 {{- $releaseNamespace := .releaseNamespace -}}
-{{- $secretStoreKind := .secretStoreKind -}}
 {{- $configSection := .configSection -}}
 
 {{- with $configSection -}}
@@ -88,6 +91,6 @@ spec:
       remoteRef:
         key: {{ $value }}
     {{- end }}
-{{- end -}}
-{{- end -}}
+{{- end }}
+{{- end }}
 {{- end -}}

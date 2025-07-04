@@ -1,0 +1,165 @@
+projectName: ''
+registry: amsdvpallacratlantis.azurecr.io
+image: ''
+version: ''
+
+# backoffLimit: 0 # Optional - if not present default is 0
+# concurrencyPolicy: Forbid # Optional - if not present default is "Forbid"
+imagePullSecrets: ''
+imagePullPolicy: ''
+jobName: ''
+schedule: ''
+suspend: false
+
+# workloadIdentity: "false"
+# serviceAccountName: "default"
+
+securityContext: {}
+additionalLabels: {}
+
+command: '' # '["kubectl"]'
+args: '' #["exec", "deployment/{{ .Values.cronjobs.targetDeployment }}", "--", "/code/project/django-admin", "{{ .Values.cronjobs.jobCommand }}"{{- include "argsPassed" . }}]
+
+tolerations:
+  enabled: false
+  # key: enterprise
+  # value: flw
+
+affinityNodeKey: '' # optional
+affinityNodeName: '' # optional
+
+resources:
+  enabled: false
+
+persistence:
+  enabled: false 
+
+customScriptSupport:
+  enabled: false
+
+app:
+  configuration: {}
+  # secretStoreKind: "" SecretStore or ClusterSecretStore. Default: SecretStore
+  # secretStoreRef: "" Name of the SecretStore to us if it it doesn't use the project one. Default: It uses the enterprise one.
+  secrets: {}
+  additionalSecretRef: []
+  additionalConfigurationRef: []
+  volumeMounts: []
+  mountFiles: []
+
+
+# sidecarContainer is only supported in Kubernetes 1.19+
+initContainer:
+  enabled: false
+  # registry: amsdvpallacratlantis.azurecr.io
+  # image: ''
+  # version: ''
+  # configuration: {}
+  # secrets: {}
+  # additionalConfigurationRef: {}
+  # additionalSecretRef: {}
+
+
+# # # TEST VALUES
+# projectName: my-project
+# jobName: my-job
+# schedule: "0 0 * * *"
+# suspend: false
+# backoffLimit: 2
+# imagePullSecrets: my-secret
+# registry: my-registry
+# image: my-image
+# version: "1.0.0"
+# command:
+#   - /bin/sh
+#   - -c
+#   - echo "Hello, World!"
+
+# securityContext:
+#   runAsUser: 10000 # "tools" user inside msw-esl-bash-interface
+#   runAsGroup: 10001
+
+# additionalLabels:
+#   easilys_instance: "1041180067992173623"
+#   job_type: bash-interface
+  
+# imagePullPolicy: IfNotPresent
+# workloadIdentity: false
+
+# tolerations:
+#   enabled: true
+#   key: "key1"
+#   value: "value1"
+
+
+# affinityNodeKey: "key2"
+# affinityNodeName: "value2"
+
+
+# initContainer:
+#   enabled: true
+#   image: my-init-container
+#   version: "1.0.0"
+#   additionalConfigurationRef: 
+#     - configMapRef:
+#         name: other-init-configmap-ref
+#   configuration:
+#     INIT_CONFIG_VAR: "value"
+#     INIT_CONFIG_VAR2: "2438959237905"
+#   secrets:
+#     INIT_SECRET_KEY: "secret-key"
+#   additionalSecretRef: 
+#     - secretRef:
+#         name: other-init-secret-ref
+
+# app:
+#   additionalConfigurationRef: 
+#     - configMapRef:
+#         name: other-configmap-ref
+#   configuration:
+#     APP_CONFIG_VAR: "app-value"
+#   secrets:
+#     APP_SECRET_KEY: "app-secret"
+#   additionalSecretRef: 
+#     - secretRef:
+#         name: other-secret-ref
+#   mountFiles:
+#     - name: sql-query
+#       path: "/sql-query.sql"
+#       data: |
+#         SELECT1; 
+
+# resources:
+#   enabled: true
+#   requests:
+#     cpu: "100m"
+#     memory: "128Mi"
+#   limits:
+#     cpu: "200m"
+#     memory: "256Mi"
+
+# customScriptSupport:
+#   enabled: true
+#   fileName: "custom-script.sh"
+#   script: |
+#     #!/bin/sh
+#     echo "Running custom script"
+
+# persistence:
+#   enabled: true
+#   storages:
+#     - name: storage1
+#       secretName: my-secret
+#       containers:
+#         storageClass: azureblob-fuse-premium
+#         items:
+#           - name: container1
+#             mountPath: /data/container1
+#       fileShares:
+#         storageClass: azurefile-csi
+#         items:
+#           - name: share1
+#             mountPath: /data/share1
+
+
+# secretStoreRef: my-secret-store

@@ -1,0 +1,44 @@
+{{- /*
+    This file validates that some required values are defined
+    and that they have the expected type using the kindIs function.
+    It sets a default value for .Values in case it is nil.
+
+    In the $fields dictionary, the following are defined:
+      - The key of the value.
+      - Whether it is required (via "required").
+      - The expected type ("string", "map", "slice", "bool", etc.) via "type".
+      - The error message via "errorMsg" in case the condition is not met.
+*/ -}}
+
+{{- /* Ensure that .Values is a dictionary, defaulting to an empty dictionary if it is nil */ -}}
+{{- $values := default dict .Values }}
+
+{{- $fields := dict
+    "projectName"     (dict "required" true  "type" "string" "errorMsg" "projectName is required and must be a string.")
+    "jobName"         (dict "required" true  "type" "string" "errorMsg" "jobName is required and must be a string.")
+    "schedule"        (dict "required" true  "type" "string" "errorMsg" "schedule is required and must be a string.")
+    "image"           (dict "required" true "type" "string" "errorMsg" "image is required and must be a string.")
+    "version"         (dict "required" true "type" "string" "errorMsg" "version is required and must be a string.")
+}}
+
+{{- $errors := list }}
+{{- range $key, $cfg := $fields }}
+  {{- $value := index $values $key }}
+  {{- if and $cfg.required (not $value) }}
+    {{- /* If the field is required and is not defined */ -}}
+    {{- $errors = append $errors $cfg.errorMsg }}
+  {{- else if $value }}
+    {{- /* If the value exists, verify that it is of the correct type */ -}}
+    {{- if not (kindIs $cfg.type $value) }}
+      {{- $errors = append $errors (print $key " must be of type " $cfg.type ".") }}
+    {{- end }}
+  {{- end }}
+{{- end }}
+
+{{- if gt (len $errors) 0 }}
+  {{- $errorOutput := "" -}}
+  {{- range $err := $errors -}}
+    {{- $errorOutput = printf "%s%s\n" $errorOutput $err -}}
+  {{- end -}}
+  {{- fail (print "Validation error(s):\n" $errorOutput) }}
+{{- end }}

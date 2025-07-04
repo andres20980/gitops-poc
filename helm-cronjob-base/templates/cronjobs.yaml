@@ -1,0 +1,193 @@
+# cronjobs.yaml v1.1.0
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ .Values.projectName }}-cron-{{ .Values.jobName }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/name: {{ .Values.projectName }}-cron-{{ .Values.jobName }}
+    {{- include "cronjob.additionalLabels" .Values.additionalLabels | trim | nindent 4 }}
+spec:
+  schedule: {{ .Values.schedule | quote }}
+  successfulJobsHistoryLimit: 2
+  failedJobsHistoryLimit: 1
+  concurrencyPolicy: {{ .Values.concurrencyPolicy | default "Forbid" }}
+  suspend: {{ .Values.suspend }}
+  jobTemplate:
+    spec:
+      backoffLimit: {{ .Values.backoffLimit | default 0 }}
+      template:
+        metadata:
+          labels:
+            app: {{ .Values.projectName }}-cron-{{ .Values.jobName }}
+            {{- include "cronjob.additionalLabels" .Values.additionalLabels | trim | nindent 12 }}
+            azure.workload.identity/use: {{ .Values.workloadIdentity | default "false" | quote }}
+          annotations:
+            checksum/config: {{ include (print $.Template.BasePath "/config-map.yaml") . | sha256sum }}
+        spec:
+          enableServiceLinks: false
+          restartPolicy: Never
+          {{- if .Values.imagePullSecrets }}
+          imagePullSecrets:
+          - name: {{ .Values.imagePullSecrets }}
+          {{- end }}
+          {{- if .Values.securityContext }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          {{- end }}
+          serviceAccountName: {{ .Values.serviceAccountName | default "default" }}
+          {{- if .Values.initContainer.enabled }}
+            {{- with .Values.initContainer }}
+          initContainers:
+            - name: init
+              image: {{ .registry | default "amsdvpallacratlantis.azurecr.io" }}/{{ .image }}:{{ .version | default "latest" }}
+              imagePullPolicy: Always
+              {{- if or .configuration .secrets .additionalConfigurationRef .additionalSecretRef }}
+              envFrom:
+                {{- if .additionalConfigurationRef }}
+                  {{- toYaml .additionalConfigurationRef | nindent 16 }}
+                {{- end }}
+                {{- if .configuration }}
+                - configMapRef:
+                    name: {{ $.Values.projectName }}-{{ $.Values.jobName }}-init-config
+                {{- end }}
+                {{- if .secrets }}
+                - secretRef:
+                    name: {{ $.Values.projectName }}-{{ $.Values.jobName }}-init-secret
+                {{- end }}
+                {{- if .additionalSecretRef }}
+                  {{- toYaml .additionalSecretRef | nindent 16 }}
+                {{- end }}
+              {{- end }}
+              {{- if .securityContext }}
+              securityContext:
+                {{- toYaml .securityContext | nindent 16 }}
+              {{- end }}
+            {{- end }}
+          {{- end }}
+          containers:
+          - name: {{ .Values.projectName }}-cron-{{ .Values.jobName }}
+            imagePullPolicy: {{ .Values.imagePullPolicy | default "IfNotPresent" }}
+            image: {{ .Values.registry }}/{{ .Values.image }}:{{ .Values.version }}
+            {{- if .Values.command }}
+            command:
+              {{- range .Values.command }}
+              - {{ . | quote }}
+              {{- end }}
+            {{- end }}
+            {{- if .Values.app.args }}
+            args: {{ .Values.app.args | toJson }}
+            {{- end }}
+            {{- if or .Values.app.additionalConfigurationRef .Values.app.secrets .Values.app.configuration .Values.app.additionalSecretRef }}
+            envFrom:
+              {{- if .Values.app.additionalConfigurationRef }}
+                {{- toYaml .Values.app.additionalConfigurationRef | nindent 14 }}
+              {{- end }}
+              {{- if .Values.app.configuration }}
+              - configMapRef: # for env variables
+                  name: {{ .Values.projectName }}-{{ .Values.jobName }}-config
+              {{- end }}
+              {{- if .Values.app.additionalSecretRef }}
+                {{- toYaml .Values.app.additionalSecretRef | nindent 14 }}
+              {{- end }}
+              {{- if .Values.app.secrets }}
+              - secretRef: # for kv secrets using external secrets
+                  name: {{ .Values.projectName }}-{{ .Values.jobName }}-secret
+              {{- end }}
+            {{- end }}
+            {{- with .Values.resources }}
+            {{- if and .enabled (and .requests .limits) }}
+            resources:
+              requests:
+                cpu: {{ .requests.cpu }}
+                memory: {{ .requests.memory }}
+              limits:
+                cpu: {{ .limits.cpu }}
+                memory: {{ .limits.memory }}
+            {{- end }}
+            {{- end }}
+            {{- if or .Values.app.mountFiles .Values.persistence.enabled .Values.app.volumeMounts }}
+            volumeMounts:
+              {{- if .Values.app.mountFiles }}
+                {{- range .Values.app.mountFiles }}
+              - name: {{ .name }}
+                mountPath: {{ .path }}
+                subPath: {{ .name }}
+                {{- end }}
+              {{- end }}
+              {{- if .Values.persistence.enabled }}
+                {{- range .Values.persistence.storages }}
+                  {{- $storageName := .name }}
+                  {{- if .containers }}
+                    {{- range .containers.items }}
+              - name: persistence-{{ $.Values.jobName }}-{{ $storageName }}-{{ .name }}
+                mountPath: {{ .mountPath }}
+                    {{- end }}
+                  {{- end }}
+                  {{- if .fileShares }}
+                    {{- range .fileShares.items }}
+              - name: persistence-{{ $.Values.jobName }}-{{ $storageName }}-{{ .name }}
+                mountPath: {{ .mountPath }}
+                    {{- end }}
+                  {{- end }}
+                {{- end }}
+              {{- end }}
+              {{- if .Values.app.volumeMounts }}
+                {{- toYaml .Values.app.volumeMounts | nindent 14 }}
+              {{- end }}
+            {{- end }}
+            {{- if .Values.app.securityContext }}
+            securityContext:
+              {{- toYaml .Values.app.securityContext | nindent 14 }}
+            {{- end }}
+          {{- if or .Values.app.mountFiles .Values.persistence.enabled .Values.volumes }}
+          volumes:
+            {{- if .Values.app.mountFiles }}
+              {{- range .Values.app.mountFiles }}
+            - name: {{ .name }}
+              configMap:
+                name: {{ $.Values.projectName }}-{{ $.Values.jobName }}-app-{{ .name }}-config
+                defaultMode: 0750
+              {{- end }}
+            {{- end }}
+            {{- if .Values.persistence.enabled }}
+              {{- range .Values.persistence.storages }}
+                {{- $storageName := .name }}
+                {{- if .containers }}
+                  {{- range .containers.items }}
+            - name: persistence-{{ $.Values.jobName }}-{{ $storageName }}-{{ .name }}
+              persistentVolumeClaim:
+                claimName: {{ $.Values.jobName }}-{{ $storageName }}-{{ .name }}-pvc
+                  {{- end }}
+                {{- end }}
+                {{- if .fileShares }}
+                  {{- range .fileShares.items }}
+            - name: persistence-{{ $.Values.jobName }}-{{ $storageName }}-{{ .name }}
+              persistentVolumeClaim:
+                claimName: {{ $.Values.jobName }}-{{ $storageName }}-{{ .name }}-pvc
+                  {{- end }}
+                {{- end }}
+              {{- end }}
+            {{- end }}
+          {{- if .Values.volumes }}
+          {{- toYaml .Values.volumes | nindent 12 }}
+          {{- end }}
+          {{- end }}
+            {{- with .Values.tolerations }}
+              {{- if and .enabled (and .key .value) }}
+          tolerations:
+          - key: {{ .key }}
+            operator: "Equal"
+            value: {{ .value }}
+            effect: "NoSchedule"
+              {{- end }}
+            {{- end }}
+          affinity:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                - matchExpressions:
+                  - key: {{ .Values.affinityNodeKey | default "agentpool"}}
+                    operator: In
+                    values:
+                      - {{ .Values.affinityNodeName | default "default" }}

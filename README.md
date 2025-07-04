@@ -1,5 +1,5 @@
 # GitOps Proof of Concept (PoC)  
-**Version: 2.2.0**
+**Version: 3.0.0**
 
 ---
 
@@ -9,102 +9,65 @@ This repository demonstrates a modern GitOps workflow using a robust stack of Cl
 
 **Core Technologies:**
 - **Argo CD:** GitOps agent that continuously syncs the Kubernetes cluster state to match the desired state in Git.
-- **Kustomize:** Declarative management and customization of Kubernetes manifests, enabling environment-specific configurations.
-- **Argo Rollouts:** Advanced deployment strategies (Canary, Blue-Green) for safe, progressive delivery.
+- **Helm:** Used as the base templating engine for creating standard, reusable application definitions.
+- **Kustomize:** Declarative management and customization of the Helm-generated manifests, enabling environment-specific configurations.
+- **Argo Rollouts:** Advanced deployment strategies (Canary, Blue-Green) for safe, progressive delivery, now integrated into the base Helm chart.
 
 **Applications:**
-- `kustomiworld`
-- `kustomispace`
+- `world`
+- `space`
 
-Each is composed of several microservices and configured for different deployment strategies.
+Each is composed of several microservices and configured for different deployment strategies and environments (dev, pre).
 
 ---
 
 ## 2. Core Concepts
 
-### 2.1. GitOps with Argo CD
+### 2.1. GitOps with Argo CD ("App of Apps" per Environment)
 
 - **Source of Truth:** This repository is the single source of truth. All cluster changes are made via commits.
-- **Declarative Manifests:**  
-  `argo-cd/apps/` contains Argo CD `Application` custom resources, specifying:
-  - Manifest location (`path`)
-  - Target Kubernetes `server`
-  - Deployment `namespace`
-- **Automated Sync:**  
-  `syncPolicy: automated` ensures Argo CD automatically applies detected changes, keeping the cluster state in sync with Git.
+- **Environment-Driven Management:** We use the **"App of Apps" per Environment** pattern. A root application exists for each environment (e.g., `root-app-dev`), which in turn discovers and manages all applications belonging to that environment.
+- **Automated Sync:** `syncPolicy: automated` ensures Argo CD automatically applies detected changes, keeping the cluster state in sync with Git.
 
-### 2.2. Application Composition with Kustomize
+### 2.2. Component Management with Helm & Kustomize
 
-- **Components (Bases):**  
-  `kustomize/components/` holds base, environment-agnostic manifests for each microservice (e.g., `helloworld`, `sun`, `carbone`).
-- **Applications:**  
-  `kustomize/apps/` composes complete applications from components.
-  - **Base:** (e.g., `kustomize/apps/kustomiworld/base/`) lists required components.
-  - **Overlays:** (e.g., `kustomize/apps/kustomiworld/overlays/dev/`) inherit from base and apply environment-specific patches (replica counts, image tags, labels, etc.).
+This PoC uses a powerful combination of Helm for templating and Kustomize for customization.
+
+- **Base Helm Chart (`helm-base/`):** A single, standardized Helm chart located in `helm-base/` defines the "shape" of all our applications. It contains templates for Kubernetes resources like `Deployments`, `Rollouts`, `Services`, `HPA`, etc.
+- **Components (`kustomize/components/`):** Each microservice is defined as a Kustomize component. However, instead of containing raw YAML, the `base` of each component now primarily contains two files:
+  1. `kustomization.yaml`: Points to the local Helm chart in `helm-base/`.
+  2. `values.yaml`: Provides the specific configuration values for that component (e.g., image name, port, rollout strategy).
+- **Application Overlays (`kustomize/apps/`):** These still compose complete applications from components and apply environment-specific patches (e.g., different image tags for `dev` vs. `pre`, replica counts, etc.).
 
 ---
 
 ## 3. Advanced Deployment Strategies with Argo Rollouts
 
-This PoC implements progressive delivery strategies for safe, controlled releases using the `Rollout` custom resource.
+Progressive delivery is now built into our base Helm chart and can be enabled and configured via each component's `values.yaml` file.
 
 ### 3.1. Canary Release
 
-**Used for:** `helloworld`, `carbone` components  
-**Strategy:** Gradually shifts a percentage of traffic to the new version before full rollout.
+**Configuration:** In a component's `values.yaml`, set:
 
-**Configuration:**
-- `stableService`: Receives production traffic.
-- `canaryService`: Receives test traffic for the new version.
-- `steps`:
-  1. `setWeight: 20` — Send 20% of traffic to the new version.
-  2. `pause: {}` — Pause rollout indefinitely for manual validation.
-
-**Example: `helloworld` Rollout**
 ```yaml
-# kustomize/components/custom/helloworld/base/rollout.yaml
-apiVersion: argoproj.io/v1alpha1
-kind: Rollout
-metadata:
-  name: helloworld
-spec:
-  # ... pod template ...
-  strategy:
-    canary:
-      stableService: helloworld-service
-      canaryService: helloworld-service-canary
-      steps:
-        - setWeight: 20
-        - pause: {}
+rollout:
+  enabled: true
+  strategy: "Canary"
 ```
 
----
+This instructs the Helm chart to generate a Rollout resource with a Canary strategy and its required services.
 
 ### 3.2. Blue-Green Deployment
 
-**Used for:** `sun`, `moon` components  
-**Strategy:** Deploys new version (Green) alongside old (Blue) without initial production traffic.
+**Configuration:** In a component's `values.yaml`, set:
 
-**Configuration:**
-- `activeService`: Points to the stable (Blue) version.
-- `previewService`: Points to the new (Green) version for isolated testing.
-- `autoPromotionEnabled: false`: Pauses rollout after Green is available; manual promotion required to switch traffic.
-
-**Example: `sun` Rollout**
 ```yaml
-# kustomize/components/custom/sun/base/rollout.yaml
-apiVersion: argoproj.io/v1alpha1
-kind: Rollout
-metadata:
-  name: sun
-spec:
-  # ... pod template ...
-  strategy:
-    blueGreen:
-      activeService: sun-service
-      previewService: sun-service-preview
-      autoPromotionEnabled: false
+rollout:
+  enabled: true
+  strategy: "BlueGreen"
 ```
+
+This instructs the Helm chart to generate a Rollout resource with a Blue-Green strategy and its required active and preview services.
 
 ---
 
@@ -112,27 +75,29 @@ spec:
 
 ```
 .
-├── argo-cd/apps/               # Argo CD Application manifests (entrypoint)
-│   ├── app-kustomiworld-dev.yaml
-│   ├── app-kustomiworld-pre.yaml
-│   └── ...
+├── argo-cd/
+│   ├── apps/
+│   │   ├── dev/            # Argo CD Application manifests for DEV
+│   │   └── pre/            # Argo CD Application manifests for PRE
+│   └── roots/
+│       ├── root-app-dev.yaml # Root App that manages everything in dev/
+│       └── root-app-pre.yaml # Root App that manages everything in pre/
+├── helm-base/                # The single, shared Helm Chart for all components
+│   ├── Chart.yaml
+│   ├── templates/
+│   └── values.yaml
 ├── kustomize/
-│   ├── apps/                   # Application definitions
-│   │   ├── kustomiworld/
-│   │   │   ├── base/           # Composes app from components
-│   │   │   └── overlays/       # Environment-specific customizations
-│   │   │       ├── dev/
-│   │   │       └── pre/
-│   │   └── ...
-│   └── components/             # Reusable base manifests for each microservice
-│       ├── custom/
-│       │   ├── byebyeworld/
-│       │   ├── helloworld/
-│       │   └── ...
-│       └── third-party/
-│           └── carbone/
-└── services/                   # Docker build context and other resources
-    └── carbone-ee-docker/
+│   ├── apps/                 # Application definitions
+│   │   └── ...
+│   ├── components/           # Reusable components
+│   │   └── custom/
+│   │      └── helloworld/
+│   │          └── base/
+│   │              ├── kustomization.yaml # -> Points to helm-base
+│   │              └── values.yaml      # -> Configures helloworld
+│   └── ...
+└── services/                 # Docker build context and source code
+  └── ...
 ```
 
 ---
@@ -144,35 +109,22 @@ spec:
 - Argo CD and Argo Rollouts installed
 
 **Deployment Commands:**
-```bash
-# Deploy 'kustomiworld' to DEV
-kubectl apply -f argo-cd/apps/app-kustomiworld-dev.yaml
 
-# Deploy 'kustomispace' to DEV
-kubectl apply -f argo-cd/apps/app-kustomispace-dev.yaml
+With the new "App of Apps" per environment structure, you only need to apply the root application for the environment you want to deploy.
+
+```bash
+# Deploy EVERYTHING for the DEV environment
+kubectl apply -f argo-cd/roots/root-app-dev.yaml
+
+# Deploy EVERYTHING for the PRE environment
+kubectl apply -f argo-cd/roots/root-app-pre.yaml
 ```
-Argo CD will detect the Application resource and synchronize all Kubernetes resources as defined in the `kustomize/` path.
+
+Argo CD will detect the root application, which will then automatically discover and deploy all child applications defined in the corresponding `argo-cd/apps/` subdirectory.
 
 ---
 
-### Triggering a New Rollout
+### Managing Applications
 
-A new rollout can be triggered by:
-- **Changing the container image:** Update the image tag in the component's `rollout.yaml`.
-- **Changing the Pod Template:** Any change to the pod template in the Rollout spec triggers a new release.
-
-**Tip:**  
-Dev overlays apply a patch to add a `rollout-timestamp` label. Changing its value in a commit triggers a new deployment, even without a new image.
-
-**Example patch (`kustomispace/overlays/dev`):**
-```yaml
-# kustomize/apps/kustomispace/overlays/dev/kustomization.yaml
-patches:
-  - patch: |-
-      - op: add
-        path: /spec/template/metadata/labels/rollout-timestamp
-        value: "2025-06-26T13-15-00Z"
-    target:
-      kind: Rollout
-      name: sun
-```
+- **To add a new app to an environment:** Add its `app-name.yaml` manifest to the correct subdirectory (e.g., `argo-cd/apps/dev/`) and commit. The root app will deploy it automatically.
+- **To remove an app from an environment:** Delete its `app-name.yaml` manifest from the Git repository and commit. The root app, thanks to `prune: true`, will remove it from the cluster automatically.
