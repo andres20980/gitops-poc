@@ -1,20 +1,32 @@
 ############################################################
 # Contenido del directorio: helm-base
 ############################################################
-[1;34md[33mr[31mw[32mx[0m[33mr[1;90m-[0m[32mx[33mr[1;90m-[0m[32mx[0m    [1;90m-[0m [1;33masanchez[0m [34m 4 Jul 12:23[0m [1;90m--[0m [1;34mtemplates[0m
-.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m2.3k[0m [1;33masanchez[0m [34m 4 Jul 12:32[0m [1;90m--[0m _helpers.tpl
+[1;34md[33mr[31mw[32mx[0m[33mr[1;90m-[0m[32mx[33mr[1;90m-[0m[32mx[0m    [1;90m-[0m [1;33masanchez[0m [34m 4 Jul 14:04[0m [1;90m--[0m [1;34mtemplates[0m
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m3.3k[0m [1;33masanchez[0m [34m 4 Jul 14:04[0m [1;90m--[0m _helpers.tpl
 .[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m  [32m228[0m [1;33masanchez[0m [34m 3 Jul 14:42[0m [1;90m--[0m Chart.yaml
-.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m  [32m143[0m [1;33masanchez[0m [34m 3 Jul 14:42[0m [1;90m--[0m values.yaml
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m  [32m161[0m [1;33masanchez[0m [34m 4 Jul 14:04[0m [1;90m--[0m values.yaml
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m  [32m161[0m [1;33masanchez[0m [34m 4 Jul 14:04[0m [1;90m--[0m [90mvalues.yaml.bak[0m
 
 helm-base/templates:
-.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m2.4k[0m [1;33masanchez[0m [34m 3 Jul 15:06[0m [1;90m--[0m config-map.yaml
-.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m8.5k[0m [1;33masanchez[0m [34m 4 Jul 10:49[0m [1;90m--[0m deployment.yaml
-.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m  [32m745[0m [1;33masanchez[0m [34m 4 Jul 12:33[0m [1;90m--[0m external-secrets.yaml
-.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m1.0k[0m [1;33masanchez[0m [34m 3 Jul 15:06[0m [1;90m--[0m hpa.yaml
-.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m2.3k[0m [1;33masanchez[0m [34m 3 Jul 15:06[0m [1;90m--[0m ingress.yaml
-.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m1.3k[0m [1;33masanchez[0m [34m 4 Jul 12:32[0m [1;90m--[0m persistentVolume.yaml
-.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m1.2k[0m [1;33masanchez[0m [34m 4 Jul 12:33[0m [1;90m--[0m persistentVolumeClaim.yaml
-.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m1.5k[0m [1;33masanchez[0m [34m 4 Jul 10:48[0m [1;90m--[0m rollout.yaml
-.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m  [32m402[0m [1;33masanchez[0m [34m 4 Jul 10:49[0m [1;90m--[0m service-canary.yaml
-.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m  [32m411[0m [1;33masanchez[0m [34m 4 Jul 10:49[0m [1;90m--[0m service-preview.yaml
-.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m  [32m350[0m [1;33masanchez[0m [34m 3 Jul 15:06[0m [1;90m--[0m service.yaml
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m3.5k[0m [1;33masanchez[0m [34m 4 Jul 14:00[0m [1;90m--[0m config-map.yaml
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m3.5k[0m [1;33masanchez[0m [34m 4 Jul 14:04[0m [1;90m--[0m [90mconfig-map.yaml.bak[0m
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m8.8k[0m [1;33masanchez[0m [34m 4 Jul 14:00[0m [1;90m--[0m deployment.yaml
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m8.8k[0m [1;33masanchez[0m [34m 4 Jul 14:04[0m [1;90m--[0m [90mdeployment.yaml.bak[0m
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m  [32m745[0m [1;33masanchez[0m [34m 4 Jul 14:04[0m [1;90m--[0m external-secrets.yaml
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m  [32m745[0m [1;33masanchez[0m [34m 4 Jul 14:04[0m [1;90m--[0m [90mexternal-secrets.yaml.bak[0m
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m1.2k[0m [1;33masanchez[0m [34m 4 Jul 14:00[0m [1;90m--[0m hpa.yaml
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m1.2k[0m [1;33masanchez[0m [34m 4 Jul 14:04[0m [1;90m--[0m [90mhpa.yaml.bak[0m
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m2.8k[0m [1;33masanchez[0m [34m 4 Jul 14:00[0m [1;90m--[0m ingress.yaml
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m2.8k[0m [1;33masanchez[0m [34m 4 Jul 14:04[0m [1;90m--[0m [90mingress.yaml.bak[0m
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m1.3k[0m [1;33masanchez[0m [34m 4 Jul 14:04[0m [1;90m--[0m persistentVolume.yaml
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m1.3k[0m [1;33masanchez[0m [34m 4 Jul 14:04[0m [1;90m--[0m [90mpersistentVolume.yaml.bak[0m
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m1.2k[0m [1;33masanchez[0m [34m 4 Jul 14:04[0m [1;90m--[0m persistentVolumeClaim.yaml
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m1.2k[0m [1;33masanchez[0m [34m 4 Jul 14:04[0m [1;90m--[0m [90mpersistentVolumeClaim.yaml.bak[0m
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m1.9k[0m [1;33masanchez[0m [34m 4 Jul 14:00[0m [1;90m--[0m rollout.yaml
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m [1;32m1.9k[0m [1;33masanchez[0m [34m 4 Jul 14:04[0m [1;90m--[0m [90mrollout.yaml.bak[0m
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m  [32m582[0m [1;33masanchez[0m [34m 4 Jul 14:00[0m [1;90m--[0m service-canary.yaml
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m  [32m582[0m [1;33masanchez[0m [34m 4 Jul 14:04[0m [1;90m--[0m [90mservice-canary.yaml.bak[0m
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m  [32m591[0m [1;33masanchez[0m [34m 4 Jul 14:00[0m [1;90m--[0m service-preview.yaml
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m  [32m591[0m [1;33masanchez[0m [34m 4 Jul 14:04[0m [1;90m--[0m [90mservice-preview.yaml.bak[0m
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m  [32m530[0m [1;33masanchez[0m [34m 4 Jul 14:00[0m [1;90m--[0m service.yaml
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m  [32m530[0m [1;33masanchez[0m [34m 4 Jul 14:04[0m [1;90m--[0m [90mservice.yaml.bak[0m
