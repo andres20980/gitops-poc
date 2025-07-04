@@ -1,4 +1,5 @@
-# argocd/projects/project-pre.yaml v1.0.0
+# argo-cd/projects/project-pre.yaml v1.1.0
+# Corrected namespaceResourceBlacklist section.
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
@@ -18,10 +19,7 @@ spec:
   clusterResourceWhitelist:
   - group: '*'
     kind: '*'
+  # The blacklist applies to kinds, not specific names.
   namespaceResourceBlacklist:
   - group: ''
     kind: 'Namespace'
-    name: 'kube-system'
-  - group: ''
-    kind: 'Namespace'
-    name: 'argocd'

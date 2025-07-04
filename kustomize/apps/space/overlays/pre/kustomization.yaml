@@ -1,37 +1,30 @@
-# kustomize/apps/space/overlays/pre/kustomization.yaml v1.2.0
-# Kustomization for the 'space' app in the 'pre' environment.
+# kustomize/apps/space/overlays/pre/kustomization.yaml v2.0.0
+# Reverted to using patches for customization.
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-
 bases:
   - ../../base
-
 namespace: space-pre
-
-# Use helmCharts to override values for each component.
-helmCharts:
-  # --- Sun Component Overrides ---
-  - name: ../../../../components/custom/sun/base
-    releaseName: sun
-    valuesFile: ../../../../components/custom/sun/base/values.yaml
-    additionalValuesFiles:
-      - values-sun-pre.yaml
-
-  # --- Moon Component Overrides ---
-  - name: ../../../../components/custom/moon/base
-    releaseName: moon
-    valuesFile: ../../../../components/custom/moon/base/values.yaml
-    additionalValuesFiles:
-      - values-moon-pre.yaml
-
-  # --- Carbone Component Overrides ---
-  - name: ../../../../components/third-party/carbone/base
-    releaseName: carbone
-    valuesFile: ../../../../components/third-party/carbone/base/values.yaml
-    additionalValuesFiles:
-      - values-carbone-pre.yaml
-
-# We keep the image overrides separate for clarity.
-images:
-  - name: ghcr.io/andres20980/sun-app
-    newTag: 25f6004
+# Patches to set replica counts for PRE environment
+patches:
+- target:
+    kind: Rollout
+    name: sun
+  patch: |-
+    - op: replace
+      path: /spec/replicas
+      value: 2
+- target:
+    kind: Rollout
+    name: moon
+  patch: |-
+    - op: replace
+      path: /spec/replicas
+      value: 2
+- target:
+    kind: Rollout
+    name: carbone
+  patch: |-
+    - op: replace
+      path: /spec/replicas
+      value: 2

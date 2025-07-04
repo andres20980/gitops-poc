@@ -1,3 +1,0 @@
-# kustomize/apps/space/overlays/pre/values-carbone-pre.yaml v1.0.0
-# PRE-specific values for the carbone component.
-replicaCount: 2

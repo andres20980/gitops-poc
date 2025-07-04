@@ -1,3 +1,0 @@
-# kustomize/apps/space/overlays/pre/values-sun-pre.yaml v1.0.0
-# PRE-specific values for the sun component.
-replicaCount: 2

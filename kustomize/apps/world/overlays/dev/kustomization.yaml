@@ -1,44 +1,37 @@
-# kustomize/apps/world/overlays/dev/kustomization.yaml v3.3.0
-# Kustomization for the 'world' app in the 'dev' environment.
+# kustomize/apps/world/overlays/dev/kustomization.yaml v4.0.0
+# Reverted to using patches for customization.
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-
 bases:
   - ../../base
-
 namespace: world-dev
-
-# Use helmCharts to override values for each component.
-helmCharts:
-  # --- Helloworld Component Overrides ---
-  - name: ../../../../components/custom/helloworld/base
-    releaseName: helloworld
-    valuesFile: ../../../../components/custom/helloworld/base/values.yaml
-    additionalValuesFiles:
-      - values-helloworld-dev.yaml
-
-  # --- Byebyeworld Component Overrides ---
-  - name: ../../../../components/custom/byebyeworld/base
-    releaseName: byebyeworld
-    valuesFile: ../../../../components/custom/byebyeworld/base/values.yaml
-    additionalValuesFiles:
-      - values-byebyeworld-dev.yaml
-
-  # --- Moon Component Overrides ---
-  - name: ../../../../components/custom/moon/base
-    releaseName: moon
-    valuesFile: ../../../../components/custom/moon/base/values.yaml
-    additionalValuesFiles:
-      - values-moon-dev.yaml
-
-  # --- Carbone Component Overrides ---
-  - name: ../../../../components/third-party/carbone/base
-    releaseName: carbone
-    valuesFile: ../../../../components/third-party/carbone/base/values.yaml
-    additionalValuesFiles:
-      - values-carbone-dev.yaml
-
-# We keep the image overrides separate for clarity.
-images:
-  - name: ghcr.io/andres20980/helloworld-app
-    newTag: 25f6004
+# Patches to set replica counts for DEV environment
+patches:
+- target:
+    kind: Rollout
+    name: helloworld
+  patch: |-
+    - op: replace
+      path: /spec/replicas
+      value: 1
+- target:
+    kind: Rollout
+    name: byebyeworld
+  patch: |-
+    - op: replace
+      path: /spec/replicas
+      value: 1
+- target:
+    kind: Rollout
+    name: moon
+  patch: |-
+    - op: replace
+      path: /spec/replicas
+      value: 1
+- target:
+    kind: Rollout
+    name: carbone
+  patch: |-
+    - op: replace
+      path: /spec/replicas
+      value: 1
