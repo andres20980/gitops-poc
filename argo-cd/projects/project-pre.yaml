@@ -1,25 +1,21 @@
-# argo-cd/projects/project-pre.yaml v1.1.0
-# Corrected namespaceResourceBlacklist section.
+# argo-cd/projects/project-pre.yaml
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: applications-pre
+  name: pre-project
   namespace: argocd
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io
 spec:
-  description: "Project for the pre-production environment"
+  description: Pre-production Project
   sourceRepos:
-  - 'https://github.com/andres20980/gitops-poc.git'
+  - '*'
   destinations:
-  - server: https://kubernetes.default.svc
-    namespace: 'space-pre'
-  - server: https://kubernetes.default.svc
-    namespace: 'world-pre'
+  - namespace: space-pre
+    server: https://kubernetes.default.svc
+  - namespace: world-pre
+    server: https://kubernetes.default.svc
   clusterResourceWhitelist:
   - group: '*'
     kind: '*'
-  # The blacklist applies to kinds, not specific names.
-  namespaceResourceBlacklist:
-  - group: ''
-    kind: 'Namespace'
+  namespaceResourceWhitelist:
+  - group: '*'
+    kind: '*'

@@ -1,0 +1,9 @@
+# kustomize/components/helloworld/base/values.yaml
+serviceName: helloworld
+image: andres20980/helloworld-app:latest
+replicas: 1
+service:
+  type: ClusterIP
+  port: 80
+ingress:
+  enabled: false

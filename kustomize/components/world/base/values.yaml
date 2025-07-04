@@ -1,0 +1,9 @@
+# kustomize/components/world/base/values.yaml
+serviceName: world
+image: your-repo/world-service:latest # Placeholder for world image
+replicas: 1
+service:
+  type: ClusterIP
+  port: 80
+ingress:
+  enabled: false

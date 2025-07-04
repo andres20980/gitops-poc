@@ -1,25 +1,21 @@
-# argo-cd/projects/project-dev.yaml v1.1.0
-# Corrected namespaceResourceBlacklist section.
+# argo-cd/projects/project-dev.yaml
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: applications-dev
+  name: dev-project
   namespace: argocd
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io
 spec:
-  description: "Project for the development environment"
+  description: Development Project
   sourceRepos:
-  - 'https://github.com/andres20980/gitops-poc.git'
+  - '*'
   destinations:
-  - server: https://kubernetes.default.svc
-    namespace: 'space-dev'
-  - server: https://kubernetes.default.svc
-    namespace: 'world-dev'
+  - namespace: space-dev
+    server: https://kubernetes.default.svc
+  - namespace: world-dev
+    server: https://kubernetes.default.svc
   clusterResourceWhitelist:
   - group: '*'
     kind: '*'
-  # The blacklist applies to kinds, not specific names.
-  namespaceResourceBlacklist:
-  - group: ''
-    kind: 'Namespace'
+  namespaceResourceWhitelist:
+  - group: '*'
+    kind: '*'

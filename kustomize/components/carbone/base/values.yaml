@@ -1,0 +1,9 @@
+# kustomize/components/carbone/base/values.yaml
+serviceName: carbone
+image: andres20980/carbone-ee-docker:latest
+replicas: 1
+service:
+  type: ClusterIP
+  port: 80
+ingress:
+  enabled: false

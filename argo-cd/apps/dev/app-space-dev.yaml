@@ -1,13 +1,13 @@
-# argocd/apps/dev/app-space-dev.yaml v2.0.0
+# argo-cd/apps/dev/app-space-dev.yaml
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: space-dev
+  name: app-space-dev
   namespace: argocd
 spec:
-  project: applications-dev # Assign to the dev project
+  project: dev-project
   source:
-    repoURL: https://github.com/andres20980/gitops-poc.git
+    repoURL: https://github.com/andres20980/gitops-poc.git # Replace with your repository URL
     targetRevision: HEAD
     path: kustomize/apps/space/overlays/dev
   destination:

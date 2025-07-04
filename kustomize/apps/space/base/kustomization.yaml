@@ -1,11 +1,42 @@
-# kustomize/apps/kustomispace/base/kustomization.yaml v1.2.0
-# Added the third-party carbone component to the application.
+# kustomize/apps/space/base/kustomization.yaml
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+
 resources:
-  - ../../../components/custom/sun/base
-  - ../../../components/custom/moon/base
-  - ../../../components/third-party/carbone/base
-namespace: default
+  - ../../../components/world/base
+  - ../../../components/sun/base
+  - ../../../components/moon/base
+  - ../../../components/carbone/base
+
 commonLabels:
-  app: myapp
+  app: space-app
+
+patches:
+  - target:
+      kind: HelmRelease
+      name: world
+    patch: |-
+      - op: replace
+        path: /metadata/name
+        value: space-world
+  - target:
+      kind: HelmRelease
+      name: sun
+    patch: |-
+      - op: replace
+        path: /metadata/name
+        value: space-sun
+  - target:
+      kind: HelmRelease
+      name: moon
+    patch: |-
+      - op: replace
+        path: /metadata/name
+        value: space-moon
+  - target:
+      kind: HelmRelease
+      name: carbone
+    patch: |-
+      - op: replace
+        path: /metadata/name
+        value: space-carbone

@@ -1,13 +1,13 @@
-# argocd/apps/dev/app-world-dev.yaml v2.0.0
+# argo-cd/apps/dev/app-world-dev.yaml
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: world-dev
+  name: app-world-dev
   namespace: argocd
 spec:
-  project: applications-dev # Assign to the dev project
+  project: dev-project
   source:
-    repoURL: https://github.com/andres20980/gitops-poc.git
+    repoURL: https://github.com/andres20980/gitops-poc.git # Replace with your repository URL
     targetRevision: HEAD
     path: kustomize/apps/world/overlays/dev
   destination:

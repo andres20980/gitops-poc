@@ -1,25 +1,20 @@
-# kustomize/apps/space/overlays/pre/kustomization.yaml v2.0.0
-# Reverted to using patches for customization.
+# kustomize/apps/space/overlays/pre/kustomization.yaml
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-resources:
+
+resources: # Changed from 'bases' to 'resources' for future compatibility
   - ../../base
+
 namespace: space-pre
+
 patches:
-  - target: {kind: Rollout, name: sun}
+  - target:
+      kind: HelmRelease
+      name: space-world
     patch: |-
       - op: replace
-        path: /spec/replicas
-        value: 2
-  - target: {kind: Rollout, name: moon}
-    patch: |-
+        path: /spec/values/ingress/enabled
+        value: true
       - op: replace
-        path: /spec/replicas
-        value: 2
-  - target: {kind: Rollout, name: carbone}
-    patch: |-
-      - op: replace
-        path: /spec/replicas
-        value: 2
-commonLabels:
-  app: myapp
+        path: /spec/values/ingress/host
+        value: world-pre.space.example.com
