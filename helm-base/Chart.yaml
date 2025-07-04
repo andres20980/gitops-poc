@@ -1,0 +1,8 @@
+# helm-base/Chart.yaml v1.0.0
+# Metadata for the base Helm chart.
+apiVersion: v2
+name: msw-cic-helm-chart-base
+description: A base Helm chart for deploying standard applications
+type: application
+version: 1.0.0
+appVersion: "1.0"

@@ -1,0 +1,3 @@
+# helm-base/values.yaml v1.0.0
+# Default values for the base chart.
+# These will be overridden by the values files in each Kustomize component.
