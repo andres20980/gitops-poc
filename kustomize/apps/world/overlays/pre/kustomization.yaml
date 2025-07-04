@@ -5,32 +5,23 @@ kind: Kustomization
 bases:
   - ../../base
 namespace: world-pre
-# Patches to set replica counts for PRE environment
 patches:
-- target:
-    kind: Rollout
-    name: helloworld
+- target: { kind: Rollout, name: helloworld }
   patch: |-
     - op: replace
       path: /spec/replicas
       value: 3
-- target:
-    kind: Rollout
-    name: byebyeworld
+- target: { kind: Rollout, name: byebyeworld }
   patch: |-
     - op: replace
       path: /spec/replicas
       value: 2
-- target:
-    kind: Rollout
-    name: moon
+- target: { kind: Rollout, name: moon }
   patch: |-
     - op: replace
       path: /spec/replicas
       value: 2
-- target:
-    kind: Rollout
-    name: carbone
+- target: { kind: Rollout, name: carbone }
   patch: |-
     - op: replace
       path: /spec/replicas

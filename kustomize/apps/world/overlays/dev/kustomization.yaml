@@ -5,32 +5,23 @@ kind: Kustomization
 bases:
   - ../../base
 namespace: world-dev
-# Patches to set replica counts for DEV environment
 patches:
-- target:
-    kind: Rollout
-    name: helloworld
+- target: { kind: Rollout, name: helloworld }
   patch: |-
     - op: replace
       path: /spec/replicas
       value: 1
-- target:
-    kind: Rollout
-    name: byebyeworld
+- target: { kind: Rollout, name: byebyeworld }
   patch: |-
     - op: replace
       path: /spec/replicas
       value: 1
-- target:
-    kind: Rollout
-    name: moon
+- target: { kind: Rollout, name: moon }
   patch: |-
     - op: replace
       path: /spec/replicas
       value: 1
-- target:
-    kind: Rollout
-    name: carbone
+- target: { kind: Rollout, name: carbone }
   patch: |-
     - op: replace
       path: /spec/replicas

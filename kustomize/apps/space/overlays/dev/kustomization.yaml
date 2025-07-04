@@ -5,25 +5,18 @@ kind: Kustomization
 bases:
   - ../../base
 namespace: space-dev
-# Patches to set replica counts for DEV environment
 patches:
-- target:
-    kind: Rollout
-    name: sun
+- target: { kind: Rollout, name: sun }
   patch: |-
     - op: replace
       path: /spec/replicas
       value: 1
-- target:
-    kind: Rollout
-    name: moon
+- target: { kind: Rollout, name: moon }
   patch: |-
     - op: replace
       path: /spec/replicas
       value: 1
-- target:
-    kind: Rollout
-    name: carbone
+- target: { kind: Rollout, name: carbone }
   patch: |-
     - op: replace
       path: /spec/replicas
