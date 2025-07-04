@@ -1,12 +1,12 @@
-# kustomize/apps/space/overlays/dev/kustomization.yaml v1.2.0
-# Kustomization for the 'space' app in the 'dev' environment.
+# kustomize/apps/space/overlays/pre/kustomization.yaml v1.2.0
+# Kustomization for the 'space' app in the 'pre' environment.
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 bases:
   - ../../base
 
-namespace: space-dev
+namespace: space-pre
 
 # Use helmCharts to override values for each component.
 helmCharts:
@@ -15,21 +15,21 @@ helmCharts:
     releaseName: sun
     valuesFile: ../../../../components/custom/sun/base/values.yaml
     additionalValuesFiles:
-      - values-sun-dev.yaml
+      - values-sun-pre.yaml
 
   # --- Moon Component Overrides ---
   - name: ../../../../components/custom/moon/base
     releaseName: moon
     valuesFile: ../../../../components/custom/moon/base/values.yaml
     additionalValuesFiles:
-      - values-moon-dev.yaml
+      - values-moon-pre.yaml
 
   # --- Carbone Component Overrides ---
   - name: ../../../../components/third-party/carbone/base
     releaseName: carbone
     valuesFile: ../../../../components/third-party/carbone/base/values.yaml
     additionalValuesFiles:
-      - values-carbone-dev.yaml
+      - values-carbone-pre.yaml
 
 # We keep the image overrides separate for clarity.
 images:

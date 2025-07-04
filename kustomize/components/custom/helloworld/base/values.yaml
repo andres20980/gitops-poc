@@ -1,27 +1,22 @@
-# kustomize/components/custom/helloworld/base/values.yaml v1.0.0
-# Values for the helloworld component.
+# kustomize/components/custom/helloworld/base/values.yaml v1.1.0
+# Default values for the helloworld component.
+# Changed 'replicas' to 'replicaCount' for Helm standard consistency.
+
+replicaCount: 1
 
 name: helloworld
 
 app:
-  registry: "ghcr.io/andres20980"
-  image: "helloworld-app:v1"
-  version: "1.0" # App version, not image tag
-
-service:
-  targetPort: 8080
-
-# Enable Argo Rollouts with Canary strategy
-rollout:
-  enabled: true
-  strategy: "Canary"
-
-# Specific config to wait for the carbone service dependency
-initContainer:
-  enabled: true
-  image: "busybox"
-  version: "1.28"
-  command:
-    - "sh"
-    - "-c"
-    - "until nc -z -v -w30 carbone-service 4000; do echo 'Waiting for carbone-service...'; sleep 2; done;"
+  name: helloworld-app
+  image:
+    repository: ghcr.io/andres20980/helloworld-app
+    tag: latest
+  port: 8080
+  message: "Hello World"
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "128Mi"
+    limits:
+      cpu: "200m"
+      memory: "256Mi"

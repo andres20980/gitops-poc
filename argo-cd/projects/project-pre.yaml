@@ -1,0 +1,27 @@
+# argocd/projects/project-pre.yaml v1.0.0
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: applications-pre
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  description: "Project for the pre-production environment"
+  sourceRepos:
+  - 'https://github.com/andres20980/gitops-poc.git'
+  destinations:
+  - server: https://kubernetes.default.svc
+    namespace: 'space-pre'
+  - server: https://kubernetes.default.svc
+    namespace: 'world-pre'
+  clusterResourceWhitelist:
+  - group: '*'
+    kind: '*'
+  namespaceResourceBlacklist:
+  - group: ''
+    kind: 'Namespace'
+    name: 'kube-system'
+  - group: ''
+    kind: 'Namespace'
+    name: 'argocd'

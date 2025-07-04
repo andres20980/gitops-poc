@@ -1,35 +1,44 @@
-# kustomize/apps/world/overlays/pre/kustomization.yaml v2.0.0
-# Updated the namespace to match the new application name.
+# kustomize/apps/world/overlays/pre/kustomization.yaml v1.3.0
+# Kustomization for the 'world' app in the 'pre' environment.
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 bases:
   - ../../base
 
-# Updated the namespace from kustomiworld-pre to world-pre
 namespace: world-pre
+
+# Use helmCharts to override values for each component.
+helmCharts:
+  # --- Helloworld Component Overrides ---
+  - name: ../../../../components/custom/helloworld/base
+    releaseName: helloworld
+    valuesFile: ../../../../components/custom/helloworld/base/values.yaml
+    additionalValuesFiles:
+      - values-helloworld-pre.yaml
+
+  # --- Byebyeworld Component Overrides ---
+  - name: ../../../../components/custom/byebyeworld/base
+    releaseName: byebyeworld
+    valuesFile: ../../../../components/custom/byebyeworld/base/values.yaml
+    additionalValuesFiles:
+      - values-byebyeworld-pre.yaml
+
+  # --- Moon Component Overrides ---
+  - name: ../../../../components/custom/moon/base
+    releaseName: moon
+    valuesFile: ../../../../components/custom/moon/base/values.yaml
+    additionalValuesFiles:
+      - values-moon-pre.yaml
+
+  # --- Carbone Component Overrides ---
+  - name: ../../../../components/third-party/carbone/base
+    releaseName: carbone
+    valuesFile: ../../../../components/third-party/carbone/base/values.yaml
+    additionalValuesFiles:
+      - values-carbone-pre.yaml
+
+# We keep the image overrides separate for clarity.
 images:
   - name: ghcr.io/andres20980/helloworld-app
     newTag: 25f6004
-patches:
-  - patch: |-
-      - op: replace
-        path: /spec/replicas
-        value: 2
-    target:
-      kind: Deployment
-      name: helloworld
-  - patch: |-
-      - op: replace
-        path: /spec/replicas
-        value: 2
-    target:
-      kind: Deployment
-      name: byebyeworld
-  - patch: |-
-      - op: replace
-        path: /spec/replicas
-        value: 2
-    target:
-      kind: Deployment
-      name: moon

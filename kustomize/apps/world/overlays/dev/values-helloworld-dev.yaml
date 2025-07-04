@@ -1,0 +1,3 @@
+# kustomize/apps/world/overlays/dev/values-helloworld-dev.yaml v1.0.0
+# DEV-specific values for the helloworld component.
+replicaCount: 1

@@ -7,4 +7,3 @@ resources:
   - ../../../components/custom/byebyeworld/base
   - ../../../components/custom/moon/base
   - ../../../components/third-party/carbone/base
-  - ../../../base/secrets

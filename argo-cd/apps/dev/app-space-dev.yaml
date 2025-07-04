@@ -1,25 +1,21 @@
-# argo-cd/apps/app-space-dev.yaml v2.0.0
-# Content updated to reflect the new application name 'space'.
+# argocd/apps/dev/app-space-dev.yaml v2.0.0
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  # 1. Renamed the Argo CD Application
   name: space-dev
   namespace: argocd
 spec:
-  project: default
+  project: applications-dev # Assign to the dev project
   source:
     repoURL: https://github.com/andres20980/gitops-poc.git
     targetRevision: HEAD
-    # 2. Updated the path to the new directory
     path: kustomize/apps/space/overlays/dev
   destination:
     server: https://kubernetes.default.svc
-    # 3. Renamed the destination namespace for consistency
     namespace: space-dev
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
     syncOptions:
-      - CreateNamespace=true
+    - CreateNamespace=true

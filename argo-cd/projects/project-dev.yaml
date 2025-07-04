@@ -1,0 +1,27 @@
+# argocd/projects/project-dev.yaml v1.0.0
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: applications-dev
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  description: "Project for the development environment"
+  sourceRepos:
+  - 'https://github.com/andres20980/gitops-poc.git'
+  destinations:
+  - server: https://kubernetes.default.svc
+    namespace: 'space-dev'
+  - server: https://kubernetes.default.svc
+    namespace: 'world-dev'
+  clusterResourceWhitelist:
+  - group: '*'
+    kind: '*'
+  namespaceResourceBlacklist:
+  - group: ''
+    kind: 'Namespace'
+    name: 'kube-system'
+  - group: ''
+    kind: 'Namespace'
+    name: 'argocd'

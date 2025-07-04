@@ -1,17 +1,15 @@
-# argo-cd/roots/root-app-pre.yaml v1.0.0
-# Root application for the PRE environment.
+# argocd/root-apps/root-app-pre.yaml v2.0.0
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: root-app-pre
+  name: root-pre
   namespace: argocd
 spec:
-  project: default
+  project: default # The root app itself can remain in the default project
   source:
     repoURL: https://github.com/andres20980/gitops-poc.git
     targetRevision: HEAD
-    # This now points specifically to the pre apps directory.
-    path: argo-cd/apps/pre
+    path: argocd/apps/pre
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd
@@ -19,5 +17,3 @@ spec:
     automated:
       prune: true
       selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
