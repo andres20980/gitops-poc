@@ -1,13 +1,15 @@
-# kustomize/components/moon/kustomization.yaml v1.0
+# kustomize/components/moon/base/kustomization.yaml v1.2
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-# Render the local Helm chart with component-specific values.
+# Using 'name' for the local Helm chart path and updated labels syntax.
 helmCharts:
-  - name: ../../../helm-base
+  - name: ../../../../helm-base
     releaseName: moon
     valuesFile: values.yaml
 
-# Apply common labels to all generated resources.
-commonLabels:
-  app.kubernetes.io/component: moon
+# Updated 'commonLabels' to the new 'labels' syntax.
+labels:
+- pairs:
+    app.kubernetes.io/component: moon
+  includeSelectors: true
