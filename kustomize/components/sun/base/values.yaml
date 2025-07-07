@@ -1,9 +1,17 @@
-# kustomize/components/sun/base/values.yaml v2.0
-serviceName: sun
-image: nginxdemos/hello:plain-text
-replicas: 1
+# kustomize/components/sun/values.yaml v1.0
+# Specific Helm values for the 'sun' component.
+
+name: sun
+
+# Application-specific configuration.
+app:
+  image: nginxdemos/hello
+  version: plain-text
+
+# Service configuration.
 service:
-  type: ClusterIP
-  port: 80
-ingress:
+  targetPort: 80
+
+# Disable rollout for this component by default.
+rollout:
   enabled: false

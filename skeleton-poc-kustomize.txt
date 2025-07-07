@@ -1,0 +1,266 @@
+📁 Directory structure for './kustomize'
+./kustomize
+├── apps
+│   ├── space
+│   │   ├── base
+│   │   │   └── kustomization.yaml
+│   │   └── overlays
+│   │       ├── dev
+│   │       │   └── kustomization.yaml
+│   │       └── pre
+│   │           └── kustomization.yaml
+│   └── world
+│       ├── base
+│       │   └── kustomization.yaml
+│       └── overlays
+│           ├── dev
+│           │   └── kustomization.yaml
+│           └── pre
+│               └── kustomization.yaml
+├── components
+│   ├── carbone
+│   │   └── base
+│   │       ├── kustomization.yaml
+│   │       └── values.yaml
+│   ├── helloworld
+│   │   └── base
+│   │       ├── kustomization.yaml
+│   │       └── values.yaml
+│   ├── moon
+│   │   └── base
+│   │       ├── kustomization.yaml
+│   │       └── values.yaml
+│   ├── sun
+│   │   └── base
+│   │       ├── kustomization.yaml
+│   │       └── values.yaml
+│   └── world
+└── kustomize-helm.sh
+
+22 directories, 15 files
+
+📄 File contents within './kustomize' (recursive)
+
+==== ./kustomize/components/carbone/base/values.yaml ====
+# kustomize/components/carbone/values.yaml v1.0
+# Specific Helm values for the 'carbone' component.
+
+name: carbone
+
+# Application-specific configuration.
+app:
+  image: nginxdemos/hello
+  version: plain-text
+
+# Service configuration.
+service:
+  targetPort: 80
+
+# Disable rollout for this component by default.
+rollout:
+  enabled: false
+
+==== ./kustomize/components/carbone/base/kustomization.yaml ====
+# kustomize/components/carbone/kustomization.yaml v1.0
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# Render the local Helm chart with component-specific values.
+helmCharts:
+  - name: ../../../helm-base
+    releaseName: carbone
+    valuesFile: values.yaml
+
+# Apply common labels to all generated resources.
+commonLabels:
+  app.kubernetes.io/component: carbone
+
+==== ./kustomize/components/sun/base/values.yaml ====
+# kustomize/components/sun/values.yaml v1.0
+# Specific Helm values for the 'sun' component.
+
+name: sun
+
+# Application-specific configuration.
+app:
+  image: nginxdemos/hello
+  version: plain-text
+
+# Service configuration.
+service:
+  targetPort: 80
+
+# Disable rollout for this component by default.
+rollout:
+  enabled: false
+
+==== ./kustomize/components/sun/base/kustomization.yaml ====
+# kustomize/components/sun/kustomization.yaml v1.0
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# Render the local Helm chart with component-specific values.
+helmCharts:
+  - name: ../../../helm-base
+    releaseName: sun
+    valuesFile: values.yaml
+
+# Apply common labels to all generated resources.
+commonLabels:
+  app.kubernetes.io/component: sun
+==== ./kustomize/components/helloworld/base/values.yaml ====
+# kustomize/components/helloworld/values.yaml v1.0
+# Specific Helm values for the 'helloworld' component.
+
+# The 'name' will be used for metadata.name in most resources.
+# It's inherited from the releaseName in kustomization.yaml.
+name: helloworld
+
+# Application-specific configuration.
+app:
+  image: andres20980/helloworld-app
+  version: latest
+  # No specific configuration needed, will use defaults from helm-base.
+
+# Service configuration.
+service:
+  targetPort: 80
+
+# Disable rollout for this component by default.
+# It can be enabled in the environment-specific overlay.
+rollout:
+  enabled: false
+==== ./kustomize/components/helloworld/base/kustomization.yaml ====
+# kustomize/components/helloworld/kustomization.yaml v1.2
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# Render the local Helm chart with component-specific values.
+helmCharts:
+  - name: ../../../helm-base
+    releaseName: helloworld
+    valuesFile: values.yaml
+
+# Apply common labels to all generated resources.
+commonLabels:
+  app.kubernetes.io/component: helloworld
+
+==== ./kustomize/components/moon/base/values.yaml ====
+# kustomize/components/moon/values.yaml v1.0
+# Specific Helm values for the 'moon' component.
+
+name: moon
+
+# Application-specific configuration.
+app:
+  image: nginxdemos/hello
+  version: plain-text
+
+# Service configuration.
+service:
+  targetPort: 80
+
+# Disable rollout for this component by default.
+rollout:
+  enabled: false
+
+==== ./kustomize/components/moon/base/kustomization.yaml ====
+# kustomize/components/moon/kustomization.yaml v1.0
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# Render the local Helm chart with component-specific values.
+helmCharts:
+  - name: ../../../helm-base
+    releaseName: moon
+    valuesFile: values.yaml
+
+# Apply common labels to all generated resources.
+commonLabels:
+  app.kubernetes.io/component: moon
+
+==== ./kustomize/kustomize-helm.sh ====
+# kustomize/kustomize-helm.sh v1.0
+#!/bin/sh
+# This script first runs 'kustomize build' on the given path.
+# Then, it pipes the Kustomize output to 'helm template' to apply values.
+# This separates the two steps, avoiding the Kustomize bug with local chart repos.
+
+# Build the Kustomize base, which now only contains resources and values.
+kustomize build .
+==== ./kustomize/apps/space/base/kustomization.yaml ====
+# kustomize/apps/space/base/kustomization.yaml v1.0
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# List of components that form the 'space' application.
+resources:
+  - ../../../components/sun
+  - ../../../components/moon
+  - ../../../components/carbone
+
+# Apply a common label to identify all resources as part of this application.
+commonLabels:
+  app.kubernetes.io/part-of: space-app
+
+==== ./kustomize/apps/space/overlays/pre/kustomization.yaml ====
+# kustomize/apps/space/overlays/pre/kustomization.yaml v1.0
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# Inherit all resources from the base application definition.
+resources:
+  - ../../base
+
+# Specify the target namespace for the 'pre' environment.
+namespace: space-pre
+
+==== ./kustomize/apps/space/overlays/dev/kustomization.yaml ====
+# kustomize/apps/space/overlays/dev/kustomization.yaml v1.0
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# Inherit all resources from the base application definition.
+resources:
+  - ../../base
+
+# Specify the target namespace for the 'dev' environment.
+namespace: space-dev
+
+==== ./kustomize/apps/world/base/kustomization.yaml ====
+# kustomize/apps/world/base/kustomization.yaml v1.0
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# List of components that form the 'world' application.
+resources:
+  - ../../../components/helloworld
+  - ../../../components/moon
+  - ../../../components/carbone
+
+# Apply a common label to identify all resources as part of this application.
+commonLabels:
+  app.kubernetes.io/part-of: world-app
+==== ./kustomize/apps/world/overlays/pre/kustomization.yaml ====
+# kustomize/apps/world/overlays/pre/kustomization.yaml v1.0
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# Inherit all resources from the base application definition.
+resources:
+  - ../../base
+
+# Specify the target namespace for the 'pre' environment.
+namespace: world-pre
+
+==== ./kustomize/apps/world/overlays/dev/kustomization.yaml ====
+# kustomize/apps/world/overlays/dev/kustomization.yaml v1.0
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# Inherit all resources from the base application definition.
+resources:
+  - ../../base
+
+# Specify the target namespace for the 'dev' environment.
+namespace: world-dev

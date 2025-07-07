@@ -1,9 +1,21 @@
-# kustomize/components/helloworld/base/values.yaml v3.0
-serviceName: helloworld
-image: andres20980/helloworld-app:latest
-replicas: 1
+# kustomize/components/helloworld/values.yaml v1.0
+# Specific Helm values for the 'helloworld' component.
+
+# The 'name' will be used for metadata.name in most resources.
+# It's inherited from the releaseName in kustomization.yaml.
+name: helloworld
+
+# Application-specific configuration.
+app:
+  image: andres20980/helloworld-app
+  version: latest
+  # No specific configuration needed, will use defaults from helm-base.
+
+# Service configuration.
 service:
-  type: ClusterIP
-  port: 80
-ingress:
+  targetPort: 80
+
+# Disable rollout for this component by default.
+# It can be enabled in the environment-specific overlay.
+rollout:
   enabled: false
