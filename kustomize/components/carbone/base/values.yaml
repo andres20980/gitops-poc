@@ -1,4 +1,4 @@
-# kustomize/components/carbone/base/values.yaml
+# kustomize/components/carbone/base/values.yaml v1.0
 serviceName: carbone
 image: andres20980/carbone-ee-docker:latest
 replicas: 1

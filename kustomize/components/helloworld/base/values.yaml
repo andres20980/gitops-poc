@@ -1,4 +1,4 @@
-# kustomize/components/helloworld/base/values.yaml
+# kustomize/components/helloworld/base/values.yaml v3.0
 serviceName: helloworld
 image: andres20980/helloworld-app:latest
 replicas: 1

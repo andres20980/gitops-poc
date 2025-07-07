@@ -1,6 +1,6 @@
-# kustomize/components/moon/base/values.yaml
+# kustomize/components/moon/base/values.yaml v2.0
 serviceName: moon
-image: your-repo/moon-service:latest # Placeholder for moon image
+image: nginxdemos/hello:plain-text
 replicas: 1
 service:
   type: ClusterIP

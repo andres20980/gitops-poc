@@ -1,6 +1,6 @@
-# kustomize/components/sun/base/values.yaml
+# kustomize/components/sun/base/values.yaml v2.0
 serviceName: sun
-image: your-repo/sun-service:latest # Placeholder for sun image
+image: nginxdemos/hello:plain-text
 replicas: 1
 service:
   type: ClusterIP
