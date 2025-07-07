@@ -6,5 +6,5 @@ helmCharts:
 - name: msw-cic-helm-chart-base
   releaseName: world
   version: 1.0.0
-  repo: file://../../../helm-base
+  repo: ../../../helm-base
   valuesFile: values.yaml
