@@ -1,10 +1,9 @@
-# kustomize/components/helloworld/base/kustomization.yaml v1.9
+# kustomize/components/helloworld/base/kustomization.yaml v2.0
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-# Using an absolute path for debugging purposes to confirm the root cause.
 helmCharts:
-  - name: ../../../charts/helm-base
+  - name: charts/helm-base # Updated to root-relative path
     releaseName: helloworld
     valuesFile: values.yaml
 

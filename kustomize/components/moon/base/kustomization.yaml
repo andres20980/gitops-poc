@@ -1,10 +1,9 @@
-# kustomize/components/moon/base/kustomization.yaml v1.3
+# kustomize/components/moon/base/kustomization.yaml v1.4
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-# Using the simplified local path after refactoring the directory structure.
 helmCharts:
-  - name: ../../../charts/helm-base
+  - name: charts/helm-base # Updated to root-relative path
     releaseName: moon
     valuesFile: values.yaml
 
