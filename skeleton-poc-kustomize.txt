@@ -65,32 +65,32 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-  - helmrelease.yaml
+- helmrelease.yaml
 
 configMapGenerator:
-  - name: carbone-values
-    files:
-      - values.yaml
+- files:
+  - values.yaml
+  name: carbone-values
 
 patches:
-  - target:
-      group: helm.toolkit.fluxcd.io
-      version: v2beta1
-      kind: HelmRelease
-      name: carbone
-    patch: |-
-      - op: replace
-        path: /spec/chart/spec/chart
-        value: ./helm-base
-      - op: replace
-        path: /spec/chart/spec/sourceRef/kind
-        value: GitRepository
-      - op: replace
-        path: /spec/chart/spec/sourceRef/name
-        value: gitops-poc-repo # Replace with your actual Flux GitRepository name if different
-      - op: replace
-        path: /spec/valuesFrom/0/sourceRef/name
-        value: carbone-values
+- patch: |-
+    - op: replace
+      path: /spec/chart/spec/chart
+      value: ./helm-base
+    - op: replace
+      path: /spec/chart/spec/sourceRef/kind
+      value: GitRepository
+    - op: replace
+      path: /spec/chart/spec/sourceRef/name
+      value: gitops-poc-repo # Replace with your actual Flux GitRepository name if different
+    - op: replace
+      path: /spec/valuesFrom/0/sourceRef/name
+      value: carbone-values
+  target:
+    group: helm.toolkit.fluxcd.io
+    kind: HelmRelease
+    name: carbone
+    version: v2beta1
 
 ==== ./kustomize/components/carbone/base/helmrelease.yaml ====
 # kustomize/components/carbone/base/helmrelease.yaml
@@ -127,32 +127,32 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-  - helmrelease.yaml
+- helmrelease.yaml
 
 configMapGenerator:
-  - name: sun-values
-    files:
-      - values.yaml
+- files:
+  - values.yaml
+  name: sun-values
 
 patches:
-  - target:
-      group: helm.toolkit.fluxcd.io
-      version: v2beta1
-      kind: HelmRelease
-      name: sun
-    patch: |-
-      - op: replace
-        path: /spec/chart/spec/chart
-        value: ./helm-base
-      - op: replace
-        path: /spec/chart/spec/sourceRef/kind
-        value: GitRepository
-      - op: replace
-        path: /spec/chart/spec/sourceRef/name
-        value: gitops-poc-repo # Replace with your actual Flux GitRepository name if different
-      - op: replace
-        path: /spec/valuesFrom/0/sourceRef/name
-        value: sun-values
+- patch: |-
+    - op: replace
+      path: /spec/chart/spec/chart
+      value: ./helm-base
+    - op: replace
+      path: /spec/chart/spec/sourceRef/kind
+      value: GitRepository
+    - op: replace
+      path: /spec/chart/spec/sourceRef/name
+      value: gitops-poc-repo # Replace with your actual Flux GitRepository name if different
+    - op: replace
+      path: /spec/valuesFrom/0/sourceRef/name
+      value: sun-values
+  target:
+    group: helm.toolkit.fluxcd.io
+    kind: HelmRelease
+    name: sun
+    version: v2beta1
 
 ==== ./kustomize/components/sun/base/helmrelease.yaml ====
 # kustomize/components/sun/base/helmrelease.yaml
@@ -189,32 +189,32 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-  - helmrelease.yaml
+- helmrelease.yaml
 
 configMapGenerator:
-  - name: helloworld-values
-    files:
-      - values.yaml
+- files:
+  - values.yaml
+  name: helloworld-values
 
 patches:
-  - target:
-      group: helm.toolkit.fluxcd.io
-      version: v2beta1
-      kind: HelmRelease
-      name: helloworld
-    patch: |-
-      - op: replace
-        path: /spec/chart/spec/chart
-        value: ./helm-base
-      - op: replace
-        path: /spec/chart/spec/sourceRef/kind
-        value: GitRepository
-      - op: replace
-        path: /spec/chart/spec/sourceRef/name
-        value: gitops-poc-repo # Replace with your actual Flux GitRepository name if different
-      - op: replace
-        path: /spec/valuesFrom/0/sourceRef/name
-        value: helloworld-values
+- patch: |-
+    - op: replace
+      path: /spec/chart/spec/chart
+      value: ./helm-base
+    - op: replace
+      path: /spec/chart/spec/sourceRef/kind
+      value: GitRepository
+    - op: replace
+      path: /spec/chart/spec/sourceRef/name
+      value: gitops-poc-repo # Replace with your actual Flux GitRepository name if different
+    - op: replace
+      path: /spec/valuesFrom/0/sourceRef/name
+      value: helloworld-values
+  target:
+    group: helm.toolkit.fluxcd.io
+    kind: HelmRelease
+    name: helloworld
+    version: v2beta1
 
 ==== ./kustomize/components/helloworld/base/helmrelease.yaml ====
 # kustomize/components/helloworld/base/helmrelease.yaml
@@ -251,32 +251,32 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-  - helmrelease.yaml
+- helmrelease.yaml
 
 configMapGenerator:
-  - name: moon-values
-    files:
-      - values.yaml
+- files:
+  - values.yaml
+  name: moon-values
 
 patches:
-  - target:
-      group: helm.toolkit.fluxcd.io
-      version: v2beta1
-      kind: HelmRelease
-      name: moon
-    patch: |-
-      - op: replace
-        path: /spec/chart/spec/chart
-        value: ./helm-base
-      - op: replace
-        path: /spec/chart/spec/sourceRef/kind
-        value: GitRepository
-      - op: replace
-        path: /spec/chart/spec/sourceRef/name
-        value: gitops-poc-repo # Replace with your actual Flux GitRepository name if different
-      - op: replace
-        path: /spec/valuesFrom/0/sourceRef/name
-        value: moon-values
+- patch: |-
+    - op: replace
+      path: /spec/chart/spec/chart
+      value: ./helm-base
+    - op: replace
+      path: /spec/chart/spec/sourceRef/kind
+      value: GitRepository
+    - op: replace
+      path: /spec/chart/spec/sourceRef/name
+      value: gitops-poc-repo # Replace with your actual Flux GitRepository name if different
+    - op: replace
+      path: /spec/valuesFrom/0/sourceRef/name
+      value: moon-values
+  target:
+    group: helm.toolkit.fluxcd.io
+    kind: HelmRelease
+    name: moon
+    version: v2beta1
 
 ==== ./kustomize/components/moon/base/helmrelease.yaml ====
 # kustomize/components/moon/base/helmrelease.yaml
@@ -313,32 +313,32 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-  - helmrelease.yaml
+- helmrelease.yaml
 
 configMapGenerator:
-  - name: world-values
-    files:
-      - values.yaml
+- files:
+  - values.yaml
+  name: world-values
 
 patches:
-  - target:
-      group: helm.toolkit.fluxcd.io
-      version: v2beta1
-      kind: HelmRelease
-      name: world
-    patch: |-
-      - op: replace
-        path: /spec/chart/spec/chart
-        value: ./helm-base
-      - op: replace
-        path: /spec/chart/spec/sourceRef/kind
-        value: GitRepository
-      - op: replace
-        path: /spec/chart/spec/sourceRef/name
-        value: gitops-poc-repo # Replace with your actual Flux GitRepository name if different
-      - op: replace
-        path: /spec/valuesFrom/0/sourceRef/name
-        value: world-values
+- patch: |-
+    - op: replace
+      path: /spec/chart/spec/chart
+      value: ./helm-base
+    - op: replace
+      path: /spec/chart/spec/sourceRef/kind
+      value: GitRepository
+    - op: replace
+      path: /spec/chart/spec/sourceRef/name
+      value: gitops-poc-repo # Replace with your actual Flux GitRepository name if different
+    - op: replace
+      path: /spec/valuesFrom/0/sourceRef/name
+      value: world-values
+  target:
+    group: helm.toolkit.fluxcd.io
+    kind: HelmRelease
+    name: world
+    version: v2beta1
 
 ==== ./kustomize/components/world/base/helmrelease.yaml ====
 # kustomize/components/world/base/helmrelease.yaml
@@ -364,87 +364,89 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-  - ../../../components/world/base
-  - ../../../components/sun/base
-  - ../../../components/moon/base
-  - ../../../components/carbone/base
+- ../../../components/world/base
+- ../../../components/sun/base
+- ../../../components/moon/base
+- ../../../components/carbone/base
 
-commonLabels:
-  app: space-app
 
 patches:
-  - target:
-      kind: HelmRelease
-      name: world
-    patch: |-
-      - op: replace
-        path: /metadata/name
-        value: space-world
-  - target:
-      kind: HelmRelease
-      name: sun
-    patch: |-
-      - op: replace
-        path: /metadata/name
-        value: space-sun
-  - target:
-      kind: HelmRelease
-      name: moon
-    patch: |-
-      - op: replace
-        path: /metadata/name
-        value: space-moon
-  - target:
-      kind: HelmRelease
-      name: carbone
-    patch: |-
-      - op: replace
-        path: /metadata/name
-        value: space-carbone
+- patch: |-
+    - op: replace
+      path: /metadata/name
+      value: space-world
+  target:
+    kind: HelmRelease
+    name: world
+- patch: |-
+    - op: replace
+      path: /metadata/name
+      value: space-sun
+  target:
+    kind: HelmRelease
+    name: sun
+- patch: |-
+    - op: replace
+      path: /metadata/name
+      value: space-moon
+  target:
+    kind: HelmRelease
+    name: moon
+- patch: |-
+    - op: replace
+      path: /metadata/name
+      value: space-carbone
+  target:
+    kind: HelmRelease
+    name: carbone
+labels:
+- includeSelectors: true
+  pairs:
+    app: space-app
 
 ==== ./kustomize/apps/space/overlays/pre/kustomization.yaml ====
 # kustomize/apps/space/overlays/pre/kustomization.yaml
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-resources: # Changed from 'bases' to 'resources' for future compatibility
-  - ../../base
+resources:
+- ../../base
 
 namespace: space-pre
 
 patches:
-  - target:
-      kind: HelmRelease
-      name: space-world
-    patch: |-
-      - op: replace
-        path: /spec/values/ingress/enabled
-        value: true
-      - op: replace
-        path: /spec/values/ingress/host
-        value: world-pre.space.example.com
+- patch: |-
+    - op: replace
+      path: /spec/values/ingress/enabled
+      value: true
+    - op: replace
+      path: /spec/values/ingress/host
+      value: world-pre.space.example.com
+  target:
+    kind: HelmRelease
+    name: space-world
 
 ==== ./kustomize/apps/space/overlays/dev/kustomization.yaml ====
 # kustomize/apps/space/overlays/dev/kustomization.yaml
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-resources: # Changed from 'bases' to 'resources' for future compatibility
-  - ../../base
+resources:
+- ../../base
 
 namespace: space-dev
 
 patches:
-  - target:
-      kind: HelmRelease
-      name: space-world
-    patch: |-
-      - op: replace
-        path: /spec/values/ingress/enabled
-        value: true
-      - op: replace
-        path: /spec/values/ingress/host
-        value: world-dev.space.example.com
+- patch: |-
+    - op: replace
+      path: /spec/values/ingress/enabled
+      value: true
+    - op: replace
+      path: /spec/values/ingress/host
+      value: world-dev.space.example.com
+  target:
+    kind: HelmRelease
+    name: space-world
 
 ==== ./kustomize/apps/world/base/kustomization.yaml ====
 # kustomize/apps/world/base/kustomization.yaml
@@ -452,76 +454,78 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-  - ../../../components/helloworld/base
-  - ../../../components/moon/base
-  - ../../../components/carbone/base
+- ../../../components/helloworld/base
+- ../../../components/moon/base
+- ../../../components/carbone/base
 
-commonLabels:
-  app: world-app
 
 patches:
-  - target:
-      kind: HelmRelease
-      name: helloworld
-    patch: |-
-      - op: replace
-        path: /metadata/name
-        value: world-helloworld
-  - target:
-      kind: HelmRelease
-      name: moon
-    patch: |-
-      - op: replace
-        path: /metadata/name
-        value: world-moon
-  - target:
-      kind: HelmRelease
-      name: carbone
-    patch: |-
-      - op: replace
-        path: /metadata/name
-        value: world-carbone
+- patch: |-
+    - op: replace
+      path: /metadata/name
+      value: world-helloworld
+  target:
+    kind: HelmRelease
+    name: helloworld
+- patch: |-
+    - op: replace
+      path: /metadata/name
+      value: world-moon
+  target:
+    kind: HelmRelease
+    name: moon
+- patch: |-
+    - op: replace
+      path: /metadata/name
+      value: world-carbone
+  target:
+    kind: HelmRelease
+    name: carbone
+labels:
+- includeSelectors: true
+  pairs:
+    app: world-app
 
 ==== ./kustomize/apps/world/overlays/pre/kustomization.yaml ====
 # kustomize/apps/world/overlays/pre/kustomization.yaml
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-resources: # Changed from 'bases' to 'resources' for future compatibility
-  - ../../base
+resources:
+- ../../base
 
 namespace: world-pre
 
 patches:
-  - target:
-      kind: HelmRelease
-      name: world-helloworld
-    patch: |-
-      - op: replace
-        path: /spec/values/ingress/enabled
-        value: true
-      - op: replace
-        path: /spec/values/ingress/host
-        value: helloworld-pre.world.example.com
+- patch: |-
+    - op: replace
+      path: /spec/values/ingress/enabled
+      value: true
+    - op: replace
+      path: /spec/values/ingress/host
+      value: helloworld-pre.world.example.com
+  target:
+    kind: HelmRelease
+    name: world-helloworld
 
 ==== ./kustomize/apps/world/overlays/dev/kustomization.yaml ====
 # kustomize/apps/world/overlays/dev/kustomization.yaml
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-resources: # Changed from 'bases' to 'resources' for future compatibility
-  - ../../base
+resources:
+- ../../base
 
 namespace: world-dev
 
 patches:
-  - target:
-      kind: HelmRelease
-      name: world-helloworld
-    patch: |-
-      - op: replace
-        path: /spec/values/ingress/enabled
-        value: true
-      - op: replace
-        path: /spec/values/ingress/host
-        value: helloworld-dev.world.example.com
+- patch: |-
+    - op: replace
+      path: /spec/values/ingress/enabled
+      value: true
+    - op: replace
+      path: /spec/values/ingress/host
+      value: helloworld-dev.world.example.com
+  target:
+    kind: HelmRelease
+    name: world-helloworld

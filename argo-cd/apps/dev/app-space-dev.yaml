@@ -1,4 +1,4 @@
-# argo-cd/apps/dev/app-space-dev.yaml
+# argo-cd/apps/dev/app-space-dev.yaml v2.0
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -10,6 +10,12 @@ spec:
     repoURL: https://github.com/andres20980/gitops-poc.git # Replace with your repository URL
     targetRevision: HEAD
     path: kustomize/apps/space/overlays/dev
+    helm:
+      values: |
+        world:
+          ingress:
+            enabled: true
+            host: world-dev.space.example.com
   destination:
     server: https://kubernetes.default.svc
     namespace: space-dev

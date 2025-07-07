@@ -10,9 +10,12 @@
 │   │   └── pre
 │   │       ├── app-space-pre.yaml
 │   │       └── app-world-pre.yaml
-│   └── projects
-│       ├── project-dev.yaml
-│       └── project-pre.yaml
+│   ├── projects
+│   │   ├── project-dev.yaml
+│   │   └── project-pre.yaml
+│   └── roots
+│       ├── root-app-dev.yaml
+│       └── root-app-pre.yaml
 ├── export_poc_structure.sh
 ├── helm-base
 │   ├── Chart.yaml
@@ -79,7 +82,7 @@
 ├── skeleton-poc-kustomize.txt
 └── skeleton-poc-root.txt
 
-31 directories, 48 files
+32 directories, 50 files
 
 📄 File contents within '.' (recursive)
 

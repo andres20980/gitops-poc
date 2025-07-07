@@ -1,34 +1,15 @@
-# kustomize/apps/world/base/kustomization.yaml
+# kustomize/apps/world/base/kustomization.yaml v2.0
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-  - ../../../components/helloworld/base
-  - ../../../components/moon/base
-  - ../../../components/carbone/base
+- ../../../components/helloworld/base
+- ../../../components/moon/base
+- ../../../components/carbone/base
 
-commonLabels:
-  app: world-app
+namePrefix: world-
 
-patches:
-  - target:
-      kind: HelmRelease
-      name: helloworld
-    patch: |-
-      - op: replace
-        path: /metadata/name
-        value: world-helloworld
-  - target:
-      kind: HelmRelease
-      name: moon
-    patch: |-
-      - op: replace
-        path: /metadata/name
-        value: world-moon
-  - target:
-      kind: HelmRelease
-      name: carbone
-    patch: |-
-      - op: replace
-        path: /metadata/name
-        value: world-carbone
+labels:
+- includeSelectors: true
+  pairs:
+    app: world-app

@@ -1,42 +1,16 @@
-# kustomize/apps/space/base/kustomization.yaml
+# kustomize/apps/space/base/kustomization.yaml v2.0
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-  - ../../../components/world/base
-  - ../../../components/sun/base
-  - ../../../components/moon/base
-  - ../../../components/carbone/base
+- ../../../components/world/base
+- ../../../components/sun/base
+- ../../../components/moon/base
+- ../../../components/carbone/base
 
-commonLabels:
-  app: space-app
+namePrefix: space-
 
-patches:
-  - target:
-      kind: HelmRelease
-      name: world
-    patch: |-
-      - op: replace
-        path: /metadata/name
-        value: space-world
-  - target:
-      kind: HelmRelease
-      name: sun
-    patch: |-
-      - op: replace
-        path: /metadata/name
-        value: space-sun
-  - target:
-      kind: HelmRelease
-      name: moon
-    patch: |-
-      - op: replace
-        path: /metadata/name
-        value: space-moon
-  - target:
-      kind: HelmRelease
-      name: carbone
-    patch: |-
-      - op: replace
-        path: /metadata/name
-        value: space-carbone
+labels:
+- includeSelectors: true
+  pairs:
+    app: space-app

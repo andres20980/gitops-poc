@@ -1,4 +1,4 @@
-# argo-cd/apps/pre/app-world-pre.yaml
+# argo-cd/apps/pre/app-world-pre.yaml v2.0
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -10,6 +10,12 @@ spec:
     repoURL: https://github.com/andres20980/gitops-poc.git # Replace with your repository URL
     targetRevision: HEAD
     path: kustomize/apps/world/overlays/pre
+    helm:
+      values: |
+        helloworld:
+          ingress:
+            enabled: true
+            host: helloworld-pre.world.example.com
   destination:
     server: https://kubernetes.default.svc
     namespace: world-pre

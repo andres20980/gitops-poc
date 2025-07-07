@@ -7,13 +7,60 @@
 │   └── pre
 │       ├── app-space-pre.yaml
 │       └── app-world-pre.yaml
-└── projects
-    ├── project-dev.yaml
-    └── project-pre.yaml
+├── projects
+│   ├── project-dev.yaml
+│   └── project-pre.yaml
+└── roots
+    ├── root-app-dev.yaml
+    └── root-app-pre.yaml
 
-5 directories, 6 files
+6 directories, 8 files
 
 📄 File contents within './argo-cd' (recursive)
+
+==== ./argo-cd/roots/root-app-pre.yaml ====
+# argo-cd/roots/root-app-pre.yaml
+# Root application for the PRE environment using the "App of Apps" pattern
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: root-app-pre
+  namespace: argocd
+spec:
+  project: pre-project
+  source:
+    repoURL: https://github.com/andres20980/gitops-poc.git
+    targetRevision: HEAD
+    path: argo-cd/apps/pre
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+
+==== ./argo-cd/roots/root-app-dev.yaml ====
+# argo-cd/roots/root-app-dev.yaml
+# Root application for the DEV environment using the "App of Apps" pattern
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: root-app-dev
+  namespace: argocd
+spec:
+  project: dev-project
+  source:
+    repoURL: https://github.com/andres20980/gitops-poc.git
+    targetRevision: HEAD
+    path: argo-cd/apps/dev
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
 
 ==== ./argo-cd/projects/project-dev.yaml ====
 # argo-cd/projects/project-dev.yaml
@@ -30,6 +77,8 @@ spec:
   - namespace: space-dev
     server: https://kubernetes.default.svc
   - namespace: world-dev
+    server: https://kubernetes.default.svc
+  - namespace: argocd
     server: https://kubernetes.default.svc
   clusterResourceWhitelist:
   - group: '*'
@@ -53,6 +102,8 @@ spec:
   - namespace: space-pre
     server: https://kubernetes.default.svc
   - namespace: world-pre
+    server: https://kubernetes.default.svc
+  - namespace: argocd
     server: https://kubernetes.default.svc
   clusterResourceWhitelist:
   - group: '*'
