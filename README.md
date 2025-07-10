@@ -1,130 +1,147 @@
-# GitOps Proof of Concept (PoC)  
-**Version: 3.0.0**
+# GitOps PoC (Proof of Concept)
+
+## Overview
+
+This repository implements a GitOps Proof of Concept (PoC) using **Azure DevOps Pipelines**, **Helm**, **Docker**, and **Argo CD** (configured externally in [`msw-cic-argo-config`](https://dev.azure.com/mapal-software/CICD/_git/msw-cic-argo-config)).
+
+The PoC automates the full CI/CD workflow for containerized applications, leveraging Git as the **single source of truth**, with Argo CD automatically deploying any changes to Kubernetes.
 
 ---
 
-## 1. Introduction
+## 📁 Repository Structure
 
-This repository demonstrates a modern GitOps workflow using a robust stack of Cloud Native tools. It showcases best practices for application composition, continuous deployment, and progressive delivery on Kubernetes.
-
-**Core Technologies:**
-- **Argo CD:** GitOps agent that continuously syncs the Kubernetes cluster state to match the desired state in Git.
-- **Helm:** Used as the base templating engine for creating standard, reusable application definitions.
-- **Kustomize:** Declarative management and customization of the Helm-generated manifests, enabling environment-specific configurations.
-- **Argo Rollouts:** Advanced deployment strategies (Canary, Blue-Green) for safe, progressive delivery, now integrated into the base Helm chart.
-
-**Applications:**
-- `world`
-- `space`
-
-Each is composed of several microservices and configured for different deployment strategies and environments (dev, pre).
-
----
-
-## 2. Core Concepts
-
-### 2.1. GitOps with Argo CD ("App of Apps" per Environment)
-
-- **Source of Truth:** This repository is the single source of truth. All cluster changes are made via commits.
-- **Environment-Driven Management:** We use the **"App of Apps" per Environment** pattern. A root application exists for each environment (e.g., `root-app-dev`), which in turn discovers and manages all applications belonging to that environment.
-- **Automated Sync:** `syncPolicy: automated` ensures Argo CD automatically applies detected changes, keeping the cluster state in sync with Git.
-
-### 2.2. Component Management with Helm & Kustomize
-
-This PoC uses a powerful combination of Helm for templating and Kustomize for customization.
-
-- **Base Helm Chart (`helm-base/`):** A single, standardized Helm chart located in `helm-base/` defines the "shape" of all our applications. It contains templates for Kubernetes resources like `Deployments`, `Rollouts`, `Services`, `HPA`, etc.
-- **Components (`kustomize/components/`):** Each microservice is defined as a Kustomize component. However, instead of containing raw YAML, the `base` of each component now primarily contains two files:
-  1. `kustomization.yaml`: Points to the local Helm chart in `helm-base/`.
-  2. `values.yaml`: Provides the specific configuration values for that component (e.g., image name, port, rollout strategy).
-- **Application Overlays (`kustomize/apps/`):** These still compose complete applications from components and apply environment-specific patches (e.g., different image tags for `dev` vs. `pre`, replica counts, etc.).
+```
+.pipelines/                # Reusable Azure DevOps pipeline templates (YAML)
+│   └── templates/
+│       └── component-build-push.yml   # Shared CI/CD logic for all services (build, push, patch)
+├── apps/                  # Declarative Helm structure per environment
+│   └── dev/
+│       ├── app-one/       # Composite Helm chart: includes helloworld + carbone
+│       │   ├── Chart.yaml         # Declares Helm dependencies
+│       │   ├── values.yaml        # Shared values for the app
+│       │   └── values/
+│       │       ├── helloworld.yaml    # Component-specific values (image repo, tag, replicas)
+│       │       └── carbone.yaml
+│       └── app-two/       # Helm chart using only carbone as a dependency
+│           ├── Chart.yaml
+│           ├── values.yaml
+│           ├── values/
+│           │   └── carbone.yaml
+│           └── kustomization.yaml     # Optional: Helm chart definition via Kustomize
+├── services/              # Application source code and individual pipelines
+│   ├── helloworld-app/    # Simple internal Python app
+│   │   ├── Dockerfile
+│   │   ├── app.py
+│   │   └── azure-pipelines.yml    # GitOps-compliant CI pipeline
+│   └── carbone-ee-docker/ # Custom Carbone image with plugins, LibreOffice, fonts
+│       ├── Dockerfile
+│       ├── azure-pipeline.yml
+│       └── deployement/   # Optional: alternative deploy targets (ECS, ACA, docker-compose)
+├── export_poc_structure.sh    # Script to export the current repo structure and contents
+└── README.md                  # You're reading it!
+```
 
 ---
 
-## 3. Advanced Deployment Strategies with Argo Rollouts
+## 🔄 GitOps Workflow
 
-Progressive delivery is now built into our base Helm chart and can be enabled and configured via each component's `values.yaml` file.
+### 1. Source Code Changes
 
-### 3.1. Canary Release
+Developers commit code to `services/<name>/`.
 
-**Configuration:** In a component's `values.yaml`, set:
+### 2. Azure DevOps Pipeline Execution
+
+Each service has its own pipeline file which extends the shared template:
+
+- Builds the Docker image
+- Pushes it to Azure Container Registry (ACR)
+- Patches the related `apps/dev/**/values/<component>.yaml` with the new image tag
+- Commits and pushes the update back to the `main` branch
+
+### 3. Argo CD Sync
+
+Defined in the external repo [`msw-cic-argo-config`](https://dev.azure.com/mapal-software/CICD/_git/msw-cic-argo-config), Argo CD Applications are configured like this:
 
 ```yaml
-rollout:
-  enabled: true
-  strategy: "Canary"
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+    name: app-one-dev
+spec:
+    source:
+        repoURL: https://dev.azure.com/mapal-software/CICD/_git/msw-cic-gitops-poc
+        path: apps/dev/app-one
+        helm:
+            valueFiles:
+                - values/helloworld.yaml
+                - values/carbone.yaml
+    destination:
+        namespace: app-one-dev
+    syncPolicy:
+        automated:
+            prune: true
+            selfHeal: true
 ```
 
-This instructs the Helm chart to generate a Rollout resource with a Canary strategy and its required services.
-
-### 3.2. Blue-Green Deployment
-
-**Configuration:** In a component's `values.yaml`, set:
-
-```yaml
-rollout:
-  enabled: true
-  strategy: "BlueGreen"
-```
-
-This instructs the Helm chart to generate a Rollout resource with a Blue-Green strategy and its required active and preview services.
+Argo CD detects changes and auto-syncs to the Kubernetes cluster.
 
 ---
 
-## 4. Project Structure
+## 📦 Helm Usage
 
-```
-.
-├── argo-cd/
-│   ├── apps/
-│   │   ├── dev/            # Argo CD Application manifests for DEV
-│   │   └── pre/            # Argo CD Application manifests for PRE
-│   └── roots/
-│       ├── root-app-dev.yaml # Root App that manages everything in dev/
-│       └── root-app-pre.yaml # Root App that manages everything in pre/
-├── helm-base/                # The single, shared Helm Chart for all components
-│   ├── Chart.yaml
-│   ├── templates/
-│   └── values.yaml
-├── kustomize/
-│   ├── apps/                 # Application definitions
-│   │   └── ...
-│   ├── components/           # Reusable components
-│   │   └── custom/
-│   │      └── helloworld/
-│   │          └── base/
-│   │              ├── kustomization.yaml # -> Points to helm-base
-│   │              └── values.yaml      # -> Configures helloworld
-│   └── ...
-└── services/                 # Docker build context and source code
-  └── ...
-```
+Each application in `apps/dev/` is a Helm composite chart with:
 
----
+- A `Chart.yaml` defining dependencies
+- A shared `values.yaml` (global config for the app)
+- One YAML file per dependency inside the `values/` directory (e.g., `carbone.yaml`, `helloworld.yaml`)
 
-## 5. How to Deploy
-
-**Prerequisites:**
-- Running Kubernetes cluster
-- Argo CD and Argo Rollouts installed
-
-**Deployment Commands:**
-
-With the new "App of Apps" per environment structure, you only need to apply the root application for the environment you want to deploy.
+**Rendering an app manually (for local testing):**
 
 ```bash
-# Deploy EVERYTHING for the DEV environment
-kubectl apply -f argo-cd/roots/root-app-dev.yaml
-
-# Deploy EVERYTHING for the PRE environment
-kubectl apply -f argo-cd/roots/root-app-pre.yaml
+helm dependency build apps/dev/app-one
+helm upgrade --install app-one apps/dev/app-one \
+    -f apps/dev/app-one/values.yaml \
+    -f apps/dev/app-one/values/helloworld.yaml \
+    -f apps/dev/app-one/values/carbone.yaml
 ```
-
-Argo CD will detect the root application, which will then automatically discover and deploy all child applications defined in the corresponding `argo-cd/apps/` subdirectory.
 
 ---
 
-### Managing Applications
+## ⚙️ Pipeline Template
 
-- **To add a new app to an environment:** Add its `app-name.yaml` manifest to the correct subdirectory (e.g., `argo-cd/apps/dev/`) and commit. The root app will deploy it automatically.
-- **To remove an app from an environment:** Delete its `app-name.yaml` manifest from the Git repository and commit. The root app, thanks to `prune: true`, will remove it from the cluster automatically.
+The shared pipeline logic lives in:
+
+- `.pipelines/templates/component-build-push.yml`
+
+This template:
+
+- Logs in to ACR
+- Builds and pushes Docker images
+- Automatically updates `Helm values/<component>.yaml` with the new tag
+- Commits & pushes changes to main if values changed
+
+Pipelines for each service reference this template and provide parameters like `serviceName`, `chartBaseVersion`, etc.
+
+---
+
+## 🛠️ Requirements
+
+- Azure DevOps with service connections to ACR
+- Azure Container Registry (with OCI Helm chart support)
+- Kubernetes cluster with Argo CD installed
+- Argo CD config in external repo: `msw-cic-argo-config`
+- Tools: `helm`, `yq` (v4+), `kubectl`, `git`
+
+---
+
+## ✅ Summary
+
+This PoC enables a production-grade GitOps workflow with:
+
+- Declarative Helm-based app definitions
+- CI/CD with image build + GitOps patching via Azure Pipelines
+- Argo CD auto-sync from Git to Kubernetes
+
+All deployments are driven by Git, and any new commit to `main` is automatically rolled out to the cluster by Argo CD.
+
+---

@@ -1,0 +1,31 @@
+# azure-pipelines.yml v3.0.0 - adapted to GitOps DRY model
+trigger:
+  branches:
+    include:
+      - main
+  tags:
+    include:
+      - v*.*.*
+  paths:
+    include:
+      - services/helloworld-app/**
+
+variables:
+  ACR_REGISTRY_URL: amsdvpallacratlantis.azurecr.io
+  ACR_SERVICE_CONN: ams-gbl-dvp-all-weu-atlantis-rg-acr
+  SOURCE_VERSION_SHORT_ENV: $[substring(variables['Build.SourceVersion'], 0, 7)]
+
+pool:
+  name: ams-gbl-dvp-nlv-weu-pipelines-vmss-ubuntu2204
+
+extends:
+  template: ../../.pipelines/templates/component-build-push.yml@self
+  parameters:
+    serviceName: 'helloworld-app'
+    servicePath: 'services/helloworld-app'
+    acrRegistry: $(ACR_REGISTRY_URL)
+    acrServiceConnection: $(ACR_SERVICE_CONN)
+    sourceVersionShort: $(SOURCE_VERSION_SHORT_ENV)
+    chartBaseOciUrl: "oci://amsdvpallacratlantis.azurecr.io/helm/chart-base"
+    chartBaseVersion: "1.2.1"
+    componentName: 'helloworld'

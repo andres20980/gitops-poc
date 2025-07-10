@@ -1,0 +1,15 @@
+apiVersion: v2
+name: app-one
+description: Composite chart for app-one
+type: application
+version: 0.1.0
+appVersion: "1.0.0"
+dependencies:
+  - name: chart-base
+    alias: helloworld
+    version: "1.2.1"
+    repository: "oci://amsdvpallacratlantis.azurecr.io/helm"
+  - name: chart-base
+    alias: carbone
+    version: "1.2.1"
+    repository: "oci://amsdvpallacratlantis.azurecr.io/helm"

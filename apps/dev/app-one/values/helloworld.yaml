@@ -1,0 +1,4 @@
+image:
+  repository: amsdvpallacratlantis.azurecr.io/helloworld-app
+  tag: 264aeda
+replicaCount: 1

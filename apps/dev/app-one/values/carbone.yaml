@@ -1,0 +1,4 @@
+image:
+  repository: amsdvpallacratlantis.azurecr.io/carbone
+  tag: 5992b56
+replicaCount: 2
