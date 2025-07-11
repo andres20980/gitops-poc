@@ -1,4 +1,4 @@
-# argodeploy/applications.yaml v1.1
+# argodeploy/applications.yaml v1.3
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
@@ -22,18 +22,19 @@ spec:
       source:
         repoURL: 'oci://ghcr.io/andres20980/chart-base' # Apunta directamente al chart-base remoto
         targetRevision: 1.2.1 # La versión específica del chart-base
-        chart: chart-base # El nombre del chart dentro del repositorio OCI
+        # NOTA: Se elimina la línea 'chart: chart-base'
         helm:
           valueFiles:
-            # Estos paths son relativos al repoURL del ApplicationSet (tu gitops-poc.git)
+            - '{{path}}/common-values.yaml' # Añadido en v1.2 si no lo tenias
             - '{{path}}/values.yaml'
-            - '{{path}}/values-dev.yaml' # Para entornos de desarrollo
+            - '{{path}}/values-dev.yaml'
+            - '{{path}}/values-pre.yaml' # Añadido en v1.2 si no lo tenias
       destination:
         server: 'https://kubernetes.default.svc'
-        namespace: '{{path.basename}}' # Crea un namespace por aplicación (ej: pdf-processor, world)
+        namespace: '{{path.basename}}'
       syncPolicy:
         automated:
           prune: true
           selfHeal: true
         syncOptions:
-          - CreateNamespace=true # Asegúrate de que el namespace exista
+          - CreateNamespace=true
