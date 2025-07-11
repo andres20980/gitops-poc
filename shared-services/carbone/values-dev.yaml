@@ -1,7 +1,7 @@
 # Valores específicos para desarrollo
 chart-base:
   app:
-    version: dev-build
+    version: local-v1
   replicaCount: 1
   resources:
     limits:
