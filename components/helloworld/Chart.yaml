@@ -1,0 +1,11 @@
+apiVersion: v2
+name: helloworld
+description: Wrapper chart for helloworld using chart-base
+type: application
+version: 0.1.0
+appVersion: "local-v1"
+
+dependencies:
+  - name: chart-base
+    version: "1.2.1"
+    repository: "oci://ghcr.io/andres20980"

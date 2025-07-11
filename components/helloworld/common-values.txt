@@ -1,4 +1,0 @@
-# components/helloworld/common-values.yaml v1.0
-# Valores comunes para todos los entornos de Helloworld
-env:
-  DEBUG: "true"

@@ -1,0 +1,3 @@
+chart-base:
+  env:
+    DEBUG: "true"

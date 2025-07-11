@@ -1,0 +1,2 @@
+chart-base:
+  replicaCount: 2

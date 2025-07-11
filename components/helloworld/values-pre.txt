@@ -1,3 +1,0 @@
-# components/helloworld/values-pre.yaml v1.0
-# Sobreescrituras para el entorno de preproducción de Helloworld
-replicaCount: 2

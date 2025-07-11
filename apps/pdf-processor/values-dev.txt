@@ -1,7 +1,0 @@
-# apps/pdf-processor/values-dev.yaml v1.0
-# Sobreescrituras para el entorno de desarrollo de pdf-processor
-# Por ejemplo, una imagen de desarrollo o más replicas
-image:
-  tag: dev
-
-replicaCount: 2

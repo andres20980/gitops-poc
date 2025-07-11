@@ -1,0 +1,3 @@
+chart-base:
+  app:
+  replicaCount: 1

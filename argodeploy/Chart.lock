@@ -1,6 +1,0 @@
-dependencies:
-- name: chart-base
-  repository: oci://ghcr.io/andres20980
-  version: 1.2.1
-digest: sha256:a4793b4571a08ad4997bd33b22868291ff024ba8053c52e6196fa3b74c13372c
-generated: "2025-07-11T09:54:22.622795344+02:00"

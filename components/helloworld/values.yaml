@@ -1,0 +1,21 @@
+chart-base:
+  nameOverride: helloworld
+
+  affinity: {}
+  nodeSelector: {}
+  tolerations: []
+
+  app:
+    registry: ghcr.io/andres20980
+    image: helloworld-app
+    version: local-v1
+
+  replicaCount: 1
+
+  service:
+    type: ClusterIP
+    port: 5000
+    targetPort: 5000
+
+  carbone:
+    enabled: false
