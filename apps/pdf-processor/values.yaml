@@ -1,0 +1,20 @@
+# apps/pdf-processor/values.yaml v1.0
+# Valores de ejemplo para el chart-base de pdf-processor
+# Ajusta esto para que coincida con lo que tu chart-base espera
+image:
+  repository: ghcr.io/andres20980/pdf-processor-placeholder # Imagen de tu app
+  tag: latest
+
+carbone:
+  enabled: true
+  image: ghcr.io/andres20980/carbone:local-v1
+  replicaCount: 1
+  service:
+    type: ClusterIP
+    port: 80
+
+# Otras configuraciones que el chart-base espera...
+replicaCount: 1
+service:
+  type: ClusterIP
+  port: 80

@@ -1,0 +1,39 @@
+# argodeploy/applications.yaml v1.1
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: gitops-poc-applications
+  namespace: argocd
+spec:
+  generators:
+    - git:
+        repoURL: 'https://github.com/andres20980/gitops-poc.git'
+        revision: HEAD
+        directories:
+          - path: apps/*
+  template:
+    metadata:
+      name: '{{path.basename}}-app' # Ej: pdf-processor-app, world-app
+      labels:
+        app.kubernetes.io/managed-by: argocd
+        app.kubernetes.io/part-of: gitops-poc
+    spec:
+      project: default
+      source:
+        repoURL: 'oci://ghcr.io/andres20980/chart-base' # Apunta directamente al chart-base remoto
+        targetRevision: 1.2.1 # La versión específica del chart-base
+        chart: chart-base # El nombre del chart dentro del repositorio OCI
+        helm:
+          valueFiles:
+            # Estos paths son relativos al repoURL del ApplicationSet (tu gitops-poc.git)
+            - '{{path}}/values.yaml'
+            - '{{path}}/values-dev.yaml' # Para entornos de desarrollo
+      destination:
+        server: 'https://kubernetes.default.svc'
+        namespace: '{{path.basename}}' # Crea un namespace por aplicación (ej: pdf-processor, world)
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true # Asegúrate de que el namespace exista
