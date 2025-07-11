@@ -9,6 +9,9 @@ chart-base:
     registry: ghcr.io/andres20980
     image: helloworld-app
     version: local-v1
+    env:
+      - name: CARBONE_URL
+        value: http://shcomp-carbone.shared-services.svc.cluster.local:8080
 
   replicaCount: 1
 
@@ -18,4 +21,4 @@ chart-base:
     targetPort: 5000
 
   carbone:
-    enabled: false
+    enabled: true

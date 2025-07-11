@@ -23,3 +23,4 @@ spec:
       selfHeal: true  # Reparar recursos que están fuera de sincronización
     syncOptions:
       - CreateNamespace=true  # Crear automáticamente el namespace si no existe
+

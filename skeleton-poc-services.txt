@@ -1,0 +1,281 @@
+📁 Directory structure for './services'
+./services
+├── carbone-ee-docker
+│   ├── .dockerignore
+│   ├── .github
+│   │   └── workflows
+│   │       └── publish.yml
+│   ├── BUILD.md
+│   ├── Dockerfile
+│   ├── Dockerfile-fonts
+│   ├── Dockerfile-slim
+│   ├── LibreOffice_24.8.4.2_Linux_x86-64_deb.tar.gz
+│   ├── README.md
+│   ├── azure-pipeline.yml
+│   ├── deployement
+│   │   ├── aws-ecs
+│   │   │   ├── README.md
+│   │   │   └── ecs.tf
+│   │   ├── azure-container-apps
+│   │   │   ├── Readme.md
+│   │   │   └── azure.tf
+│   │   └── docker-compose
+│   │       ├── multiInstance
+│   │       │   ├── docker-compose.yml
+│   │       │   └── nginx.conf
+│   │       └── simple
+│   │           └── docker-compose.yml
+│   ├── docker-entrypoint.sh
+│   ├── documentation.md
+│   └── fonts
+│       ├── aptos-fonts
+│       │   ├── Aptos-Black-Italic.ttf
+│       │   ├── Aptos-Black.ttf
+│       │   ├── Aptos-Bold-Italic.ttf
+│       │   ├── Aptos-Bold.ttf
+│       │   ├── Aptos-Display-Bold-Italic.ttf
+│       │   ├── Aptos-Display-Bold.ttf
+│       │   ├── Aptos-Display-Italic.ttf
+│       │   ├── Aptos-Display.ttf
+│       │   ├── Aptos-ExtraBold-Italic.ttf
+│       │   ├── Aptos-ExtraBold.ttf
+│       │   ├── Aptos-Italic.ttf
+│       │   ├── Aptos-Light-Italic.ttf
+│       │   ├── Aptos-Light.ttf
+│       │   ├── Aptos-Mono-Bold-Italic.ttf
+│       │   ├── Aptos-Mono-Bold.ttf
+│       │   ├── Aptos-Mono-Italic.ttf
+│       │   ├── Aptos-Mono.ttf
+│       │   ├── Aptos-Narrow-Bold-Italic.ttf
+│       │   ├── Aptos-Narrow-Bold.ttf
+│       │   ├── Aptos-Narrow-Italic.ttf
+│       │   ├── Aptos-Narrow.ttf
+│       │   ├── Aptos-SemiBold-Italic.ttf
+│       │   ├── Aptos-SemiBold.ttf
+│       │   ├── Aptos-Serif-Bold-Italic.ttf
+│       │   ├── Aptos-Serif-Bold.ttf
+│       │   ├── Aptos-Serif-Italic.ttf
+│       │   ├── Aptos-Serif.ttf
+│       │   └── Aptos.ttf
+│       ├── msttcorefonts
+│       │   ├── Andale_Mono.ttf
+│       │   ├── Arial_Black.ttf
+│       │   ├── Arial_Bold.ttf
+│       │   ├── Arial_Bold_Italic.ttf
+│       │   ├── Arial_Italic.ttf
+│       │   ├── Comic_Sans_MS.ttf
+│       │   ├── Comic_Sans_MS_Bold.ttf
+│       │   ├── Courier_New.ttf
+│       │   ├── Courier_New_Bold.ttf
+│       │   ├── Courier_New_Bold_Italic.ttf
+│       │   ├── Courier_New_Italic.ttf
+│       │   ├── Georgia_Bold.ttf
+│       │   ├── Georgia_Bold_Italic.ttf
+│       │   ├── Georgia_Italic.ttf
+│       │   ├── Times_New_Roman.ttf
+│       │   ├── Times_New_Roman_Bold.ttf
+│       │   ├── Times_New_Roman_Bold_Italic.ttf
+│       │   ├── Times_New_Roman_Italic.ttf
+│       │   ├── Trebuchet_MS.ttf
+│       │   ├── Trebuchet_MS_Bold.ttf
+│       │   ├── Trebuchet_MS_Bold_Italic.ttf
+│       │   ├── Trebuchet_MS_Italic.ttf
+│       │   ├── Verdana_Bold.ttf
+│       │   ├── Verdana_Bold_Italic.ttf
+│       │   ├── Verdana_Italic.ttf
+│       │   ├── andalemo.ttf -> Andale_Mono.ttf
+│       │   ├── arial.ttf
+│       │   ├── arialbd.ttf -> Arial_Bold.ttf
+│       │   ├── arialbi.ttf -> Arial_Bold_Italic.ttf
+│       │   ├── ariali.ttf -> Arial_Italic.ttf
+│       │   ├── ariblk.ttf -> Arial_Black.ttf
+│       │   ├── comic.ttf -> Comic_Sans_MS.ttf
+│       │   ├── comicbd.ttf -> Comic_Sans_MS_Bold.ttf
+│       │   ├── cour.ttf -> Courier_New.ttf
+│       │   ├── courbd.ttf -> Courier_New_Bold.ttf
+│       │   ├── courbi.ttf -> Courier_New_Bold_Italic.ttf
+│       │   ├── couri.ttf -> Courier_New_Italic.ttf
+│       │   ├── georgia.ttf
+│       │   ├── georgiab.ttf -> Georgia_Bold.ttf
+│       │   ├── georgiai.ttf -> Georgia_Italic.ttf
+│       │   ├── georgiaz.ttf -> Georgia_Bold_Italic.ttf
+│       │   ├── impact.ttf
+│       │   ├── times.ttf -> Times_New_Roman.ttf
+│       │   ├── timesbd.ttf -> Times_New_Roman_Bold.ttf
+│       │   ├── timesbi.ttf -> Times_New_Roman_Bold_Italic.ttf
+│       │   ├── timesi.ttf -> Times_New_Roman_Italic.ttf
+│       │   ├── trebuc.ttf -> Trebuchet_MS.ttf
+│       │   ├── trebucbd.ttf -> Trebuchet_MS_Bold.ttf
+│       │   ├── trebucbi.ttf -> Trebuchet_MS_Bold_Italic.ttf
+│       │   ├── trebucit.ttf -> Trebuchet_MS_Italic.ttf
+│       │   ├── verdana.ttf
+│       │   ├── verdanab.ttf -> Verdana_Bold.ttf
+│       │   ├── verdanai.ttf -> Verdana_Italic.ttf
+│       │   ├── verdanaz.ttf -> Verdana_Bold_Italic.ttf
+│       │   └── webdings.ttf
+│       └── ppviewer
+│           ├── calibri.ttf
+│           ├── calibrib.ttf
+│           ├── calibrii.ttf
+│           ├── calibriz.ttf
+│           ├── cambria.ttc
+│           ├── cambriab.ttf
+│           ├── cambriai.ttf
+│           ├── cambriaz.ttf
+│           ├── candara.ttf
+│           ├── candarab.ttf
+│           ├── candarai.ttf
+│           ├── candaraz.ttf
+│           ├── consola.ttf
+│           ├── consolab.ttf
+│           ├── consolai.ttf
+│           ├── consolaz.ttf
+│           ├── constan.ttf
+│           ├── constanb.ttf
+│           ├── constani.ttf
+│           ├── constanz.ttf
+│           ├── corbel.ttf
+│           ├── corbelb.ttf
+│           ├── corbeli.ttf
+│           ├── corbelz.ttf
+│           ├── meiryo.ttc
+│           └── meiryob.ttc
+└── helloworld-app
+    ├── Dockerfile
+    ├── app.py
+    ├── azure-pipelines.yml
+    └── requirements.txt
+
+15 directories, 131 files
+
+📄 File contents within './services' (recursive)
+
+==== ./services/carbone-ee-docker/Dockerfile ====
+FROM debian:stable-slim AS downloader
+ARG TARGETARCH
+ARG LO_VERSION="24.8.4.2"
+ARG ARCH=${TARGETARCH/arm64/aarch64}
+ARG ARCH=${ARCH/amd64/x86-64}
+COPY LibreOffice_24.8.4.2_Linux_x86-64_deb.tar.gz /libreoffice.tar.gz
+
+FROM node:18 AS s3_plugin_install
+RUN git clone https://github.com/carboneio/carbone-ee-plugin-s3.git && \
+	cd carbone-ee-plugin-s3 && npm ci --omit=dev && rm -R test
+
+FROM node:18 AS azure_plugin_install
+RUN git clone https://github.com/carboneio/carbone-ee-plugin-azure-storage-blob.git && \
+	cd carbone-ee-plugin-azure-storage-blob && npm i && npm ci --omit=dev
+
+FROM debian:stable-slim
+
+ARG TARGETPLATFORM
+ARG TARGETARCH
+ARG CARBONE_VERSION="4.25.5"
+
+LABEL carbone.version=${CARBONE_VERSION}
+
+WORKDIR /tmp
+RUN apt update && \
+    apt install -y libfreetype6 fontconfig libgssapi-krb5-2 && \
+    rm -rf /var/lib/apt/lists/*
+
+# Create Carbone user
+RUN adduser carbone --home /app --no-create-home --disabled-password --system
+
+# Copy the local binary into the image folder "app"
+ENV APP_ROOT=/app/
+RUN mkdir ${APP_ROOT} && chown -R carbone:nogroup ${APP_ROOT}
+
+WORKDIR ${APP_ROOT}
+
+ADD --chown=carbone:nogroup --chmod=755 https://bin.carbone.io/carbone/carbone-ee-${CARBONE_VERSION}-linux-${TARGETARCH/amd64/x64} ./carbone-ee-linux
+
+COPY --chown=carbone:nogroup --chmod=755 ./docker-entrypoint.sh ./docker-entrypoint.sh
+
+# Include plugins
+COPY --chown=carbone:nogroup --from=s3_plugin_install carbone-ee-plugin-s3 /app/plugin-s3/
+COPY --chown=carbone:nogroup --from=azure_plugin_install carbone-ee-plugin-azure-storage-blob /app/plugin-azure/
+
+# Download and install LibreOffice
+RUN --mount=type=bind,from=downloader,target=/tmp/libreoffice.tar.gz,source=libreoffice.tar.gz \
+	tar -zxf /tmp/libreoffice.tar.gz && \
+	dpkg -i LibreOffice*_Linux_*_deb/DEBS/*.deb && \
+	rm -r LibreOffice*
+
+# Include basic fonts
+COPY --chown=carbone:nogroup fonts /usr/share/fonts/
+RUN fc-cache -f -v
+
+USER carbone
+
+RUN mkdir /app/template && mkdir /app/render && mkdir /app/config && mkdir /app/asset && mkdir /app/plugin
+
+EXPOSE 4000/tcp
+
+ENTRYPOINT ["./docker-entrypoint.sh"]
+
+CMD ["webserver"]
+
+==== ./services/helloworld-app/Dockerfile ====
+# services/helloworld-app/Dockerfile v1.0.0
+# Use a multi-stage build to keep the final image small and secure.
+
+# ---- Builder Stage ----
+# This stage installs dependencies.
+FROM python:3.9-slim as builder
+
+WORKDIR /app
+
+# Install build dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# ---- Final Stage ----
+# This stage copies the installed dependencies and the application code.
+FROM python:3.9-slim
+
+WORKDIR /app
+
+# Copy dependencies from the builder stage
+COPY --from=builder /usr/local/lib/python3.9/site-packages /usr/local/lib/python3.9/site-packages
+
+# Copy the application code
+COPY app.py .
+
+# Expose the port the app runs on
+EXPOSE 8080
+
+# Command to run the application
+CMD ["python", "app.py"]
+==== ./services/helloworld-app/azure-pipelines.yml ====
+# azure-pipelines.yml v3.0.0 - adapted to GitOps DRY model
+trigger:
+  branches:
+    include:
+      - main
+  tags:
+    include:
+      - v*.*.*
+  paths:
+    include:
+      - services/helloworld-app/**
+
+variables:
+  ACR_REGISTRY_URL: amsdvpallacratlantis.azurecr.io
+  ACR_SERVICE_CONN: ams-gbl-dvp-all-weu-atlantis-rg-acr
+  SOURCE_VERSION_SHORT_ENV: $[substring(variables['Build.SourceVersion'], 0, 7)]
+
+pool:
+  name: ams-gbl-dvp-nlv-weu-pipelines-vmss-ubuntu2204
+
+extends:
+  template: ../../.pipelines/templates/component-build-push.yml@self
+  parameters:
+    serviceName: 'helloworld-app'
+    servicePath: 'services/helloworld-app'
+    acrRegistry: $(ACR_REGISTRY_URL)
+    acrServiceConnection: $(ACR_SERVICE_CONN)
+    sourceVersionShort: $(SOURCE_VERSION_SHORT_ENV)
+    chartBaseOciUrl: "oci://amsdvpallacratlantis.azurecr.io/helm/chart-base"
+    chartBaseVersion: "1.2.1"
+    componentName: 'helloworld'

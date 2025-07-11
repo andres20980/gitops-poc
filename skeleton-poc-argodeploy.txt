@@ -1,0 +1,135 @@
+📁 Directory structure for './argodeploy'
+./argodeploy
+├── applications.yaml
+├── funcional
+│   ├── Chart.yaml
+│   ├── test-application.yaml
+│   └── values.yaml
+└── shared-services.yaml
+
+2 directories, 5 files
+
+📄 File contents within './argodeploy' (recursive)
+
+==== ./argodeploy/shared-services.yaml ====
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: shared-services-set
+  namespace: argocd
+spec:
+  generators:
+    - git:
+        repoURL: https://github.com/andres20980/gitops-poc.git
+        revision: main
+        directories:
+          - path: shared-services/*
+  template:
+    metadata:
+      name: 'shcomp-{{path.basename}}'
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/andres20980/gitops-poc.git
+        targetRevision: main
+        path: '{{path}}'   # Ruta del repositorio Git donde están los valores
+        helm:
+          valueFiles:
+            - values.yaml
+            - common-values.yaml
+            - values-dev.yaml
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: shared-services
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+
+==== ./argodeploy/funcional/values.yaml ====
+chart-base:
+  nameOverride: helloworld
+  affinity: {}
+  nodeSelector: {}
+  tolerations: []
+  app:
+    registry: ghcr.io/andres20980
+    image: helloworld-app
+    version: local-v1
+  replicaCount: 1
+  service:
+    type: ClusterIP
+    port: 5000
+    targetPort: 5000
+  carbone:
+    enabled: false
+
+==== ./argodeploy/funcional/Chart.yaml ====
+apiVersion: v2
+name: wrapper-chart
+version: 0.1.0
+
+dependencies:
+  - name: chart-base
+    version: "1.2.1"
+    repository: "oci://ghcr.io/andres20980"
+
+==== ./argodeploy/funcional/test-application.yaml ====
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: helloworld-test-app
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/andres20980/gitops-poc.git
+    path: argodeploy
+    targetRevision: main
+    helm:
+      valueFiles:
+        - values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: test-helloworld
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+
+==== ./argodeploy/applications.yaml ====
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: apps-main-set
+  namespace: argocd
+spec:
+  generators:
+    - git:
+        repoURL: https://github.com/andres20980/gitops-poc.git
+        revision: main
+        directories:
+          - path: apps/*  # Este patrón busca todas las aplicaciones en ./apps/X
+  template:
+    metadata:
+      name: 'app-{{path.basename}}'
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/andres20980/gitops-poc.git
+        targetRevision: main
+        path: '{{path}}/services'  # Ahora apuntamos a /services dentro de cada aplicación
+        helm:
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{path.basename}}'  # El namespace será el nombre de la aplicación
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true

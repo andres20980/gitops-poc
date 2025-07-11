@@ -24,6 +24,7 @@ spec:
             - values.yaml
             - common-values.yaml
             - values-dev.yaml
+            - ../values-gitops.yaml
       destination:
         server: https://kubernetes.default.svc
         namespace: shared-services
