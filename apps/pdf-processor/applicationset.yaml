@@ -7,18 +7,17 @@ spec:
   generators:
     - list:
         elements:
-          - name: carbone-shcomp  # Aquí se refiere a la app ya existente
-            path: shared-services/carbone  # Esto es solo para propósitos de organización
-            namespace: pdf-processor-dev  # Usar el namespace donde se debe desplegar el app
+          - name: carbone-shcomp  # Esta es la referencia al componente ya existente
+            namespace: shared-services  # Aquí está el namespace donde el componente ya está desplegado
   template:
     metadata:
-      name: '{{name}}-app'  # Se sigue utilizando el nombre del componente como parte del nombre
+      name: 'pdf-processor-app'  # Nombre de la app que consume el componente 'carbone-shcomp'
     spec:
       project: default
       source:
         repoURL: https://github.com/andres20980/gitops-poc.git
         targetRevision: main
-        path: '{{path}}'  # Esto sigue siendo para la ruta en Git
+        path: apps/pdf-processor  # Ruta de la app pdf-processor
         helm:
           valueFiles:
             - values.yaml
@@ -26,7 +25,7 @@ spec:
             - values-dev.yaml
       destination:
         server: https://kubernetes.default.svc
-        namespace: '{{namespace}}'  # Aquí se refiere al namespace 'pdf-processor-dev' o el que corresponda
+        namespace: pdf-processor-dev  # El namespace de 'pdf-processor'
       syncPolicy:
         automated:
           prune: true
