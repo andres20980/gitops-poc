@@ -1,3 +1,12 @@
-# components/carbone/values-pre.yaml v1.0
-# Sobreescrituras para el entorno de preproducción de Carbone
-replicaCount: 2 # Más réplicas para pre-producción
+# Valores específicos para preproducción
+chart-base:
+  app:
+    version: pre-build
+  replicaCount: 2
+  resources:
+    limits:
+      cpu: 300m
+      memory: 384Mi
+    requests:
+      cpu: 150m
+      memory: 192Mi

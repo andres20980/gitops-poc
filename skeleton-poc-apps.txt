@@ -1,0 +1,87 @@
+📁 Directory structure for './apps'
+./apps
+├── pdf-processor
+│   └── applicationset.yaml
+└── world
+    └── applicationset.yaml
+
+3 directories, 2 files
+
+📄 File contents within './apps' (recursive)
+
+==== ./apps/pdf-processor/applicationset.yaml ====
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: pdf-processor-app
+  namespace: argocd
+spec:
+  generators:
+    - list:
+        elements:
+          - name: carbone
+            path: components/carbone
+            namespace: pdf-processor-dev
+  template:
+    metadata:
+      name: '{{name}}-app'
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/andres20980/gitops-poc.git
+        targetRevision: main
+        path: '{{path}}'
+        helm:
+          valueFiles:
+            - values.yaml
+            - common-values.yaml
+            - values-dev.yaml
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{namespace}}'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+
+==== ./apps/world/applicationset.yaml ====
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: world-app
+  namespace: argocd
+spec:
+  generators:
+    - list:
+        elements:
+          - name: helloworld
+            path: components/helloworld
+            namespace: world-dev
+          - name: carbone
+            path: components/carbone
+            namespace: world-dev
+  template:
+    metadata:
+      name: '{{name}}-app'
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/andres20980/gitops-poc.git
+        targetRevision: main
+        path: '{{path}}'
+        helm:
+          valueFiles:
+            - values.yaml
+            - common-values.yaml
+            - values-dev.yaml
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{namespace}}'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true

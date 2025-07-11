@@ -1,0 +1,68 @@
+📁 Directory structure for './shared-services'
+./shared-services
+└── carbone
+    ├── Chart.yaml
+    ├── common-values.yaml
+    ├── values-dev.yaml
+    ├── values-pre.yaml
+    └── values.yaml
+
+2 directories, 5 files
+
+📄 File contents within './shared-services' (recursive)
+
+==== ./shared-services/carbone/values.yaml ====
+# components/carbone/values.yaml v1.0
+# Valores predeterminados para el componente Carbone
+image:
+  repository: ghcr.io/andres20980/carbone
+  tag: local-v1
+  pullPolicy: IfNotPresent
+
+replicaCount: 1
+
+service:
+  type: ClusterIP
+  port: 8080 # Puerto predeterminado de Carbone
+  targetPort: 8080
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 250m
+    memory: 256Mi
+
+# Otros valores específicos de Carbone si los hubiera (ej. licencias, configs internas)
+==== ./shared-services/carbone/Chart.yaml ====
+# components/carbone/Chart.yaml v1.0
+apiVersion: v2
+name: carbone
+description: Helm Chart for the Carbone component
+type: application # Puede ser 'library' si solo se consume, o 'application' si es desplegable
+version: 0.1.0
+appVersion: "local-v1" # Versión de la imagen de Carbone
+==== ./shared-services/carbone/values-dev.yaml ====
+# components/carbone/values-dev.yaml v1.0
+# Sobreescrituras para el entorno de desarrollo de Carbone
+image:
+  tag: dev-build # Usar una etiqueta de imagen específica para desarrollo
+replicaCount: 1
+resources:
+  limits:
+    cpu: 200m
+    memory: 256Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+==== ./shared-services/carbone/values-pre.yaml ====
+# components/carbone/values-pre.yaml v1.0
+# Sobreescrituras para el entorno de preproducción de Carbone
+replicaCount: 2 # Más réplicas para pre-producción
+==== ./shared-services/carbone/common-values.yaml ====
+# components/carbone/common-values.yaml v1.0
+# Valores comunes para todos los entornos de Carbone
+# (por ejemplo, si tienes alguna variable global de entorno para todos los despliegues de carbone)
+env:
+  LOG_LEVEL: INFO

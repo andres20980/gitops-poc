@@ -1,23 +1,21 @@
-# components/carbone/values.yaml v1.0
-# Valores predeterminados para el componente Carbone
-image:
-  repository: ghcr.io/andres20980/carbone
-  tag: local-v1
-  pullPolicy: IfNotPresent
-
-replicaCount: 1
-
-service:
-  type: ClusterIP
-  port: 8080 # Puerto predeterminado de Carbone
-  targetPort: 8080
-
-resources:
-  limits:
-    cpu: 500m
-    memory: 512Mi
-  requests:
-    cpu: 250m
-    memory: 256Mi
-
-# Otros valores específicos de Carbone si los hubiera (ej. licencias, configs internas)
+# Valores base para carbone (puedes poner aquí los valores comunes a todos los entornos)
+chart-base:
+  nameOverride: carbone
+  app:
+    registry: ghcr.io/andres20980
+    image: carbone-app
+    version: local-v1
+  replicaCount: 1
+  service:
+    type: ClusterIP
+    port: 8080
+    targetPort: 8080
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 250m
+      memory: 256Mi
+  env:
+    LOG_LEVEL: INFO

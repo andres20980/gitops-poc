@@ -1,12 +1,12 @@
-# components/carbone/values-dev.yaml v1.0
-# Sobreescrituras para el entorno de desarrollo de Carbone
-image:
-  tag: dev-build # Usar una etiqueta de imagen específica para desarrollo
-replicaCount: 1
-resources:
-  limits:
-    cpu: 200m
-    memory: 256Mi
-  requests:
-    cpu: 100m
-    memory: 128Mi
+# Valores específicos para desarrollo
+chart-base:
+  app:
+    version: dev-build
+  replicaCount: 1
+  resources:
+    limits:
+      cpu: 200m
+      memory: 256Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi

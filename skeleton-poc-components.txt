@@ -1,0 +1,62 @@
+📁 Directory structure for './components'
+./components
+└── helloworld
+    ├── Chart.yaml
+    ├── common-values.yaml
+    ├── values-dev.yaml
+    ├── values-pre.yaml
+    └── values.yaml
+
+2 directories, 5 files
+
+📄 File contents within './components' (recursive)
+
+==== ./components/helloworld/values.yaml ====
+chart-base:
+  nameOverride: helloworld
+
+  affinity: {}
+  nodeSelector: {}
+  tolerations: []
+
+  app:
+    registry: ghcr.io/andres20980
+    image: helloworld-app
+    version: local-v1
+
+  replicaCount: 1
+
+  service:
+    type: ClusterIP
+    port: 5000
+    targetPort: 5000
+
+  carbone:
+    enabled: false
+
+==== ./components/helloworld/Chart.yaml ====
+apiVersion: v2
+name: helloworld
+description: Wrapper chart for helloworld using chart-base
+type: application
+version: 0.1.0
+appVersion: "local-v1"
+
+dependencies:
+  - name: chart-base
+    version: "1.2.1"
+    repository: "oci://ghcr.io/andres20980"
+
+==== ./components/helloworld/values-dev.yaml ====
+chart-base:
+  app:
+  replicaCount: 1
+
+==== ./components/helloworld/values-pre.yaml ====
+chart-base:
+  replicaCount: 2
+
+==== ./components/helloworld/common-values.yaml ====
+chart-base:
+  env:
+    DEBUG: "true"

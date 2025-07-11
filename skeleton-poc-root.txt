@@ -1,0 +1,319 @@
+📁 Directory structure for '.'
+.
+├── .gitignore
+├── .pipelines
+│   └── templates
+│       └── component-build-push.yml
+├── README.md
+├── apps
+│   ├── pdf-processor
+│   │   └── applicationset.yaml
+│   └── world
+│       └── applicationset.yaml
+├── argodeploy
+│   ├── applications.yaml
+│   ├── funcional
+│   │   ├── Chart.yaml
+│   │   ├── test-application.yaml
+│   │   └── values.yaml
+│   └── shared-services.yaml
+├── components
+│   └── helloworld
+│       ├── Chart.yaml
+│       ├── common-values.yaml
+│       ├── values-dev.yaml
+│       ├── values-pre.yaml
+│       └── values.yaml
+├── export_poc_structure.sh
+├── services
+│   ├── carbone-ee-docker
+│   │   ├── .dockerignore
+│   │   ├── .github
+│   │   │   └── workflows
+│   │   │       └── publish.yml
+│   │   ├── BUILD.md
+│   │   ├── Dockerfile
+│   │   ├── Dockerfile-fonts
+│   │   ├── Dockerfile-slim
+│   │   ├── LibreOffice_24.8.4.2_Linux_x86-64_deb.tar.gz
+│   │   ├── README.md
+│   │   ├── azure-pipeline.yml
+│   │   ├── deployement
+│   │   │   ├── aws-ecs
+│   │   │   │   ├── README.md
+│   │   │   │   └── ecs.tf
+│   │   │   ├── azure-container-apps
+│   │   │   │   ├── Readme.md
+│   │   │   │   └── azure.tf
+│   │   │   └── docker-compose
+│   │   │       ├── multiInstance
+│   │   │       │   ├── docker-compose.yml
+│   │   │       │   └── nginx.conf
+│   │   │       └── simple
+│   │   │           └── docker-compose.yml
+│   │   ├── docker-entrypoint.sh
+│   │   ├── documentation.md
+│   │   └── fonts
+│   │       ├── aptos-fonts
+│   │       │   ├── Aptos-Black-Italic.ttf
+│   │       │   ├── Aptos-Black.ttf
+│   │       │   ├── Aptos-Bold-Italic.ttf
+│   │       │   ├── Aptos-Bold.ttf
+│   │       │   ├── Aptos-Display-Bold-Italic.ttf
+│   │       │   ├── Aptos-Display-Bold.ttf
+│   │       │   ├── Aptos-Display-Italic.ttf
+│   │       │   ├── Aptos-Display.ttf
+│   │       │   ├── Aptos-ExtraBold-Italic.ttf
+│   │       │   ├── Aptos-ExtraBold.ttf
+│   │       │   ├── Aptos-Italic.ttf
+│   │       │   ├── Aptos-Light-Italic.ttf
+│   │       │   ├── Aptos-Light.ttf
+│   │       │   ├── Aptos-Mono-Bold-Italic.ttf
+│   │       │   ├── Aptos-Mono-Bold.ttf
+│   │       │   ├── Aptos-Mono-Italic.ttf
+│   │       │   ├── Aptos-Mono.ttf
+│   │       │   ├── Aptos-Narrow-Bold-Italic.ttf
+│   │       │   ├── Aptos-Narrow-Bold.ttf
+│   │       │   ├── Aptos-Narrow-Italic.ttf
+│   │       │   ├── Aptos-Narrow.ttf
+│   │       │   ├── Aptos-SemiBold-Italic.ttf
+│   │       │   ├── Aptos-SemiBold.ttf
+│   │       │   ├── Aptos-Serif-Bold-Italic.ttf
+│   │       │   ├── Aptos-Serif-Bold.ttf
+│   │       │   ├── Aptos-Serif-Italic.ttf
+│   │       │   ├── Aptos-Serif.ttf
+│   │       │   └── Aptos.ttf
+│   │       ├── msttcorefonts
+│   │       │   ├── Andale_Mono.ttf
+│   │       │   ├── Arial_Black.ttf
+│   │       │   ├── Arial_Bold.ttf
+│   │       │   ├── Arial_Bold_Italic.ttf
+│   │       │   ├── Arial_Italic.ttf
+│   │       │   ├── Comic_Sans_MS.ttf
+│   │       │   ├── Comic_Sans_MS_Bold.ttf
+│   │       │   ├── Courier_New.ttf
+│   │       │   ├── Courier_New_Bold.ttf
+│   │       │   ├── Courier_New_Bold_Italic.ttf
+│   │       │   ├── Courier_New_Italic.ttf
+│   │       │   ├── Georgia_Bold.ttf
+│   │       │   ├── Georgia_Bold_Italic.ttf
+│   │       │   ├── Georgia_Italic.ttf
+│   │       │   ├── Times_New_Roman.ttf
+│   │       │   ├── Times_New_Roman_Bold.ttf
+│   │       │   ├── Times_New_Roman_Bold_Italic.ttf
+│   │       │   ├── Times_New_Roman_Italic.ttf
+│   │       │   ├── Trebuchet_MS.ttf
+│   │       │   ├── Trebuchet_MS_Bold.ttf
+│   │       │   ├── Trebuchet_MS_Bold_Italic.ttf
+│   │       │   ├── Trebuchet_MS_Italic.ttf
+│   │       │   ├── Verdana_Bold.ttf
+│   │       │   ├── Verdana_Bold_Italic.ttf
+│   │       │   ├── Verdana_Italic.ttf
+│   │       │   ├── andalemo.ttf -> Andale_Mono.ttf
+│   │       │   ├── arial.ttf
+│   │       │   ├── arialbd.ttf -> Arial_Bold.ttf
+│   │       │   ├── arialbi.ttf -> Arial_Bold_Italic.ttf
+│   │       │   ├── ariali.ttf -> Arial_Italic.ttf
+│   │       │   ├── ariblk.ttf -> Arial_Black.ttf
+│   │       │   ├── comic.ttf -> Comic_Sans_MS.ttf
+│   │       │   ├── comicbd.ttf -> Comic_Sans_MS_Bold.ttf
+│   │       │   ├── cour.ttf -> Courier_New.ttf
+│   │       │   ├── courbd.ttf -> Courier_New_Bold.ttf
+│   │       │   ├── courbi.ttf -> Courier_New_Bold_Italic.ttf
+│   │       │   ├── couri.ttf -> Courier_New_Italic.ttf
+│   │       │   ├── georgia.ttf
+│   │       │   ├── georgiab.ttf -> Georgia_Bold.ttf
+│   │       │   ├── georgiai.ttf -> Georgia_Italic.ttf
+│   │       │   ├── georgiaz.ttf -> Georgia_Bold_Italic.ttf
+│   │       │   ├── impact.ttf
+│   │       │   ├── times.ttf -> Times_New_Roman.ttf
+│   │       │   ├── timesbd.ttf -> Times_New_Roman_Bold.ttf
+│   │       │   ├── timesbi.ttf -> Times_New_Roman_Bold_Italic.ttf
+│   │       │   ├── timesi.ttf -> Times_New_Roman_Italic.ttf
+│   │       │   ├── trebuc.ttf -> Trebuchet_MS.ttf
+│   │       │   ├── trebucbd.ttf -> Trebuchet_MS_Bold.ttf
+│   │       │   ├── trebucbi.ttf -> Trebuchet_MS_Bold_Italic.ttf
+│   │       │   ├── trebucit.ttf -> Trebuchet_MS_Italic.ttf
+│   │       │   ├── verdana.ttf
+│   │       │   ├── verdanab.ttf -> Verdana_Bold.ttf
+│   │       │   ├── verdanai.ttf -> Verdana_Italic.ttf
+│   │       │   ├── verdanaz.ttf -> Verdana_Bold_Italic.ttf
+│   │       │   └── webdings.ttf
+│   │       └── ppviewer
+│   │           ├── calibri.ttf
+│   │           ├── calibrib.ttf
+│   │           ├── calibrii.ttf
+│   │           ├── calibriz.ttf
+│   │           ├── cambria.ttc
+│   │           ├── cambriab.ttf
+│   │           ├── cambriai.ttf
+│   │           ├── cambriaz.ttf
+│   │           ├── candara.ttf
+│   │           ├── candarab.ttf
+│   │           ├── candarai.ttf
+│   │           ├── candaraz.ttf
+│   │           ├── consola.ttf
+│   │           ├── consolab.ttf
+│   │           ├── consolai.ttf
+│   │           ├── consolaz.ttf
+│   │           ├── constan.ttf
+│   │           ├── constanb.ttf
+│   │           ├── constani.ttf
+│   │           ├── constanz.ttf
+│   │           ├── corbel.ttf
+│   │           ├── corbelb.ttf
+│   │           ├── corbeli.ttf
+│   │           ├── corbelz.ttf
+│   │           ├── meiryo.ttc
+│   │           └── meiryob.ttc
+│   └── helloworld-app
+│       ├── Dockerfile
+│       ├── app.py
+│       ├── azure-pipelines.yml
+│       └── requirements.txt
+├── shared-services
+│   └── carbone
+│       ├── Chart.yaml
+│       ├── common-values.yaml
+│       ├── values-dev.yaml
+│       ├── values-pre.yaml
+│       └── values.yaml
+├── skeleton-poc-.pipelines.txt
+├── skeleton-poc-apps.txt
+├── skeleton-poc-argodeploy.txt
+├── skeleton-poc-components.txt
+├── skeleton-poc-root.txt
+├── skeleton-poc-services.txt
+└── skeleton-poc-shared-services.txt
+
+27 directories, 159 files
+
+📄 File contents within '.' (recursive)
+
+==== ./README.md ====
+
+
+==== ./export_poc_structure.sh ====
+#!/bin/bash
+# export_poc_structure.sh v2.0.0
+# Script to export the GitOps PoC directory structure and file contents.
+# This version now includes the 'services' directory and its relevant files (pipelines, Dockerfiles).
+
+# Borrar ficheros previos
+rm -f skeleton-poc-*.txt
+
+# Recorre el directorio actual y sus subdirectorios inmediatos (incluyendo 'services')
+# La exclusión de '.git' se mantiene.
+find . -maxdepth 1 -mindepth 1 -type d ! -name ".git" | while read -r DIR; do
+  BASENAME=$(basename "$DIR")
+
+  OUTFILE="skeleton-poc-${BASENAME}.txt"
+  echo "📁 Directory structure for '$DIR'" > "$OUTFILE"
+  # Tree -a para todos los archivos, -I para ignorar .git
+  tree -a -I '.git' "$DIR" >> "$OUTFILE"
+
+  echo -e "\n📄 File contents within '$DIR' (recursive)" >> "$OUTFILE"
+
+  # Buscar todos los archivos excepto los skeleton-poc, y dentro de services, solo los relevantes
+  # Para los directorios de servicio, buscamos azure-pipelines.yml y Dockerfile
+  # Para otros directorios, excluimos 'services' de nuevo para el contenido, ya que lo manejamos aparte
+  if [[ "$BASENAME" == "services" ]]; then
+    find "$DIR" -type f \
+      ! -path "*/.git/*" \
+      -iregex ".*\(azure-pipelines\.yml\|Dockerfile\)" | \
+      while read -r FILE; do
+        echo -e "\n==== $FILE ====" >> "$OUTFILE"
+        cat "$FILE" >> "$OUTFILE"
+    done
+  else
+    find "$DIR" -type f \
+      ! -path "*/.git/*" \
+      ! -path "*/services/*" \
+      ! -name "skeleton-poc-*" | \
+      while read -r FILE; do
+        echo -e "\n==== $FILE ====" >> "$OUTFILE"
+        cat "$FILE" >> "$OUTFILE"
+    done
+  fi
+
+  echo "✅ Generated $OUTFILE"
+done
+
+# Incluir el propio directorio raíz también (ahora sin excluir 'services')
+OUTFILE="skeleton-poc-root.txt"
+echo "📁 Directory structure for '.'" > "$OUTFILE"
+tree -a -I '.git' . >> "$OUTFILE"
+
+echo -e "\n📄 File contents within '.' (recursive)" >> "$OUTFILE"
+
+# Para la raíz, buscamos los archivos de primer nivel y luego los directorios.
+# Los archivos de primer nivel (como README.md, .gitignore, setup_gitops_poc.sh, export_poc_structure.sh)
+find . -maxdepth 1 -type f \
+  ! -name "skeleton-poc-*" | while read -r FILE; do
+    echo -e "\n==== $FILE ====" >> "$OUTFILE"
+    cat "$FILE" >> "$OUTFILE"
+done
+
+echo "✅ Generated $OUTFILE"
+==== ./.gitignore ====
+# .gitignore v1.0.0
+
+# --- Files generated by Helm ---
+# Directories where Helm downloads chart dependencies.
+# If you use 'helm dependency build', these are generated locally.
+charts/
+# Ignore Windows Zone.Identifier files
+*:Zone.Identifier
+# Chart packages created with 'helm package'
+*.tgz
+
+# Helm dependencies generated by the CLI
+tmp/
+.helmignore
+
+# --- Files generated by Kustomize ---
+# Although Kustomize sources are versioned, the direct output of 'kustomize build'
+# is typically not committed to the repository in a GitOps flow, as Argo CD builds it in real-time.
+# However, if you ever build locally and don't want the output committed, you can add:
+# kustomize-build/ # Or the name of the directory where you save the build output
+
+# --- Local configuration and environment files ---
+# If you have sensitive value files that should not be committed, add them here.
+# For example, if you use a 'values-secret.yaml' for local credentials:
+# values-secret.yaml
+
+# Development-specific environment files
+.env
+.flaskenv
+
+# --- Credentials and secrets (if generated locally) ---
+# Any file containing PATs, keys, or plaintext certificates.
+# Ensure that the Base64 secret file *is* versioned if you manage it with Kustomize,
+# but not the unencoded version if you generate it locally for .dockerconfigjson.
+# For example, if the raw token were in a file:
+# my_raw_pat.txt
+
+# Files used to generate the .dockerconfigjson secret locally
+dockerconfig.json
+
+# --- Operating system files ---
+.DS_Store # macOS
+Thumbs.db # Windows
+
+# --- Python virtual environment files (if applicable) ---
+.venv/
+env/
+venv/
+__pycache__/
+
+# --- IDE / Editor files ---
+.idea/ # IntelliJ / PyCharm
+.vscode/ # VS Code
+*.iml
+*.swp
+*.swo
+
+# --- Logs and temporary directories ---
+logs/
+*.log
+tmp/

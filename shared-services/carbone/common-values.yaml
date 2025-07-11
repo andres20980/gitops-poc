@@ -1,5 +1,4 @@
-# components/carbone/common-values.yaml v1.0
-# Valores comunes para todos los entornos de Carbone
-# (por ejemplo, si tienes alguna variable global de entorno para todos los despliegues de carbone)
-env:
-  LOG_LEVEL: INFO
+# Valores comunes para todos los entornos (si hay alguna variable global para carbone)
+chart-base:
+  env:
+    LOG_LEVEL: INFO
