@@ -1,6 +1,11 @@
 apiVersion: v2
 name: carbone
-description: "Component values for carbone using chart-base OCI chart"
+description: Helm Chart for the Carbone component
 type: application
 version: 0.1.0
 appVersion: "local-v1"
+
+dependencies:
+  - name: chart-base
+    version: "1.2.1"
+    repository: "oci://ghcr.io/andres20980" # Repositorio OCI donde se encuentran los charts

@@ -16,14 +16,14 @@ spec:
     spec:
       project: default
       source:
-        repoURL: oci://ghcr.io/andres20980
-        chart: chart-base             # Chart fijo
-        targetRevision: 1.2.1         # Versión del chart-base en OCI
+        repoURL: https://github.com/andres20980/gitops-poc.git
+        targetRevision: main
+        path: '{{path}}'   # Ruta del repositorio Git donde están los valores
         helm:
           valueFiles:
             - values.yaml
             - common-values.yaml
-            - values-dev.yaml       # o values-pre.yaml según el entorno
+            - values-dev.yaml
       destination:
         server: https://kubernetes.default.svc
         namespace: shared-services
