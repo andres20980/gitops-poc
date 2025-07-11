@@ -11,7 +11,7 @@ spec:
             path: components/helloworld
             namespace: world-dev
           - name: carbone
-            path: components/carbone
+            path: shared-services/carbone
             namespace: world-dev
   template:
     metadata:

@@ -8,7 +8,7 @@ spec:
     - list:
         elements:
           - name: carbone
-            path: components/carbone
+            path: shared-services/carbone
             namespace: pdf-processor-dev
   template:
     metadata:
