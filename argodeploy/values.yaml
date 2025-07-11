@@ -1,5 +1,8 @@
 chart-base:
   nameOverride: helloworld
+  affinity: {}
+  nodeSelector: {}
+  tolerations: []
   app:
     registry: ghcr.io/andres20980
     image: helloworld-app

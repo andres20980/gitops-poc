@@ -1,0 +1,46 @@
+---
+# Source: wrapper-chart/charts/chart-base/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: helloworld
+  labels:
+    meta.helm.sh/release-name: helloworld
+spec:
+  ports:
+    - port: 80
+      targetPort: 5000
+      protocol: TCP
+  selector:
+    app: helloworld
+---
+# Source: wrapper-chart/charts/chart-base/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: helloworld
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: helloworld
+  template:
+    metadata:
+      labels:
+        app: helloworld
+      annotations:
+        checksum/config: 7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6
+    spec:
+      containers:
+        - name: app
+          image: ghcr.io/andres20980/helloworld-app:local-v1
+          imagePullPolicy: Always
+
+      enableServiceLinks: false
+---
+# Source: wrapper-chart/charts/chart-base/templates/hpa.yaml
+# Horizontal Pod Autoscaler for the application.
+# Dynamically targets either a Kubernetes Deployment or an Argo Rollout resource.
+---
+# Source: wrapper-chart/charts/chart-base/templates/service.yaml
+# Creates a standard service for a Kubernetes Deployment
