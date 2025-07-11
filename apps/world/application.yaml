@@ -1,0 +1,43 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: carbone-shcomp  # Referencia al componente ya desplegado
+  namespace: shared-services  # Namespace donde se encuentra el componente ya desplegado
+spec:
+  project: default
+  destination:
+    namespace: pdf-processor-dev  # Namespace donde quieres consumir el servicio
+    server: https://kubernetes.default.svc
+  source:
+    repoURL: https://github.com/andres20980/gitops-poc.git
+    targetRevision: main
+    path: shared-services/carbone  # Aquí está la ruta de la aplicación compartida
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+___
+
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: helloworld-comp  # Referencia al componente ya desplegado
+  namespace: project-dev  # Namespace donde se encuentra el componente ya desplegado
+spec:
+  project: default
+  destination:
+    namespace: project-dev  # Namespace donde quieres consumir el servicio
+    server: https://kubernetes.default.svc
+  source:
+    repoURL: https://github.com/andres20980/gitops-poc.git
+    targetRevision: main
+    path: components/helloworld  # Aquí está la ruta de la aplicación compartida
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+  
