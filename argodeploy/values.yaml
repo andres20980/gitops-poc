@@ -1,4 +1,4 @@
-# argocd/config/values.yaml v1.0
+# argodeploy/values.yaml v1.0
 # Valores mínimos para la aplicación de prueba helloworld
 # Serán consumidos por el chart-base remoto.
 image:
