@@ -7,9 +7,11 @@
 ├── README.md
 ├── apps
 │   ├── pdf-processor
-│   │   └── applicationset.yaml
+│   │   └── application.yaml
 │   └── world
-│       └── applicationset.yaml
+│       ├── application.yaml
+│       └── services
+│           └── helloworld-comp.yaml
 ├── argodeploy
 │   ├── applications.yaml
 │   ├── funcional
@@ -186,7 +188,7 @@
 ├── skeleton-poc-services.txt
 └── skeleton-poc-shared-services.txt
 
-27 directories, 159 files
+28 directories, 160 files
 
 📄 File contents within '.' (recursive)
 

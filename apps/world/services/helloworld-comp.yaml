@@ -1,32 +1,25 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: world-helloworld-comp  # Nombre de la aplicación
-  namespace: argocd     # Namespace de ArgoCD donde se gestionará la app
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io  # Finalizer para cascada de eliminación
+  name: helloworld-app
+  namespace: argocd  # El namespace donde se crea la aplicación en ArgoCD
 spec:
-  project: default  # El proyecto de ArgoCD al que pertenece la aplicación
-
-  # Fuente de los manifiestos de la aplicación
+  project: default
   source:
-    repoURL: https://github.com/andres20980/gitops-poc.git  # Repositorio Git donde están los manifiestos
-    targetRevision: main  # Revisión del repositorio (puede ser main o la rama que elijas)
-    path: ./components/helloworld  # Ruta dentro del repositorio donde están los manifiestos de la aplicación
+    repoURL: https://github.com/andres20980/gitops-poc.git  # Repositorio Git donde está tu código
+    targetRevision: HEAD  # Se utiliza la rama principal
+    path: components/helloworld  # Ruta al gráfico Helm de la aplicación 'helloworld'
     helm:
-      valueFiles:
-        - values.yaml
-        - common-values.yaml
-        - values-dev.yaml 
-  # Destino de la aplicación en Kubernetes (el cluster y namespace donde se desplegará)
+      valuesFiles:
+        - values.yaml         # Valores predeterminados de la aplicación
+        - common-values.yaml  # Valores comunes que se aplican a todos los entornos
+        - values-dev.yaml     # Valores específicos para el entorno de desarrollo
   destination:
-    server: https://kubernetes.default.svc  # Cluster de destino
-    namespace: helloworld  # Namespace donde se desplegará la aplicación
-
-  # Política de sincronización
+    server: https://kubernetes.default.svc
+    namespace: helloworld  # Namespace donde se desplegará la aplicación 'helloworld'
   syncPolicy:
+    automated:
+      prune: true  # Eliminar recursos que ya no son necesarios
+      selfHeal: true  # Reparar recursos que están fuera de sincronización
     syncOptions:
-      - CreateNamespace=true  # Si el namespace no existe, lo creará automáticamente
-    automated:  # Sincronización automática
-      prune: true  # Eliminar los recursos que ya no estén definidos en el manifiesto de Git
-      selfHeal: true  # Re-sincronizar si detecta cambios en los recursos del cluster que no están en Git
+      - CreateNamespace=true  # Crear automáticamente el namespace si no existe

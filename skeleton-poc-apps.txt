@@ -1,87 +1,70 @@
 📁 Directory structure for './apps'
 ./apps
 ├── pdf-processor
-│   └── applicationset.yaml
+│   └── application.yaml
 └── world
-    └── applicationset.yaml
+    ├── application.yaml
+    └── services
+        └── helloworld-comp.yaml
 
-3 directories, 2 files
+4 directories, 3 files
 
 📄 File contents within './apps' (recursive)
 
-==== ./apps/pdf-processor/applicationset.yaml ====
+==== ./apps/pdf-processor/application.yaml ====
 apiVersion: argoproj.io/v1alpha1
-kind: ApplicationSet
+kind: Application
 metadata:
-  name: pdf-processor-app
-  namespace: argocd
+  name: carbone-shcomp  # Referencia al componente ya desplegado
+  namespace: shared-services  # Namespace donde se encuentra el componente ya desplegado
 spec:
-  generators:
-    - list:
-        elements:
-          - name: carbone
-            path: components/carbone
-            namespace: pdf-processor-dev
-  template:
-    metadata:
-      name: '{{name}}-app'
-    spec:
-      project: default
-      source:
-        repoURL: https://github.com/andres20980/gitops-poc.git
-        targetRevision: main
-        path: '{{path}}'
-        helm:
-          valueFiles:
-            - values.yaml
-            - common-values.yaml
-            - values-dev.yaml
-      destination:
-        server: https://kubernetes.default.svc
-        namespace: '{{namespace}}'
-      syncPolicy:
-        automated:
-          prune: true
-          selfHeal: true
-        syncOptions:
-          - CreateNamespace=true
+  project: default
+  destination:
+    namespace: pdf-processor-dev  # Namespace donde quieres consumir el servicio
+    server: https://kubernetes.default.svc
+  source:
+    repoURL: https://github.com/andres20980/gitops-poc.git
+    targetRevision: main
+    path: shared-services/carbone  # Aquí está la ruta de la aplicación compartida
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
 
-==== ./apps/world/applicationset.yaml ====
+==== ./apps/world/application.yaml ====
 apiVersion: argoproj.io/v1alpha1
-kind: ApplicationSet
+kind: Application
 metadata:
   name: world-app
+  # You'll usually want to add your resources to the argocd namespace.
   namespace: argocd
+  # Add a this finalizer ONLY if you want these to cascade delete.
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
-  generators:
-    - list:
-        elements:
-          - name: helloworld
-            path: components/helloworld
-            namespace: world-dev
-          - name: carbone
-            path: components/carbone
-            namespace: world-dev
-  template:
-    metadata:
-      name: '{{name}}-app'
-    spec:
-      project: default
-      source:
-        repoURL: https://github.com/andres20980/gitops-poc.git
-        targetRevision: main
-        path: '{{path}}'
-        helm:
-          valueFiles:
-            - values.yaml
-            - common-values.yaml
-            - values-dev.yaml
-      destination:
-        server: https://kubernetes.default.svc
-        namespace: '{{namespace}}'
-      syncPolicy:
-        automated:
-          prune: true
-          selfHeal: true
-        syncOptions:
-          - CreateNamespace=true
+  # The project the application belongs to.
+  project: default
+
+  # Source of the application manifests
+  source:
+    repoURL: https://github.com/andres20980/gitops-cert-level-2-examples.git
+    targetRevision: HEAD
+    path: services
+   
+    # directory
+    directory:
+      recurse: false
+  # Destination cluster and namespace to deploy the application
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+
+  # Sync policy
+  syncPolicy:
+    automated: # automated sync by default retries failed attempts 5 times with following delays between attempts ( 5s, 10s, 20s, 40s, 80s ); retry controlled using `retry` field.
+      prune: true # Specifies if resources should be pruned during auto-syncing ( false by default ).
+      selfHeal: true # Specifies if partial app sync should be executed when resources are changed only in target Kubernetes cluster and no git change detected ( false by default ).
+      allowEmpty: false # Allows deleting all application resources during automatic syncing ( false by default ).
+  

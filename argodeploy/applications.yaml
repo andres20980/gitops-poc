@@ -9,7 +9,7 @@ spec:
         repoURL: https://github.com/andres20980/gitops-poc.git
         revision: main
         directories:
-          - path: apps/*
+          - path: apps/*  # Este patrón busca todas las aplicaciones en ./apps/X
   template:
     metadata:
       name: '{{path.basename}}-app'
@@ -18,10 +18,10 @@ spec:
       source:
         repoURL: https://github.com/andres20980/gitops-poc.git
         targetRevision: main
-        path: '{{path}}'
+        path: '{{path}}/services'  # Ahora apuntamos a /services dentro de cada aplicación
       destination:
         server: https://kubernetes.default.svc
-        namespace: '{{path.basename}}'
+        namespace: '{{path.basename}}'  # El namespace será el nombre de la aplicación
       syncPolicy:
         automated:
           prune: true
