@@ -1,6 +1,6 @@
 chart-base:
   nameOverride: helloworld
-
+  nodeName: ""
   image:
     repository: ghcr.io/andres20980/helloworld-app
     tag: local-v1
