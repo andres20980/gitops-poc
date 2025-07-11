@@ -7,12 +7,12 @@ spec:
   generators:
     - list:
         elements:
-          - name: helloworld
+          - name: helloworld-comp
             path: components/helloworld
             namespace: world-dev
-          - name: carbone-shared  # Referencia a shared service carbone
+          - name: carbone-shcomp
             path: shared-services/carbone
-            namespace: shared-services  # Namespace donde está el shared service
+            namespace: world-dev
   template:
     metadata:
       name: '{{name}}-app'
