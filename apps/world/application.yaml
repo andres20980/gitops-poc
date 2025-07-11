@@ -12,12 +12,18 @@ spec:
     repoURL: https://github.com/andres20980/gitops-poc.git
     targetRevision: main
     path: shared-services/carbone  # Aquí está la ruta de la aplicación compartida
+    helm:
+      valueFiles:
+        - values.yaml
+        - common-values.yaml
+        - values-dev.yaml  # Este es específico para el entorno de desarrollo
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
+
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
@@ -33,6 +39,11 @@ spec:
     repoURL: https://github.com/andres20980/gitops-poc.git
     targetRevision: main
     path: components/helloworld  # Aquí está la ruta de la aplicación compartida
+    helm:
+      valueFiles:
+        - values.yaml
+        - common-values.yaml
+        - values-dev.yaml  # Este es específico para el entorno de desarrollo
   syncPolicy:
     automated:
       prune: true
