@@ -6,12 +6,12 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: oci://ghcr.io/andres20980/chart-base
-    chart: chart-base
-    targetRevision: 1.2.1
+    repoURL: https://github.com/andres20980/gitops-poc.git
+    path: argodeploy
+    targetRevision: main
     helm:
       valueFiles:
-        - argodeploy/values.yaml
+        - values.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: test-helloworld

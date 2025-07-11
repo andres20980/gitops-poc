@@ -1,18 +1,13 @@
-# argodeploy/values.yaml v1.0
-# Valores mínimos para la aplicación de prueba helloworld
-# Serán consumidos por el chart-base remoto.
 image:
-  repository: ghcr.io/andres20980/helloworld-app # Tu imagen de helloworld
+  repository: ghcr.io/andres20980/helloworld-app
   tag: local-v1
   pullPolicy: IfNotPresent
 
-# Configuración de servicio y réplicas para la aplicación
 replicaCount: 1
 service:
   type: ClusterIP
-  port: 5000 # Puerto de helloworld-app
+  port: 5000
   targetPort: 5000
 
-# Asegúrate de que el chart-base no intente desplegar carbone por defecto
 carbone:
   enabled: false
