@@ -12,7 +12,7 @@ spec:
           - path: apps/*  # Este patrón busca todas las aplicaciones en ./apps/X
   template:
     metadata:
-      name: '{{path.basename}}-app'
+      name: 'app-{{path.basename}}'
     spec:
       project: default
       source:

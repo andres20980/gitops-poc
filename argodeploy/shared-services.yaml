@@ -12,7 +12,7 @@ spec:
           - path: shared-services/*
   template:
     metadata:
-      name: '{{path.basename}}-shcomp'
+      name: 'shcomp-{{path.basename}}'
     spec:
       project: default
       source:
