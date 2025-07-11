@@ -1,0 +1,23 @@
+# argodeploy/test-application.yaml v1.0
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: helloworld-test-app # Nombre de la aplicación de prueba en Argo CD
+  namespace: argocd # El recurso Application se crea en el namespace de Argo CD
+spec:
+  project: default
+  source:
+    repoURL: oci://ghcr.io/andres20980/chart-base # URL del chart base remoto OCI
+    targetRevision: 1.2.1 # Versión del chart base
+    helm:
+      valueFiles:
+        - argodeploy/values-test-app.yaml # <<-- RUTA ACTUALIZADA
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: test-helloworld # Namespace donde se desplegarán los recursos de Kubernetes
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true # Asegura que el namespace exista
