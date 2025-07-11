@@ -7,9 +7,9 @@ spec:
   generators:
     - list:
         elements:
-          - name: carbone
+          - name: carbone-shared  # Hacemos referencia al servicio compartido
             path: shared-services/carbone
-            namespace: pdf-processor-dev
+            namespace: shared-services
   template:
     metadata:
       name: '{{name}}-app'

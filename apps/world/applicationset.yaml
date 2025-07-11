@@ -10,9 +10,9 @@ spec:
           - name: helloworld
             path: components/helloworld
             namespace: world-dev
-          - name: carbone
+          - name: carbone-shared  # Referencia a shared service carbone
             path: shared-services/carbone
-            namespace: world-dev
+            namespace: shared-services  # Namespace donde está el shared service
   template:
     metadata:
       name: '{{name}}-app'
