@@ -7,8 +7,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: oci://ghcr.io/andres20980 # URL del chart base remoto OCI
-    chart: chart-base
+    repoURL: oci://ghcr.io/andres20980/chart-base # URL del chart base remoto OCI
     targetRevision: 1.2.1 # Versión del chart base
     helm:
       valueFiles:
