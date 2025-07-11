@@ -1,0 +1,32 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: world-helloworld-comp  # Nombre de la aplicación
+  namespace: argocd     # Namespace de ArgoCD donde se gestionará la app
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io  # Finalizer para cascada de eliminación
+spec:
+  project: default  # El proyecto de ArgoCD al que pertenece la aplicación
+
+  # Fuente de los manifiestos de la aplicación
+  source:
+    repoURL: https://github.com/andres20980/gitops-poc.git  # Repositorio Git donde están los manifiestos
+    targetRevision: main  # Revisión del repositorio (puede ser main o la rama que elijas)
+    path: ./components/helloworld  # Ruta dentro del repositorio donde están los manifiestos de la aplicación
+    helm:
+      valueFiles:
+        - values.yaml
+        - common-values.yaml
+        - values-dev.yaml 
+  # Destino de la aplicación en Kubernetes (el cluster y namespace donde se desplegará)
+  destination:
+    server: https://kubernetes.default.svc  # Cluster de destino
+    namespace: helloworld  # Namespace donde se desplegará la aplicación
+
+  # Política de sincronización
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true  # Si el namespace no existe, lo creará automáticamente
+    automated:  # Sincronización automática
+      prune: true  # Eliminar los recursos que ya no estén definidos en el manifiesto de Git
+      selfHeal: true  # Re-sincronizar si detecta cambios en los recursos del cluster que no están en Git

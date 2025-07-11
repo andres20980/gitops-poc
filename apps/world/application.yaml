@@ -1,52 +1,34 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: carbone-shcomp  # Referencia al componente ya desplegado
-  namespace: shared-services  # Namespace donde se encuentra el componente ya desplegado
+  name: world-app
+  # You'll usually want to add your resources to the argocd namespace.
+  namespace: argocd
+  # Add a this finalizer ONLY if you want these to cascade delete.
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
+  # The project the application belongs to.
   project: default
-  destination:
-    namespace: pdf-processor-dev  # Namespace donde quieres consumir el servicio
-    server: https://kubernetes.default.svc
-  source:
-    repoURL: https://github.com/andres20980/gitops-poc.git
-    targetRevision: main
-    path: shared-services/carbone  # Aquí está la ruta de la aplicación compartida
-    helm:
-      valueFiles:
-        - values.yaml
-        - common-values.yaml
-        - values-dev.yaml  # Este es específico para el entorno de desarrollo
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
 
----
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: helloworld-comp  # Referencia al componente ya desplegado
-  namespace: project-dev  # Namespace donde se encuentra el componente ya desplegado
-spec:
-  project: default
-  destination:
-    namespace: project-dev  # Namespace donde quieres consumir el servicio
-    server: https://kubernetes.default.svc
+  # Source of the application manifests
   source:
-    repoURL: https://github.com/andres20980/gitops-poc.git
-    targetRevision: main
-    path: components/helloworld  # Aquí está la ruta de la aplicación compartida
-    helm:
-      valueFiles:
-        - values.yaml
-        - common-values.yaml
-        - values-dev.yaml  # Este es específico para el entorno de desarrollo
+    repoURL: https://github.com/andres20980/gitops-cert-level-2-examples.git
+    targetRevision: HEAD
+    path: services
+   
+    # directory
+    directory:
+      recurse: false
+  # Destination cluster and namespace to deploy the application
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+
+  # Sync policy
   syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
+    automated: # automated sync by default retries failed attempts 5 times with following delays between attempts ( 5s, 10s, 20s, 40s, 80s ); retry controlled using `retry` field.
+      prune: true # Specifies if resources should be pruned during auto-syncing ( false by default ).
+      selfHeal: true # Specifies if partial app sync should be executed when resources are changed only in target Kubernetes cluster and no git change detected ( false by default ).
+      allowEmpty: false # Allows deleting all application resources during automatic syncing ( false by default ).
+  
