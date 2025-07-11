@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: apps-main-set
+  name: shared-services-set
   namespace: argocd
 spec:
   generators:
@@ -9,19 +9,24 @@ spec:
         repoURL: https://github.com/andres20980/gitops-poc.git
         revision: main
         directories:
-          - path: apps/*
+          - path: shared-services/*
   template:
     metadata:
-      name: '{{path.basename}}'
+      name: '{{path.basename}}-shared'
     spec:
       project: default
       source:
         repoURL: https://github.com/andres20980/gitops-poc.git
         targetRevision: main
         path: '{{path}}'
+        helm:
+          valueFiles:
+            - values.yaml
+            - common-values.yaml
+            - values-dev.yaml
       destination:
         server: https://kubernetes.default.svc
-        namespace: '{{path.basename}}'
+        namespace: shared-services
       syncPolicy:
         automated:
           prune: true
