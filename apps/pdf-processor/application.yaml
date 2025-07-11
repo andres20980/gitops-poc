@@ -1,0 +1,42 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: pdf-processor-app
+  namespace: argocd
+spec:
+  destination:
+    namespace: pdf-processor-dev  # El namespace donde se desplegará pdf-processor
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    repoURL: https://github.com/andres20980/gitops-poc.git
+    targetRevision: main
+    path: apps/pdf-processor  # Ruta de la app pdf-processor
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: carbone-shcomp  # Referencia al componente ya desplegado
+  namespace: shared-services  # Namespace donde se encuentra el componente ya desplegado
+spec:
+  project: default
+  destination:
+    namespace: pdf-processor-dev  # Namespace donde quieres consumir el servicio
+    server: https://kubernetes.default.svc
+  source:
+    repoURL: https://github.com/andres20980/gitops-poc.git
+    targetRevision: main
+    path: shared-services/carbone  # Aquí está la ruta de la aplicación compartida
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
