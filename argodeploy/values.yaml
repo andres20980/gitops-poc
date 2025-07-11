@@ -1,15 +1,17 @@
-nameOverride: helloworld
+chart-base:
+  nameOverride: helloworld
 
-image:
-  repository: ghcr.io/andres20980/helloworld-app
-  tag: local-v1
-  pullPolicy: IfNotPresent
+  image:
+    repository: ghcr.io/andres20980/helloworld-app
+    tag: local-v1
+    pullPolicy: IfNotPresent
 
-replicaCount: 1
-service:
-  type: ClusterIP
-  port: 5000
-  targetPort: 5000
+  replicaCount: 1
 
-carbone:
-  enabled: false
+  service:
+    type: ClusterIP
+    port: 5000
+    targetPort: 5000
+
+  carbone:
+    enabled: false
