@@ -1,0 +1,26 @@
+📁 Directory structure for './components'
+./components
+├── carbone
+│   ├── common-values.yaml
+│   ├── values-dev.yaml
+│   └── values-pre.yaml
+└── helloworld
+    ├── common-values.yaml
+    ├── values-dev.yaml
+    └── values-pre.yaml
+
+3 directories, 6 files
+
+📄 File contents within './components' (recursive)
+
+==== ./components/carbone/values-dev.yaml ====
+
+==== ./components/carbone/values-pre.yaml ====
+
+==== ./components/carbone/common-values.yaml ====
+
+==== ./components/helloworld/values-dev.yaml ====
+
+==== ./components/helloworld/values-pre.yaml ====
+
+==== ./components/helloworld/common-values.yaml ====

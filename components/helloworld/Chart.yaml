@@ -1,0 +1,7 @@
+# components/helloworld/Chart.yaml v1.0
+apiVersion: v2
+name: helloworld
+description: Helm Chart for the Helloworld component
+type: application
+version: 0.1.0
+appVersion: "local-v1" # Versión de la imagen de Helloworld

@@ -1,0 +1,108 @@
+📁 Directory structure for './apps'
+./apps
+├── pdf-processor
+│   ├── Chart.yaml
+│   ├── common-values.yaml
+│   ├── values-dev.yaml
+│   ├── values-pre.yaml
+│   └── values.yaml
+└── world
+    ├── Chart.yaml
+    ├── common-values.yaml
+    ├── values-dev.yaml
+    ├── values-pre.yaml
+    └── values.yaml
+
+3 directories, 10 files
+
+📄 File contents within './apps' (recursive)
+
+==== ./apps/pdf-processor/values.yaml ====
+# apps/pdf-processor/values.yaml v1.0
+# Valores de ejemplo para el chart-base de pdf-processor
+# Ajusta esto para que coincida con lo que tu chart-base espera
+image:
+  repository: ghcr.io/andres20980/pdf-processor-placeholder # Imagen de tu app
+  tag: latest
+
+carbone:
+  enabled: true
+  image: ghcr.io/andres20980/carbone:local-v1
+  replicaCount: 1
+  service:
+    type: ClusterIP
+    port: 80
+
+# Otras configuraciones que el chart-base espera...
+replicaCount: 1
+service:
+  type: ClusterIP
+  port: 80
+==== ./apps/pdf-processor/Chart.yaml ====
+# apps/pdf-processor/Chart.yaml v1.0
+apiVersion: v2
+name: pdf-processor
+description: Chart for PDF Processor application
+type: application
+version: 0.1.0
+appVersion: "1.0.0"
+==== ./apps/pdf-processor/values-dev.yaml ====
+# apps/pdf-processor/values-dev.yaml v1.0
+# Sobreescrituras para el entorno de desarrollo de pdf-processor
+# Por ejemplo, una imagen de desarrollo o más replicas
+image:
+  tag: dev
+
+replicaCount: 2
+==== ./apps/pdf-processor/values-pre.yaml ====
+
+==== ./apps/pdf-processor/common-values.yaml ====
+
+==== ./apps/world/values.yaml ====
+# apps/world/values.yaml v1.0
+# Valores de ejemplo para el chart-base de world
+# Ajusta esto para que coincida con lo que tu chart-base espera
+image:
+  repository: ghcr.io/andres20980/world-app-placeholder # Imagen de tu app
+  tag: latest
+
+carbone:
+  enabled: true
+  image: ghcr.io/andres20980/carbone:local-v1
+  replicaCount: 1
+  service:
+    type: ClusterIP
+    port: 80
+
+helloworld:
+  enabled: true
+  image: ghcr.io/andres20980/helloworld-app:local-v1
+  replicaCount: 1
+  service:
+    type: ClusterIP
+    port: 80
+
+# Otras configuraciones que el chart-base espera...
+replicaCount: 1
+service:
+  type: ClusterIP
+  port: 80
+==== ./apps/world/Chart.yaml ====
+# apps/world/Chart.yaml v1.0
+apiVersion: v2
+name: world
+description: Chart for World application
+type: application
+version: 0.1.0
+appVersion: "1.0.0"
+==== ./apps/world/values-dev.yaml ====
+# apps/world/values-dev.yaml v1.0
+# Sobreescrituras para el entorno de desarrollo de world
+# Por ejemplo, una imagen de desarrollo o más replicas
+image:
+  tag: dev
+
+replicaCount: 2
+==== ./apps/world/values-pre.yaml ====
+
+==== ./apps/world/common-values.yaml ====

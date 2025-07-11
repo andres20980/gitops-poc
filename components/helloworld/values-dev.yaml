@@ -1,0 +1,12 @@
+# components/helloworld/values-dev.yaml v1.0
+# Sobreescrituras para el entorno de desarrollo de Helloworld
+image:
+  tag: dev-build
+replicaCount: 1
+resources:
+  limits:
+    cpu: 50m
+    memory: 64Mi
+  requests:
+    cpu: 25m
+    memory: 32Mi
