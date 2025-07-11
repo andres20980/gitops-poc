@@ -9,7 +9,7 @@ spec:
   source:
     repoURL: oci://ghcr.io/andres20980 # URL del chart base remoto OCI
     chart: chart-base # Nombre del chart base remoto
-    argetRevision: 1.2.1 # Versión del chart base
+    targetRevision: 1.2.1 # Versión del chart base
     helm:
       valueFiles:
         - argodeploy/values.yaml # <<-- RUTA ACTUALIZADA
