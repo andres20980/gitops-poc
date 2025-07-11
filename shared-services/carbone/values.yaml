@@ -3,7 +3,7 @@ chart-base:
   nameOverride: carbone
   app:
     registry: ghcr.io/andres20980
-    image: carbone-app
+    image: carbone
     version: local-v1
   replicaCount: 1
   service:
