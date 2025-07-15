@@ -1,3 +1,16 @@
 chart-base:
+  nameOverride: carbone
+  affinity: {}
+  nodeSelector: {}
+  tolerations: []
   app:
-    version: latest
+    registry: ghcr.io/andres20980
+    image: carbone
+    version: local-v1
+  replicaCount: 1
+  service:
+    type: ClusterIP
+    port: 5000
+    targetPort: 5000
+  carbone:
+    enabled: false
