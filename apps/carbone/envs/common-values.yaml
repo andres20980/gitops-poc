@@ -1,0 +1,10 @@
+chart-base:
+  name: msw-argo-carbone
+  app:
+    registry: amsdvpallacratlantis.azurecr.io
+    image: carbone
+    version: 0.1.2
+  nodeName: workload
+  toleration:
+    key: enterprise
+    value: gbl

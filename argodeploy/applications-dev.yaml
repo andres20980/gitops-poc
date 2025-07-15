@@ -1,0 +1,47 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: dev-environment-apps
+  namespace: argo
+  annotations:
+    description: "ApplicationSet for DEV environment that automatically detects applications in apps/*/envs/dev/"
+spec:
+  generators:
+  - git:
+      repoURL: https://github.com/andres20980/gitops-poc.git
+      revision: HEAD
+      directories:
+      - path: apps/*/envs/dev
+  template:
+    metadata:
+      name: '{{path[1]}}-{{path[3]}}'
+      namespace: argo
+      labels:
+        app.kubernetes.io/name: '{{path[1]}}'
+        app.kubernetes.io/instance: '{{path[1]}}-{{path[3]}}'
+        app.kubernetes.io/managed-by: 'argocd-applicationset'
+        environment: '{{path[3]}}'
+        argocd.argoproj.io/applicationset: 'dev-environment-apps'
+      annotations:
+        description: 'Application {{path[1]}} in {{path[3]}} environment'
+        gitops.path: '{{path}}'
+    spec:
+      project: cicd-argo-config # TODO: change to the correct project
+      source:
+        repoURL: https://github.com/andres20980/gitops-poc.git
+        targetRevision: HEAD
+        path: '{{path}}'
+        helm:
+          valueFiles:
+            - ../common-values.yaml     # Common configuration for all environments
+            - values.yaml               # Environment-specific configuration
+            - values-dev.yaml         # Additional values for the dev environment
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: applications
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
