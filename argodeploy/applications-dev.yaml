@@ -26,7 +26,7 @@ spec:
         description: 'Application {{path[1]}} in {{path[3]}} environment'
         gitops.path: '{{path}}'
     spec:
-      project: cicd-argo-config # TODO: change to the correct project
+      project: default # TODO: change to the correct project
       source:
         repoURL: https://github.com/andres20980/gitops-poc.git
         targetRevision: HEAD
