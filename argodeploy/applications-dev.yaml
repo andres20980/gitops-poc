@@ -35,7 +35,6 @@ spec:
           valueFiles:
             - ../common-values.yaml     # Common configuration for all environments
             - values.yaml               # Environment-specific configuration
-            - values-dev.yaml         # Additional values for the dev environment
       destination:
         server: https://kubernetes.default.svc
         namespace: dev-apps
