@@ -15,7 +15,7 @@ spec:
   template:
     metadata:
       name: '{{path[1]}}-{{path[3]}}'
-      namespace: argo
+      namespace: argocd
       labels:
         app.kubernetes.io/name: '{{path[1]}}'
         app.kubernetes.io/instance: '{{path[1]}}-{{path[3]}}'
