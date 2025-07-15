@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
   name: dev-environment-apps
-  namespace: argo
+  namespace: argocd
   annotations:
     description: "ApplicationSet for DEV environment that automatically detects applications in apps/*/envs/dev/"
 spec:
@@ -38,7 +38,7 @@ spec:
             - values-dev.yaml         # Additional values for the dev environment
       destination:
         server: https://kubernetes.default.svc
-        namespace: applications
+        namespace: dev-apps
       syncPolicy:
         automated:
           prune: true
